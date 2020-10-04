@@ -1,7 +1,15 @@
 import React from 'react'
+import { GlobalStyles, Wrapper } from './App.styled'
+import AppContextProvider from './ContextProviders/AppContextProvider'
 
 const App = () => {
-  return <div>EMPTY APP</div>
+  return (
+    <AppContextProvider>
+      <GlobalStyles />
+
+      <Wrapper>EMPTY APP</Wrapper>
+    </AppContextProvider>
+  )
 }
 
 export default App

@@ -1,0 +1,37 @@
+/* prettier-ignore */
+// in file 'Code/User/snippets/javascript.json'
+{
+	"React FC": {
+		"prefix": [
+			"rcp",
+		],
+		"body": [
+      "import React from 'react'",
+      "",
+      "import { Wrapper } from './styled/${1:Component}.styled.tsx'",
+      "",
+      "interface Props {${2}}",
+      "",
+      "const ${1:Component}: React.FC<Props> = ({${3}}) => {",
+      "  return <${4:Wrapper}>${5}</${4:Wrapper}>",
+      "}",
+      "",
+      "export default Component",
+      "",
+		],
+		"description": "React FC."
+	},
+	"Styled component": {
+		"prefix": [
+			"scp",
+		],
+		"body": [
+			"import styled from 'styled-components'",
+			"",
+			"export const ${1:Wrapper} = styled.${2:div}`",
+			"${3}",
+			"`"
+		],
+		"description": "Styled component."
+	},
+}
