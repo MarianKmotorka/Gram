@@ -2,7 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 
 export const Wrapper = styled.div`
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 50px auto 0 auto;
   padding: 0 30px;
   height: 100%;
 `
@@ -35,6 +35,10 @@ export const GlobalStyles = createGlobalStyle`
 
   p, h1, h2, h3, h4, h5, h6 {
     margin:0;
+  }
+
+  a{
+    text-decoration:none;
   }
 }
 `

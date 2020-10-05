@@ -8,7 +8,7 @@
 		"body": [
       "import React from 'react'",
       "",
-      "import { Wrapper } from './styled/${1:Component}.styled.tsx'",
+      "import { Wrapper } from './${1:Component}.styled'",
       "",
       "interface Props {${2}}",
       "",
@@ -16,7 +16,7 @@
       "  return <${4:Wrapper}>${5}</${4:Wrapper}>",
       "}",
       "",
-      "export default Component",
+      "export default ${1:Component}",
       "",
 		],
 		"description": "React FC."

@@ -1,14 +1,16 @@
 import React from 'react'
+import Navbar from './components/Navbar/Navbar'
 import { GlobalStyles, Wrapper } from './App.styled'
-import AppContextProvider from './ContextProviders/AppContextProvider'
 
 const App = () => {
   return (
-    <AppContextProvider>
+    <>
       <GlobalStyles />
 
-      <Wrapper>APP</Wrapper>
-    </AppContextProvider>
+      <Wrapper>
+        <Navbar /> APP
+      </Wrapper>
+    </>
   )
 }
 
