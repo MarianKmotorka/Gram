@@ -7,7 +7,7 @@ const App = () => {
     <AppContextProvider>
       <GlobalStyles />
 
-      <Wrapper>EMPTY APP</Wrapper>
+      <Wrapper>APP</Wrapper>
     </AppContextProvider>
   )
 }
