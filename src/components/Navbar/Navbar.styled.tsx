@@ -12,8 +12,8 @@ export const Wrapper = styled.nav`
   left: 0;
 
   padding: 0 70px;
-
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  background-color: ${({ theme }) => theme.bg};
 `
 
 export const Logo = styled(Link)`
