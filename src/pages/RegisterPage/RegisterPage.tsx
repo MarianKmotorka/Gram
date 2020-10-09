@@ -3,27 +3,27 @@ import { motion } from "framer-motion"
 import { RouteComponentProps } from "react-router-dom"
 
 import Input from "../../components/Input"
-
-import { StyledCard, StyledButton, Title } from "./LoginPage.styled"
 import { projectAuth } from "../../config/firebaseConfig"
+
+import { StyledCard, StyledButton, Title } from "./RegisterPage.styled"
 import MessageStripe from "../../components/MessageStripe"
 
-const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
+const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
-  const handleLogin = () => {
+  const handleRegister = () => {
     setError("")
     projectAuth
-      .signInWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email, password)
       .catch(err => setError(err.message))
   }
 
   return (
     <motion.div initial={{ scale: 0.2 }} animate={{ scale: 1 }}>
       <StyledCard bg='white'>
-        <Title>Login</Title>
+        <Title>Register</Title>
 
         {error && <MessageStripe textType='error' text={error} />}
 
@@ -31,7 +31,7 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           value={email}
           onChange={e => setEmail(e.target.value)}
           width='100%'
-          label='Username'
+          label='Email'
         />
 
         <Input
@@ -42,12 +42,12 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           label='Password'
         />
 
-        <StyledButton bg='red' onClick={handleLogin}>
-          Login
+        <StyledButton bg='red' onClick={handleRegister}>
+          Register
         </StyledButton>
       </StyledCard>
     </motion.div>
   )
 }
 
-export default LoginPage
+export default RegisterPage

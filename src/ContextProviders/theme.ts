@@ -1,27 +1,29 @@
-import { DefaultTheme } from 'styled-components'
+import { DefaultTheme } from "styled-components"
 
-declare module 'styled-components' {
+declare module "styled-components" {
   export interface DefaultTheme {
     primaryText: string
     secondaryText: string
     bg: string
 
-    orange: string
-    blue: string
+    red: string
+    lightBlue: string
     green: string
     white: string
+    lightPink: string
 
     [key: string]: string
   }
 }
 
 export const lightTheme: DefaultTheme = {
-  primaryText: '#000',
-  secondaryText: '#777',
-  bg: '#fefefe',
+  primaryText: "#000",
+  secondaryText: "#777",
+  bg: "#fefefe",
 
-  orange: '#ff1e00',
-  blue: '#e8f9fd',
-  green: '#59ce8f',
-  white: '#fff'
+  red: "#ff1e00",
+  lightBlue: "#e8f9fd",
+  green: "#59ce8f",
+  white: "#fff",
+  lightPink: "#ffebebc7",
 }

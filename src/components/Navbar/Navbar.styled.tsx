@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import { Link } from "react-router-dom"
+import styled from "styled-components"
 
 export const Wrapper = styled.nav`
   display: flex;
@@ -17,7 +17,7 @@ export const Wrapper = styled.nav`
 `
 
 export const Logo = styled(Link)`
-  color: ${({ theme }) => theme.orange};
+  color: ${({ theme }) => theme.red};
   margin-right: auto;
   font-size: 20px;
 `
@@ -27,6 +27,6 @@ export const StyledLink = styled(Link)`
   transition: color 0.2s;
 
   :hover {
-    color: ${({ theme }) => theme.orange};
+    color: ${({ theme }) => theme.red};
   }
 `

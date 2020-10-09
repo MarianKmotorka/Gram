@@ -1,5 +1,5 @@
-import React, { InputHTMLAttributes } from 'react'
-import styled from 'styled-components'
+import React, { InputHTMLAttributes } from "react"
+import styled from "styled-components"
 
 interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -9,7 +9,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
 const Wrapper = styled.div<{ width?: string }>`
   display: flex;
   flex-direction: column;
-  width: ${({ width }) => width || '300px'};
+  width: ${({ width }) => width || "300px"};
 `
 
 const Label = styled.label`

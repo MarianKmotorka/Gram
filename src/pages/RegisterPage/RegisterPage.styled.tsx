@@ -23,6 +23,6 @@ export const StyledButton = styled(Button)`
 `
 
 export const Title = styled.h2`
-  color: ${({ theme }) => theme.red};
+  color: ${({ theme }) => theme.black};
   margin-right: auto;
 `
