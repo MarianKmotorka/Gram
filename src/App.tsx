@@ -13,10 +13,8 @@ const App = () => {
   return (
     <>
       <GlobalStyles />
-
+      <Navbar />
       <Wrapper>
-        <Navbar />
-
         <Switch>
           <Route path='/login' component={LoginPage} />
           <Route path='/register' component={RegisterPage} />

@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
 import { RouteComponentProps } from 'react-router-dom'
 
 import Input from '../../components/Input'
 import { projectAuth, projectFirestore } from '../../config/firebaseConfig'
 
-import { StyledCard, StyledButton, Title } from './RegisterPage.styled'
+import { StyledCard, StyledButton, Title, Wrapper } from './RegisterPage.styled'
 import MessageStripe from '../../components/MessageStripe'
 
 const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
@@ -39,7 +38,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   }
 
   return (
-    <motion.div initial={{ scale: 0.2 }} animate={{ scale: 1 }}>
+    <Wrapper initial={{ scale: 0.2 }} animate={{ scale: 1 }}>
       <StyledCard bg='white'>
         <Title>Register</Title>
 
@@ -72,7 +71,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           Register
         </StyledButton>
       </StyledCard>
-    </motion.div>
+    </Wrapper>
   )
 }
 

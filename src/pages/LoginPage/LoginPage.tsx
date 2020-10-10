@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
 import { RouteComponentProps } from 'react-router-dom'
 
 import Input from '../../components/Input'
 
-import { StyledCard, StyledButton, Title } from './LoginPage.styled'
+import { StyledCard, StyledButton, Title, Wrapper } from './LoginPage.styled'
 import { projectAuth } from '../../config/firebaseConfig'
 import MessageStripe from '../../components/MessageStripe'
 
@@ -27,7 +26,7 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   }
 
   return (
-    <motion.div initial={{ scale: 0.2 }} animate={{ scale: 1 }}>
+    <Wrapper initial={{ scale: 0.2 }} animate={{ scale: 1 }}>
       <StyledCard bg='white'>
         <Title>Login</Title>
 
@@ -52,7 +51,7 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           Login
         </StyledButton>
       </StyledCard>
-    </motion.div>
+    </Wrapper>
   )
 }
 

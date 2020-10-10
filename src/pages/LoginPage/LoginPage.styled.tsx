@@ -1,12 +1,22 @@
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 import Button from '../../components/Button'
 import Card from '../../components/Card'
+
+export const Wrapper = styled(motion.div)`
+  position: relative;
+  height: 100%;
+`
 
 export const StyledCard = styled(Card)`
   width: 50%;
   max-width: 450px;
   min-width: 250px;
-  margin: 200px auto 0;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 
   display: flex;
   flex-direction: column;
