@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 export const Wrapper = styled.div`
   max-width: 1400px;
   margin: 50px auto 0 auto;
-  padding: 0 30px;
+  padding: 0 10px;
   height: 100%;
   position: relative;
 `

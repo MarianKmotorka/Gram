@@ -12,13 +12,18 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    setIsLoading(true)
     setError('')
-    projectAuth
+
+    await projectAuth
       .signInWithEmailAndPassword(email, password)
       .then(() => history.replace('/'))
       .catch(err => setError(err.message))
+
+    setIsLoading(false)
   }
 
   return (
@@ -43,7 +48,7 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           label='Password'
         />
 
-        <StyledButton bg='red' onClick={handleLogin}>
+        <StyledButton isLoading={isLoading} bg='red' onClick={handleLogin}>
           Login
         </StyledButton>
       </StyledCard>

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { RouteComponentProps } from 'react-router-dom'
 
 import Input from '../../components/Input'
-import { projectAuth } from '../../config/firebaseConfig'
+import { projectAuth, projectFirestore } from '../../config/firebaseConfig'
 
 import { StyledCard, StyledButton, Title } from './RegisterPage.styled'
 import MessageStripe from '../../components/MessageStripe'
@@ -13,18 +13,29 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleRegister = () => {
+  const createUserRecord = (user: firebase.User) =>
+    projectFirestore
+      .collection('users')
+      .doc(user.uid)
+      .set({ info: 'some additional info' })
+
+  const handleRegister = async () => {
     if (password !== confirmPassword) {
       setError("Passwords doesn't match.")
       return
     }
 
+    setIsLoading(true)
     setError('')
-    projectAuth
+    await projectAuth
       .createUserWithEmailAndPassword(email, password)
+      .then(creds => creds.user && createUserRecord(creds.user))
       .then(() => history.replace('/'))
       .catch(err => setError(err.message))
+
+    setIsLoading(false)
   }
 
   return (
@@ -57,7 +68,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           label='Confirm password'
         />
 
-        <StyledButton bg='red' onClick={handleRegister}>
+        <StyledButton bg='red' isLoading={isLoading} onClick={handleRegister}>
           Register
         </StyledButton>
       </StyledCard>

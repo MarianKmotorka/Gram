@@ -28,10 +28,7 @@ const useFirestore = <T>(
     setLoading(true)
     setError(undefined)
 
-    const unsub = projectFirestore
-      .collection(collectionName)
-      .orderBy('createdAt', 'desc')
-      .onSnapshot(onNext, onError)
+    const unsub = projectFirestore.collection(collectionName).onSnapshot(onNext, onError)
 
     return () => {
       unsub()
