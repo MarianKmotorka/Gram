@@ -1,22 +1,29 @@
-import React, { useState } from "react"
-import { motion } from "framer-motion"
-import { RouteComponentProps } from "react-router-dom"
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import { RouteComponentProps } from 'react-router-dom'
 
-import Input from "../../components/Input"
-import { projectAuth } from "../../config/firebaseConfig"
+import Input from '../../components/Input'
+import { projectAuth } from '../../config/firebaseConfig'
 
-import { StyledCard, StyledButton, Title } from "./RegisterPage.styled"
-import MessageStripe from "../../components/MessageStripe"
+import { StyledCard, StyledButton, Title } from './RegisterPage.styled'
+import MessageStripe from '../../components/MessageStripe'
 
 const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
 
   const handleRegister = () => {
-    setError("")
+    if (password !== confirmPassword) {
+      setError("Passwords doesn't match.")
+      return
+    }
+
+    setError('')
     projectAuth
       .createUserWithEmailAndPassword(email, password)
+      .then(() => history.replace('/'))
       .catch(err => setError(err.message))
   }
 
@@ -40,6 +47,14 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           type='password'
           width='100%'
           label='Password'
+        />
+
+        <Input
+          value={confirmPassword}
+          onChange={e => setConfirmPassword(e.target.value)}
+          type='password'
+          width='100%'
+          label='Confirm password'
         />
 
         <StyledButton bg='red' onClick={handleRegister}>

@@ -1,22 +1,23 @@
-import React, { useState } from "react"
-import { motion } from "framer-motion"
-import { RouteComponentProps } from "react-router-dom"
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import { RouteComponentProps } from 'react-router-dom'
 
-import Input from "../../components/Input"
+import Input from '../../components/Input'
 
-import { StyledCard, StyledButton, Title } from "./LoginPage.styled"
-import { projectAuth } from "../../config/firebaseConfig"
-import MessageStripe from "../../components/MessageStripe"
+import { StyledCard, StyledButton, Title } from './LoginPage.styled'
+import { projectAuth } from '../../config/firebaseConfig'
+import MessageStripe from '../../components/MessageStripe'
 
 const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
   const handleLogin = () => {
-    setError("")
+    setError('')
     projectAuth
       .signInWithEmailAndPassword(email, password)
+      .then(() => history.replace('/'))
       .catch(err => setError(err.message))
   }
 
@@ -31,7 +32,7 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           value={email}
           onChange={e => setEmail(e.target.value)}
           width='100%'
-          label='Username'
+          label='Email'
         />
 
         <Input

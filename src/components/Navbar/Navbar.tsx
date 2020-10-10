@@ -1,16 +1,21 @@
-import React from "react";
+import React from 'react'
+import { useAuthContext } from '../../ContextProviders/AuthProvider'
 
-import { Logo, StyledLink, Wrapper } from "./Navbar.styled";
+import { Logo, StyledLink, Wrapper } from './Navbar.styled'
 
 const Navbar = () => {
+  const { isLoggedIn } = useAuthContext()
+
   return (
     <Wrapper>
-      <Logo to="/">Gram</Logo>
-      <StyledLink to="/login">Login</StyledLink>
-      <StyledLink to="/register">Register</StyledLink>
-      <StyledLink to="/signout">Sign out</StyledLink>
-    </Wrapper>
-  );
-};
+      <Logo to='/'>Gram</Logo>
 
-export default Navbar;
+      {!isLoggedIn && <StyledLink to='/login'>Login</StyledLink>}
+      {!isLoggedIn && <StyledLink to='/register'>Register</StyledLink>}
+
+      {isLoggedIn && <StyledLink to='/signout'>Sign out</StyledLink>}
+    </Wrapper>
+  )
+}
+
+export default Navbar

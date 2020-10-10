@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   margin: 50px auto 0 auto;
   padding: 0 30px;
   height: 100%;
+  position: relative;
 `
 
 export const GlobalStyles = createGlobalStyle`
