@@ -1,11 +1,15 @@
 import styled, { createGlobalStyle } from 'styled-components'
 
-export const Wrapper = styled.div`
+export const CenteredContainer = styled.div`
   max-width: 1400px;
-  margin: 50px auto 0 auto;
+  margin: 0 auto;
   padding: 0 10px;
   height: 100%;
-  position: relative;
+`
+
+export const AppContent = styled.div`
+  height: calc(100% - 50px);
+  overflow: auto;
 `
 
 export const GlobalStyles = createGlobalStyle`
@@ -26,8 +30,6 @@ export const GlobalStyles = createGlobalStyle`
     border-radius: 5px;
   }
 
-  html,
-  body,
   body > div {
    height: 100vh;
    overflow: auto;

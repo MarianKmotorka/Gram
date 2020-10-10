@@ -7,23 +7,31 @@ import HomePage from './pages/HomePage/HomePage'
 import LoginPage from './pages/LoginPage/LoginPage'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
 
-import { GlobalStyles, Wrapper } from './App.styled'
+import { AppContent, GlobalStyles, CenteredContainer } from './App.styled'
 
 const App = () => {
   return (
     <>
       <GlobalStyles />
+
       <Navbar />
-      <Wrapper>
-        <Switch>
-          <Route path='/login' component={LoginPage} />
-          <Route path='/register' component={RegisterPage} />
-          <Route path='/signout' component={Signout} />
-          <Route path='/' component={HomePage} /> // TODO PROTECTED ROUTE
-        </Switch>
-      </Wrapper>
+
+      <AppContent>
+        <CenteredContainer>
+          <Switch>
+            <Route path='/login' component={LoginPage} />
+            <Route path='/register' component={RegisterPage} />
+            <Route path='/signout' component={Signout} />
+            <Route path='/' component={HomePage} /> // TODO PROTECTED ROUTE
+          </Switch>
+        </CenteredContainer>
+      </AppContent>
     </>
   )
 }
+
+/*
+
+*/
 
 export default App
