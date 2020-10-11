@@ -19,7 +19,7 @@ export const Logo = styled(Link)`
 `
 
 export const StyledLink = styled(Link)`
-  margin: 0 10px;
+  margin: 0 20px;
   transition: color 0.2s;
 
   :hover {

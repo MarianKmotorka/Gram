@@ -1,10 +1,13 @@
 import styled, { createGlobalStyle } from 'styled-components'
 
 export const CenteredContainer = styled.div`
-  max-width: 1400px;
+  max-width: 60%;
   margin: 0 auto;
-  padding: 0 10px;
   height: 100%;
+
+  @media only screen and (max-width: 600px) {
+    max-width: 90%;
+  }
 `
 
 export const AppContent = styled.div`

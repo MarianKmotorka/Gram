@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import Input from '../../components/Input'
 import { projectAuth } from '../../config/firebaseConfig'
 import MessageStripe from '../../components/MessageStripe'
-import { useAuthContext } from '../../ContextProviders/AuthProvider'
+import { useAuthContext } from '../../contextProviders/AuthProvider'
 
 import { StyledCard, StyledButton, Title, Wrapper } from './LoginPage.styled'
 
