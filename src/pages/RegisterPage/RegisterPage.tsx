@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
 import Input from '../../components/Input'
+import MessageStripe from '../../components/MessageStripe'
+import { useAuthContext } from '../../ContextProviders/AuthProvider'
 import { projectAuth, projectFirestore } from '../../config/firebaseConfig'
 
 import { StyledCard, StyledButton, Title, Wrapper } from './RegisterPage.styled'
-import MessageStripe from '../../components/MessageStripe'
 
 const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [email, setEmail] = useState('')
@@ -13,6 +14,12 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const { isLoggedIn } = useAuthContext()
+
+  if (isLoggedIn) {
+    history.replace('/')
+    return <></>
+  }
 
   const createUserRecord = (user: firebase.User) =>
     projectFirestore
