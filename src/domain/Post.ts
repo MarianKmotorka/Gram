@@ -1,4 +1,6 @@
 export interface IPost {
-  url: string // TODO rename to imageURl
+  id: string
+  imageUrl: string
+  userId: string
   createdAt: Date
 }

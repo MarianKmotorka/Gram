@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react'
 import { projectFirestore } from '../config/firebaseConfig'
 
+/**
+ *
+ * @param getQuery Function that returns a query, that will be run against firebase - needs to be wrappen in useCallback
+ * @param startFetching Starts fetching only if set to true
+ */
 const useFirestore = <T>(
-  collectionName: string
+  getQuery: (
+    query: firebase.firestore.Firestore
+  ) => firebase.firestore.Query<firebase.firestore.DocumentData>,
+  startFetching: boolean = true
 ): [T[], boolean, firebase.firestore.FirestoreError | undefined] => {
   const [docs, setDocs] = useState<Array<T>>([])
   const [loading, setLoading] = useState(true)
@@ -25,16 +33,17 @@ const useFirestore = <T>(
   }
 
   useEffect(() => {
+    if (!startFetching) return
+
     setLoading(true)
     setError(undefined)
-
-    const unsub = projectFirestore.collection(collectionName).onSnapshot(onNext, onError)
+    const unsub = getQuery(projectFirestore).onSnapshot(onNext, onError)
 
     return () => {
       unsub()
       setLoading(false)
     }
-  }, [collectionName])
+  }, [getQuery, startFetching])
 
   return [docs, loading, error]
 }

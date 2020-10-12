@@ -29,7 +29,7 @@ const StyledButton = styled.button<{ bg?: string }>`
 
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean
-  bg: string
+  bg?: string
 }
 
 const Button: React.FC<IProps> = ({ children, isLoading, ...rest }) => {
