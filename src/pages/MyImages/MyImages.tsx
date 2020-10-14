@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react'
+import Backdrop from '../../components/Backdrop'
 
 import LoadingOverlay from '../../components/LoadingOverlay'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
@@ -10,6 +11,7 @@ import { Image, Wrapper, Grid, UploadFileBtn, FileInput } from './MyImages.style
 
 const MyImages = () => {
   const [file, setFile] = useState<File | null>()
+  const [imageDetail, setImageDetail] = useState<IPost>()
   const { progress } = useStorage(file)
   const { user } = useAuthContext()
   const [posts, loading, error] = useFirestore<IPost>(
@@ -32,6 +34,12 @@ const MyImages = () => {
 
   return (
     <Wrapper>
+      {imageDetail && (
+        <Backdrop onClose={() => setImageDetail(undefined)}>
+          <Image src={imageDetail.imageUrl} />
+        </Backdrop>
+      )}
+
       <p>Progress: {progress}</p>
       {error && <pre>{JSON.stringify(error, null, 2)}</pre>}
 
@@ -48,7 +56,13 @@ const MyImages = () => {
 
       <Grid>
         {posts.map(x => (
-          <Image key={x.id} src={x.imageUrl} layout />
+          <Image
+            key={x.id}
+            src={x.imageUrl}
+            onClick={() => setImageDetail(x)}
+            layout
+            whileHover={{ scale: 1.1 }}
+          />
         ))}
       </Grid>
     </Wrapper>
