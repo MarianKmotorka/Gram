@@ -13,7 +13,14 @@ const MyImages = () => {
   const { progress } = useStorage(file)
   const { user } = useAuthContext()
   const [posts, loading, error] = useFirestore<IPost>(
-    useCallback(x => x.collection('posts').where('userId', '==', user?.uid), [user]) // order it somehow
+    useCallback(
+      x =>
+        x
+          .collection('posts')
+          .where('userId', '==', user?.uid)
+          .orderBy('createdAt', 'desc'),
+      [user]
+    )
   )
 
   if (loading)

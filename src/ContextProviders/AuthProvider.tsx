@@ -2,12 +2,13 @@ import React, { createContext, useState, useEffect, useContext } from 'react'
 import LoadingOverlay from '../components/LoadingOverlay'
 import { projectAuth } from '../config/firebaseConfig'
 
-interface IAuthContext {
+interface IAuthContextValue {
   isLoggedIn: boolean
   user: firebase.User | null
+  projectAuth: firebase.auth.Auth
 }
 
-const AuthContext = createContext<IAuthContext>(undefined!)
+const AuthContext = createContext<IAuthContextValue>(undefined!)
 export const useAuthContext = () => useContext(AuthContext)
 
 const AuthProvider: React.FC = ({ children }) => {
@@ -24,11 +25,13 @@ const AuthProvider: React.FC = ({ children }) => {
 
   if (loading) return <LoadingOverlay />
 
-  return (
-    <AuthContext.Provider value={{ isLoggedIn: !!user, user }}>
-      {children}
-    </AuthContext.Provider>
-  )
+  const value = {
+    isLoggedIn: !!user,
+    user,
+    projectAuth,
+  }
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 export default AuthProvider

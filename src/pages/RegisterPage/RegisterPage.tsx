@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import Input from '../../components/Input'
 import MessageStripe from '../../components/MessageStripe'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
-import { projectAuth, projectFirestore } from '../../config/firebaseConfig'
+import { projectFirestore } from '../../config/firebaseConfig'
 
 import { StyledCard, StyledButton, Title, Wrapper } from './RegisterPage.styled'
 
@@ -14,7 +14,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { isLoggedIn } = useAuthContext()
+  const { isLoggedIn, projectAuth } = useAuthContext()
 
   if (isLoggedIn) {
     history.replace('/')

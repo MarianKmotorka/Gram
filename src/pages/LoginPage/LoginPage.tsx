@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
 import Input from '../../components/Input'
-import { projectAuth } from '../../config/firebaseConfig'
 import MessageStripe from '../../components/MessageStripe'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 
@@ -13,7 +12,7 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { isLoggedIn } = useAuthContext()
+  const { isLoggedIn, projectAuth } = useAuthContext()
 
   if (isLoggedIn) {
     history.replace('/')
