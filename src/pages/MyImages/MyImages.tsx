@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react'
-import Backdrop from '../../components/Backdrop'
 
 import LoadingOverlay from '../../components/LoadingOverlay'
+import Post from '../../components/Post/Post'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 import { IPost } from '../../domain/Post'
 import useFirestore from '../../hooks/useFirestore'
@@ -11,7 +11,7 @@ import { Image, Wrapper, Grid, UploadFileBtn, FileInput } from './MyImages.style
 
 const MyImages = () => {
   const [file, setFile] = useState<File | null>()
-  const [imageDetail, setImageDetail] = useState<IPost>()
+  const [selectedPost, setSelectedPost] = useState<IPost>()
   const { progress } = useStorage(file)
   const { user } = useAuthContext()
   const [posts, loading, error] = useFirestore<IPost>(
@@ -34,10 +34,8 @@ const MyImages = () => {
 
   return (
     <Wrapper>
-      {imageDetail && (
-        <Backdrop onClose={() => setImageDetail(undefined)}>
-          <Image src={imageDetail.imageUrl} />
-        </Backdrop>
+      {selectedPost && (
+        <Post post={selectedPost} onClose={() => setSelectedPost(undefined)} />
       )}
 
       <p>Progress: {progress}</p>
@@ -48,6 +46,7 @@ const MyImages = () => {
           type='file'
           accept='image/*'
           onChange={({ target }) => setFile(target.files && target.files[0])}
+          disabled={!!file && progress < 100}
         />
         <UploadFileBtn>
           <i className='fas fa-plus'></i>
@@ -59,7 +58,7 @@ const MyImages = () => {
           <Image
             key={x.id}
             src={x.imageUrl}
-            onClick={() => setImageDetail(x)}
+            onClick={() => setSelectedPost(x)}
             layout
             whileHover={{ scale: 1.1 }}
           />

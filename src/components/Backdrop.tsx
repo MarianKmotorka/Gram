@@ -7,13 +7,12 @@ const Wrapper = styled(motion.div)`
   height: 100vh;
   width: 100vw;
   position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  place-items: center;
   background-color: rgba(0, 0, 0, 0.3);
 `
 
-interface IBackdropProps {
+export interface IBackdropProps {
   onClose?: () => any
 }
 

@@ -6,17 +6,14 @@ import Card from '../../components/Card'
 export const Wrapper = styled(motion.div)`
   position: relative;
   height: 100%;
+  display: grid;
+  place-items: center;
 `
 
 export const StyledCard = styled(Card)`
   width: 50%;
   max-width: 450px;
   min-width: 250px;
-
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 
   display: flex;
   flex-direction: column;

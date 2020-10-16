@@ -34,7 +34,7 @@ interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: React.FC<IProps> = ({ children, isLoading, ...rest }) => {
   return (
-    <StyledButton {...rest}>
+    <StyledButton {...rest} disabled={isLoading}>
       {isLoading ? <i className='fas fa-circle-notch fa-spin'></i> : children}
     </StyledButton>
   )
