@@ -1,10 +1,12 @@
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(motion.div)`
   box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.6);
   border-radius: 25px;
   background-color: ${({ theme }) => theme.bg};
-  max-height: 80vh;
+  max-height: 95vh;
+  overflow: auto;
 `
 
 export const Header = styled.header`
@@ -14,7 +16,7 @@ export const Header = styled.header`
 `
 
 export const Image = styled.img`
-  max-height: 100%;
+  max-height: 80vh;
 `
 
 export const Footer = styled.footer`

@@ -12,7 +12,7 @@ interface IPostProps {
 const Post: React.FC<IPostProps> = ({ post, onClose }) => {
   return (
     <Backdrop onClose={onClose}>
-      <Wrapper>
+      <Wrapper initial={{ y: '50vh' }} animate={{ y: 0 }}>
         <Header>Some title text :)))</Header>
         <Image src={post.imageUrl} />
         <Footer>Some footer text</Footer>
