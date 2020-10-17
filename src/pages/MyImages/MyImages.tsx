@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 
 import LoadingOverlay from '../../components/LoadingOverlay'
 import Post from '../../components/Post/Post'
+import { projectFirestore, projectStorage } from '../../config/firebaseConfig'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 import { IPost } from '../../domain/Post'
 import useFirestore from '../../hooks/useFirestore'
@@ -32,10 +33,24 @@ const MyImages = () => {
       </Wrapper>
     )
 
+  const handlePostDeleted = async (post: IPost) => {
+    try {
+      await projectFirestore.collection('posts').doc(post.id).delete()
+      await projectStorage.refFromURL(post.imageUrl).delete()
+      setSelectedPost(undefined)
+    } catch (err) {
+      console.log(err.response)
+    }
+  }
+
   return (
     <Wrapper>
       {selectedPost && (
-        <Post post={selectedPost} onClose={() => setSelectedPost(undefined)} />
+        <Post
+          post={selectedPost}
+          onClose={() => setSelectedPost(undefined)}
+          onDelete={handlePostDeleted}
+        />
       )}
 
       <p>Progress: {progress}</p>
