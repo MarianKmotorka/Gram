@@ -11,7 +11,7 @@ const useStorage = (file: File | null | undefined) => {
   useEffect(() => {
     if (!file) return
 
-    const storageRef = projectStorage.ref(file.name)
+    const storageRef = projectStorage.ref(file.name + user?.uid + Date.now().toString())
     const collectionRef = projectFirestore.collection('posts')
 
     const unsub = storageRef.put(file).on(
