@@ -20,27 +20,3 @@ export const Image = styled(motion.img)`
   object-fit: cover;
   cursor: pointer;
 `
-
-export const UploadFileBtn = styled.span`
-  background-color: ${({ theme }) => theme.red};
-  height: 35px;
-  width: 35px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  i {
-    transition: color 0.2s;
-    color: ${({ theme }) => theme.white};
-  }
-
-  :hover i {
-    color: ${({ theme }) => theme.lightPink};
-  }
-`
-
-export const FileInput = styled.input`
-  display: none;
-`

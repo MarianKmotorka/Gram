@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
-import Button from '../../components/Button'
+import Button from '../../components/Button/Button'
 import Card from '../../components/Card'
 
 export const Wrapper = styled(motion.div)`

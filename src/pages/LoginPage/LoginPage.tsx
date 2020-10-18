@@ -38,22 +38,17 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
 
         {error && <MessageStripe textType='error' text={error} />}
 
-        <Input
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          width='100%'
-          label='Email'
-        />
+        <Input value={email} onChange={setEmail} width='100%' label='Email' />
 
         <Input
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={setPassword}
           type='password'
           width='100%'
           label='Password'
         />
 
-        <StyledButton isLoading={isLoading} bg='red' onClick={handleLogin}>
+        <StyledButton isLoading={isLoading} onClick={handleLogin}>
           Login
         </StyledButton>
       </StyledCard>

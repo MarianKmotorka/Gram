@@ -51,16 +51,11 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
 
         {error && <MessageStripe textType='error' text={error} />}
 
-        <Input
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          width='100%'
-          label='Email'
-        />
+        <Input value={email} onChange={setEmail} width='100%' label='Email' />
 
         <Input
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={setPassword}
           type='password'
           width='100%'
           label='Password'
@@ -68,13 +63,13 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
 
         <Input
           value={confirmPassword}
-          onChange={e => setConfirmPassword(e.target.value)}
+          onChange={setConfirmPassword}
           type='password'
           width='100%'
           label='Confirm password'
         />
 
-        <StyledButton bg='red' isLoading={isLoading} onClick={handleRegister}>
+        <StyledButton isLoading={isLoading} onClick={handleRegister}>
           Register
         </StyledButton>
       </StyledCard>

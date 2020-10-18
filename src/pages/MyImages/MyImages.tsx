@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react'
+import Button from '../../components/Button/Button'
 
 import LoadingOverlay from '../../components/LoadingOverlay'
 import Post from '../../components/Post/Post'
@@ -6,14 +7,13 @@ import { projectFirestore, projectStorage } from '../../config/firebaseConfig'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 import { IPost } from '../../domain/Post'
 import useFirestore from '../../hooks/useFirestore'
-import useStorage from '../../hooks/useStorage'
+import CreatePostForm from './CreatePostForm/CreatePostForm'
 
-import { Image, Wrapper, Grid, UploadFileBtn, FileInput } from './MyImages.styled'
+import { Image, Wrapper, Grid } from './MyImages.styled'
 
 const MyImages = () => {
-  const [file, setFile] = useState<File | null>()
   const [selectedPost, setSelectedPost] = useState<IPost>()
-  const { progress } = useStorage(file)
+  const [showCreatePostForm, setShowCreatePostForm] = useState(false)
   const { user } = useAuthContext()
   const [posts, loading, error] = useFirestore<IPost>(
     useCallback(
@@ -53,20 +53,11 @@ const MyImages = () => {
         />
       )}
 
-      <p>Progress: {progress}</p>
-      {error && <pre>{JSON.stringify(error, null, 2)}</pre>}
+      {showCreatePostForm && (
+        <CreatePostForm onClose={() => setShowCreatePostForm(false)} />
+      )}
 
-      <label>
-        <FileInput
-          type='file'
-          accept='image/*'
-          onChange={({ target }) => setFile(target.files && target.files[0])}
-          disabled={!!file && progress < 100}
-        />
-        <UploadFileBtn>
-          <i className='fas fa-plus'></i>
-        </UploadFileBtn>
-      </label>
+      <Button onClick={() => setShowCreatePostForm(true)}>New post</Button>
 
       <Grid>
         {posts.map(x => (

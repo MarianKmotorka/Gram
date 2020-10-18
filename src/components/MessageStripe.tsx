@@ -1,7 +1,7 @@
-import React from "react"
-import styled from "styled-components"
+import React from 'react'
+import styled from 'styled-components'
 
-type textType = "info" | "error"
+type textType = 'info' | 'error'
 
 interface IProps {
   textType?: textType
@@ -9,6 +9,7 @@ interface IProps {
 }
 
 const Wrapper = styled.div<{ color: string; bg: string }>`
+  margin: 10px 0;
   padding: 10px 20px;
   background: ${({ theme, bg }) => theme[bg]};
   border-radius: 10px;
@@ -20,15 +21,15 @@ const Wrapper = styled.div<{ color: string; bg: string }>`
   }
 `
 
-const MessageStripe: React.FC<IProps> = ({ textType = "info", text }) => {
-  let bg = "lightBlue"
-  let color = "black"
-  let icon = "fas fa-info-circle"
+const MessageStripe: React.FC<IProps> = ({ textType = 'info', text }) => {
+  let bg = 'lightBlue'
+  let color = 'black'
+  let icon = 'fas fa-info-circle'
 
-  if (textType === "error") {
-    bg = "lightPink"
-    color = "red"
-    icon = "fas fa-exclamation-circle"
+  if (textType === 'error') {
+    bg = 'lightPink'
+    color = 'red'
+    icon = 'fas fa-exclamation-circle'
   }
 
   return (

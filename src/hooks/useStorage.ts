@@ -1,33 +1,27 @@
 import { useState, useEffect } from 'react'
-import { projectStorage, projectFirestore, getTimestamp } from '../config/firebaseConfig'
+import { projectStorage } from '../config/firebaseConfig'
 import { useAuthContext } from '../contextProviders/AuthProvider'
 
-const useStorage = (file: File | null | undefined) => {
+const useStorage = (file?: File | null, startUpload: boolean = true) => {
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState<Error | null>(null)
   const [url, setUrl] = useState<string | null>(null)
   const { user } = useAuthContext()
 
   useEffect(() => {
-    if (!file) return
+    if (!file || !startUpload) return
 
     const storageRef = projectStorage.ref(file.name + user?.uid + Date.now().toString())
-    const collectionRef = projectFirestore.collection('posts')
 
     const unsub = storageRef.put(file).on(
       'state_changed',
       snap => setProgress((snap.bytesTransferred / snap.totalBytes) * 100),
       err => setError(err),
-      async () => {
-        const imageUrl = await storageRef.getDownloadURL()
-        const createdAt = getTimestamp()
-        await collectionRef.add({ imageUrl, createdAt, userId: user?.uid }) // create rule for uid cannot be null
-        setUrl(imageUrl)
-      }
+      async () => setUrl(await storageRef.getDownloadURL())
     )
 
     return () => unsub()
-  }, [file, user])
+  }, [file, user, startUpload])
 
   return { progress, url, error }
 }
