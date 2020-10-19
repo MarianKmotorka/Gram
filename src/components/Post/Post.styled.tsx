@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
+import { lightenColor } from '../../utils/utils'
 
 export const Wrapper = styled(motion.div)`
   box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.6);
@@ -35,4 +36,24 @@ export const ActionBar = styled.footer`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+`
+
+export const Description = styled(motion.p)<{ width: number }>`
+  font-weight: 200;
+  padding: 15px 25px;
+  max-width: ${({ width }) => width + 'px'};
+  background: ${({ theme }) => lightenColor(theme.green, 0.3)};
+`
+
+export const ShowMore = styled.p`
+  text-decoration: underline;
+  overflow: hidden;
+  cursor: pointer;
+  :hover {
+    font-weight: 400;
+  }
+
+  ::after {
+    content: ' ->';
+  }
 `

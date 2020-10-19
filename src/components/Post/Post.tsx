@@ -1,10 +1,11 @@
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import useDimensions from 'react-cool-dimensions'
 import { IPost } from '../../domain/Post'
 import Backdrop, { IBackdropProps } from '../Backdrop'
 import Button from '../Button/Button'
 
-import { ActionBar, Header, Image, Wrapper } from './Post.styled'
+import { ActionBar, Description, Header, Image, ShowMore, Wrapper } from './Post.styled'
 
 interface IPostProps {
   post: IPost
@@ -13,7 +14,11 @@ interface IPostProps {
 }
 
 const Post: React.FC<IPostProps> = ({ post, onClose, onDelete }) => {
+  const [showDescription, setShowDescription] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false)
+  const imageRef = useRef<HTMLImageElement>(null)
+  const { width } = useDimensions<HTMLImageElement>({ ref: imageRef })
+
   const createdAt = moment(post.createdAt.toDate()).format('MMMM Do YYYY')
 
   const handleDelete = async () => {
@@ -27,10 +32,23 @@ const Post: React.FC<IPostProps> = ({ post, onClose, onDelete }) => {
         <Header>
           <h3>{post.title}</h3>
           <p>{createdAt}</p>
+
+          {post.description && (
+            <ShowMore onClick={() => setShowDescription(x => !x)}>
+              {showDescription ? 'show less' : 'show more'}
+            </ShowMore>
+          )}
+
           <Button buttonType='action' onClick={onClose} iconName='fas fa-times' />
         </Header>
 
-        <Image src={post.imageUrl} />
+        {showDescription && (
+          <Description initial={{ height: 0 }} animate={{ height: 'auto' }} width={width}>
+            {post.description}
+          </Description>
+        )}
+
+        <Image src={post.imageUrl} ref={imageRef} />
 
         <ActionBar>
           <Button buttonType='action' iconName='far fa-heart' />
