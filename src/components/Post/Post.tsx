@@ -1,11 +1,23 @@
 import moment from 'moment'
 import React, { useRef, useState } from 'react'
 import useDimensions from 'react-cool-dimensions'
-import { IPost } from '../../domain/Post'
+import { IPost } from '../../domain/IPost'
 import Backdrop, { IBackdropProps } from '../Backdrop'
 import Button from '../Button/Button'
 
-import { ActionBar, Description, Header, Image, ShowMore, Wrapper } from './Post.styled'
+import noPhotoPng from '../../images/no-photo.png'
+import {
+  ActionBar,
+  AuthorContainer,
+  AuthorNick,
+  AuthorPicture,
+  CreatedAt,
+  Description,
+  Header,
+  Image,
+  ShowMore,
+  Wrapper,
+} from './Post.styled'
 
 interface IPostProps {
   post: IPost
@@ -30,8 +42,11 @@ const Post: React.FC<IPostProps> = ({ post, onClose, onDelete }) => {
     <Backdrop onClose={onClose}>
       <Wrapper initial={{ y: '50vh' }} animate={{ y: 0 }}>
         <Header>
-          <h3>{post.title}</h3>
-          <p>{createdAt}</p>
+          <h2>{post.title}</h2>
+          <CreatedAt>
+            <i className='far fa-clock'></i>
+            {createdAt}
+          </CreatedAt>
 
           {post.description && (
             <ShowMore onClick={() => setShowDescription(x => !x)}>
@@ -51,6 +66,11 @@ const Post: React.FC<IPostProps> = ({ post, onClose, onDelete }) => {
         <Image src={post.imageUrl} ref={imageRef} />
 
         <ActionBar>
+          <AuthorContainer>
+            <AuthorPicture src={post.userPhotoUrl || noPhotoPng} />
+            <AuthorNick>{post.userNick}</AuthorNick>
+          </AuthorContainer>
+
           <Button buttonType='action' iconName='far fa-heart' />
           <Button buttonType='action' iconName='fas fa-comment-dots' />
           <Button

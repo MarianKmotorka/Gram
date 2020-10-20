@@ -5,7 +5,7 @@ import LoadingOverlay from '../../components/LoadingOverlay'
 import Post from '../../components/Post/Post'
 import { projectFirestore, projectStorage } from '../../config/firebaseConfig'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
-import { IPost } from '../../domain/Post'
+import { IPost } from '../../domain/IPost'
 import useFirestore from '../../hooks/useFirestore'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
 
@@ -15,7 +15,7 @@ const MyImages = () => {
   const [selectedPost, setSelectedPost] = useState<IPost>()
   const [showCreatePostForm, setShowCreatePostForm] = useState(false)
   const { user } = useAuthContext()
-  const [posts, loading, error] = useFirestore<IPost>(
+  const [posts, loading] = useFirestore<IPost>(
     useCallback(
       x =>
         x

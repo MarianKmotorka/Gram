@@ -5,7 +5,7 @@ export const CenteredContainer = styled.div`
   margin: 0 auto;
   height: 100%;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 700px) {
     max-width: 90%;
   }
 `

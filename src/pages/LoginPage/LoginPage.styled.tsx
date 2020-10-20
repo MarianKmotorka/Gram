@@ -11,9 +11,8 @@ export const Wrapper = styled(motion.div)`
 `
 
 export const StyledCard = styled(Card)`
-  width: 50%;
-  max-width: 450px;
-  min-width: 250px;
+  width: 100%;
+  max-width: 600px;
 
   display: flex;
   flex-direction: column;

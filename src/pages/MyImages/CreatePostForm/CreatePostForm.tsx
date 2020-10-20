@@ -5,7 +5,7 @@ import MessageStripe from '../../../components/MessageStripe'
 import { Padding } from '../../../components/UtilityComponents'
 import { getTimestamp, projectFirestore } from '../../../config/firebaseConfig'
 import { useAuthContext } from '../../../contextProviders/AuthProvider'
-import { IPost } from '../../../domain/Post'
+import { IPost } from '../../../domain/IPost'
 import useStorage from '../../../hooks/useStorage'
 
 import {
@@ -37,6 +37,8 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ onClose }) => {
       const newPost: Omit<IPost, 'id'> = {
         createdAt: getTimestamp() as firebase.firestore.Timestamp,
         userId: user.uid,
+        userNick: user.nick,
+        userPhotoUrl: user.photoURL,
         imageUrl: url,
         title,
         description,

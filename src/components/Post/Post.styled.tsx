@@ -39,7 +39,7 @@ export const ActionBar = styled.footer`
 `
 
 export const Description = styled(motion.p)<{ width: number }>`
-  font-weight: 200;
+  font-weight: 300;
   padding: 15px 25px;
   max-width: ${({ width }) => width + 'px'};
   background: ${({ theme }) => lightenColor(theme.green, 0.3)};
@@ -55,5 +55,35 @@ export const ShowMore = styled.p`
 
   ::after {
     content: ' ->';
+  }
+`
+
+export const AuthorContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  > * + * {
+    margin-left: 7px;
+  }
+`
+
+export const AuthorPicture = styled.img`
+  height: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid ${({ theme }) => theme.green};
+`
+
+export const AuthorNick = styled.p`
+  font-weight: 700;
+  :first-letter {
+    color: ${({ theme }) => theme.green};
+  }
+`
+
+export const CreatedAt = styled.p`
+  i {
+    margin-right: 5px;
   }
 `
