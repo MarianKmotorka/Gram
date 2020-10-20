@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Routes from './components/Routes'
+import Routes from './components/Routes/Routes'
 import Navbar from './components/Navbar/Navbar'
 
 import { AppContent, GlobalStyles, CenteredContainer } from './App.styled'

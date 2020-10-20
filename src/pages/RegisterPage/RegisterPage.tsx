@@ -4,40 +4,42 @@ import { RouteComponentProps } from 'react-router-dom'
 import Input from '../../components/Input'
 import MessageStripe from '../../components/MessageStripe'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
-import { projectFirestore } from '../../config/firebaseConfig'
+import { getTimestamp, projectFirestore } from '../../config/firebaseConfig'
+import { validate } from './validator'
 
 import { StyledCard, StyledButton, Title, Wrapper } from './RegisterPage.styled'
 
 const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [email, setEmail] = useState('')
+  const [nick, setNick] = useState('@')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { isLoggedIn, projectAuth } = useAuthContext()
+  const { projectAuth } = useAuthContext()
 
-  if (isLoggedIn) {
-    history.replace('/')
-    return <></>
+  function prependNickWithAt(value: string) {
+    if (!value || value[0] !== '@') return setNick('@' + value)
+    return setNick(value)
   }
 
-  const createUserRecord = (user: firebase.User) =>
-    projectFirestore
-      .collection('users')
-      .doc(user.uid)
-      .set({ info: 'some additional info' })
-
-  const handleRegister = async () => {
-    if (password !== confirmPassword) {
-      setError("Passwords doesn't match.")
-      return
-    }
-
+  async function handleRegister() {
     setIsLoading(true)
-    setError('')
+
+    const validationResult = await validate({ nick, email, password, confirmPassword })
+    setError(validationResult.error || '')
+    if (!validationResult.success) return setIsLoading(false)
+
     await projectAuth
       .createUserWithEmailAndPassword(email, password)
-      .then(creds => creds.user && createUserRecord(creds.user))
+      .then(
+        ({ user }) =>
+          user &&
+          projectFirestore
+            .collection('users')
+            .doc(user.uid)
+            .set({ nick, createdAt: getTimestamp() })
+      )
       .then(() => history.replace('/'))
       .catch(err => setError(err.message))
 
@@ -51,8 +53,8 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
 
         {error && <MessageStripe textType='error' text={error} />}
 
+        <Input value={nick} onChange={prependNickWithAt} width='100%' label='Nick' />
         <Input value={email} onChange={setEmail} width='100%' label='Email' />
-
         <Input
           value={password}
           onChange={setPassword}
@@ -60,7 +62,6 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           width='100%'
           label='Password'
         />
-
         <Input
           value={confirmPassword}
           onChange={setConfirmPassword}

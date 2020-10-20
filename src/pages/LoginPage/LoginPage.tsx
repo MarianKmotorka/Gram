@@ -12,12 +12,7 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { isLoggedIn, projectAuth } = useAuthContext()
-
-  if (isLoggedIn) {
-    history.replace('/')
-    return <></>
-  }
+  const { projectAuth } = useAuthContext()
 
   const handleLogin = async () => {
     setIsLoading(true)
