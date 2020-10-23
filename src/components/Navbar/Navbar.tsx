@@ -4,7 +4,7 @@ import { useAuthContext } from '../../contextProviders/AuthProvider'
 import { Logo, StyledLink, Wrapper } from './Navbar.styled'
 
 const Navbar = () => {
-  const { isLoggedIn } = useAuthContext()
+  const { isLoggedIn, user } = useAuthContext()
 
   return (
     <Wrapper>
@@ -13,7 +13,7 @@ const Navbar = () => {
       {!isLoggedIn && <StyledLink to='/login'>Login</StyledLink>}
       {!isLoggedIn && <StyledLink to='/register'>Register</StyledLink>}
 
-      {isLoggedIn && <StyledLink to='/my-images'>My images</StyledLink>}
+      {isLoggedIn && <StyledLink to={`/profile/${user!.uid}`}>Profile</StyledLink>}
       {isLoggedIn && <StyledLink to='/signout'>Sign out</StyledLink>}
     </Wrapper>
   )

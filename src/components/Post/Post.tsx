@@ -21,11 +21,12 @@ import {
 
 interface IPostProps {
   post: IPost
+  canDelete: boolean
   onDelete: (post: IPost) => Promise<void>
   onClose: Required<IBackdropProps>['onClose']
 }
 
-const Post: React.FC<IPostProps> = ({ post, onClose, onDelete }) => {
+const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
   const [showDescription, setShowDescription] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false)
   const imageRef = useRef<HTMLImageElement>(null)
@@ -73,13 +74,15 @@ const Post: React.FC<IPostProps> = ({ post, onClose, onDelete }) => {
 
           <Button buttonType='action' iconName='far fa-heart' />
           <Button buttonType='action' iconName='fas fa-comment-dots' />
-          <Button
-            buttonType='action'
-            color='red'
-            iconName='far fa-trash-alt'
-            isLoading={deleteLoading}
-            onClick={handleDelete}
-          />
+          {canDelete && (
+            <Button
+              buttonType='action'
+              color='red'
+              iconName='far fa-trash-alt'
+              isLoading={deleteLoading}
+              onClick={handleDelete}
+            />
+          )}
         </ActionBar>
       </Wrapper>
     </Backdrop>

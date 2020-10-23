@@ -26,7 +26,7 @@ export const Header = styled.header`
 `
 
 export const Image = styled.img`
-  max-height: 70vh;
+  max-height: 67vh;
   max-width: 100vw;
 `
 
