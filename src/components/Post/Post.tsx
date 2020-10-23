@@ -77,7 +77,7 @@ const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
           {canDelete && (
             <Button
               buttonType='action'
-              color='red'
+              primaryColor='red'
               iconName='far fa-trash-alt'
               isLoading={deleteLoading}
               onClick={handleDelete}

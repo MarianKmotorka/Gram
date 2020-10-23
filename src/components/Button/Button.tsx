@@ -2,12 +2,12 @@ import React, { ButtonHTMLAttributes } from 'react'
 import { LoadingProgress, StyledActionButton, StyledPrimaryButton } from './Button.styled'
 
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  bg?: string
-  color?: string
-  isLoading?: boolean
-  buttonType?: ButtonType
   iconName?: string
+  primaryColor?: string
+  buttonType?: ButtonType
   disabled?: boolean
+  isLoading?: boolean
+  reversed?: boolean
   loadingProgress?: number
 }
 

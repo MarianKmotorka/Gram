@@ -5,11 +5,12 @@ import { IPost } from '../../domain/IPost'
 import useFirestore from '../../hooks/useFirestore'
 import LoadingOverlay from '../../components/LoadingOverlay'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
-
-import { Wrapper } from './ProfilePage.styled'
 import Posts from './Posts/Posts'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
 import Button from '../../components/Button/Button'
+import Profile from './Profile/Profile'
+
+import { Wrapper } from './ProfilePage.styled'
 
 const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   match: { params },
@@ -29,6 +30,8 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 
   return (
     <Wrapper>
+      <Profile />
+
       <Button onClick={() => setShowCreatePostForm(true)}>New post</Button>
 
       {loading && <LoadingOverlay />}

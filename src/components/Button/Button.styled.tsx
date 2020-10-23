@@ -1,33 +1,45 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { lightenColor } from '../../utils/utils'
 
-export const StyledPrimaryButton = styled.button<{ bg?: string }>`
-  outline: none;
-  border-radius: 18px;
-  border: 1px solid ${({ theme, bg }) => (bg ? theme[bg] : theme.white)};
+interface IProps {
+  primaryColor?: string
+  reversed?: boolean
+}
 
-  font-size: 18px;
-  cursor: ${({ disabled }) => (disabled ? 'auto' : 'pointer')};
-  transition: background-color 0.2s, color 0.2s;
+export const StyledPrimaryButton = styled.button<IProps>`
+  ${({ primaryColor = 'red', reversed, disabled, theme }) => {
+    const color1 = reversed ? theme[primaryColor] : theme.white
+    const color2 = reversed ? theme.white : theme[primaryColor]
 
-  padding: 8px 20px;
-  background: ${({ theme, bg }) => (bg ? theme[bg] : theme.red)};
-  color: ${({ theme }) => theme.white};
+    return css`
+      outline: none;
+      border-radius: 18px;
+      border: 1px solid ${theme[primaryColor]};
 
-  :hover {
-    color: ${({ theme, bg }) => (bg ? theme[bg] : theme.red)};
-    background: ${({ theme }) => theme.white};
-    * {
-      color: ${({ theme, bg }) => (bg ? theme[bg] : theme.red)};
-    }
-  }
+      font-size: 18px;
+      cursor: ${disabled ? 'auto' : 'pointer'};
+      transition: background-color 0.2s, color 0.2s;
 
-  * {
-    color: ${({ theme }) => theme.white};
-  }
+      padding: 8px 20px;
+      background: ${color1};
+      color: ${color2};
+
+      :hover {
+        color: ${color1};
+        background: ${color2};
+        * {
+          color: ${color1};
+        }
+      }
+
+      * {
+        color: ${color2};
+      }
+    `
+  }}
 `
 
-export const StyledActionButton = styled.button<{ color?: string; disabled?: boolean }>`
+export const StyledActionButton = styled.button<IProps>`
   font-size: 20px;
   margin-left: 7px;
   width: 50px;
@@ -40,7 +52,7 @@ export const StyledActionButton = styled.button<{ color?: string; disabled?: boo
   cursor: ${({ disabled }) => (disabled ? 'auto' : 'pointer')};
 
   i {
-    ${({ color, theme }) => color && `color:${theme[color]}`}
+    ${({ primaryColor, theme }) => primaryColor && `color:${theme[primaryColor]}`}
   }
 
   :hover {
