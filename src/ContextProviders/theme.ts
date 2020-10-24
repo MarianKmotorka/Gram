@@ -1,6 +1,6 @@
-import { DefaultTheme } from "styled-components"
+import { DefaultTheme } from 'styled-components'
 
-declare module "styled-components" {
+declare module 'styled-components' {
   export interface DefaultTheme {
     primaryText: string
     secondaryText: string
@@ -17,13 +17,13 @@ declare module "styled-components" {
 }
 
 export const lightTheme: DefaultTheme = {
-  primaryText: "#000",
-  secondaryText: "#777",
-  bg: "#fefefe",
+  primaryText: '#000000',
+  secondaryText: '#777777',
+  bg: '#fefefe',
 
-  red: "#ff1e00",
-  lightBlue: "#e8f9fd",
-  green: "#59ce8f",
-  white: "#fff",
-  lightPink: "#ffebebc7",
+  red: '#ff1e00',
+  lightBlue: '#e8f9fd',
+  green: '#59ce8f',
+  white: '#ffffff',
+  lightPink: '#ffebebc7',
 }

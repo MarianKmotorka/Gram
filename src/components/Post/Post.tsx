@@ -15,6 +15,7 @@ import {
   Description,
   Header,
   Image,
+  ImageContainer,
   ShowMore,
   Wrapper,
 } from './Post.styled'
@@ -29,8 +30,8 @@ interface IPostProps {
 const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
   const [showDescription, setShowDescription] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false)
-  const imageRef = useRef<HTMLImageElement>(null)
-  const { width } = useDimensions<HTMLImageElement>({ ref: imageRef })
+  const imageRef = useRef<HTMLDivElement>(null)
+  const { width } = useDimensions<HTMLDivElement>({ ref: imageRef })
 
   const createdAt = moment(post.createdAt.toDate()).format('MMMM Do YYYY')
 
@@ -64,7 +65,9 @@ const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
           </Description>
         )}
 
-        <Image src={post.imageUrl} ref={imageRef} />
+        <ImageContainer ref={imageRef}>
+          <Image src={post.imageUrl} />
+        </ImageContainer>
 
         <ActionBar>
           <AuthorContainer>

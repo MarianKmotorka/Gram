@@ -8,12 +8,16 @@ export const Wrapper = styled(motion.div)`
   background-color: ${({ theme }) => theme.bg};
   max-height: 95vh;
   overflow: auto;
+  position: relative;
 `
 
 export const Header = styled.header`
   border-radius: 25px 25px 0 0;
   padding: 15px 25px;
-  position: relative;
+  position: sticky;
+  top: 0;
+  background-color: ${({ theme }) => lightenColor(theme.white, 0.9)};
+
   p {
     font-size: 15px;
     font-weight: 200;
@@ -25,12 +29,20 @@ export const Header = styled.header`
   }
 `
 
-export const Image = styled.img`
-  max-height: 67vh;
-  max-width: 100vw;
+export const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  min-width: 100px;
 `
 
-export const ActionBar = styled.footer`
+export const Image = styled.img`
+  max-width: 100vw;
+  max-height: 65vh;
+`
+
+export const ActionBar = styled.div`
   border-radius: 0 0 25px 25px;
   padding: 8px 25px;
   display: flex;
