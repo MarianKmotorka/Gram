@@ -1,16 +1,15 @@
 import React, { useState, useCallback } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
+import Posts from './Posts/Posts'
+import Profile from './Profile/Profile'
 import { IPost } from '../../domain/IPost'
 import useFirestore from '../../hooks/useFirestore'
 import LoadingOverlay from '../../components/LoadingOverlay'
-import { useAuthContext } from '../../contextProviders/AuthProvider'
-import Posts from './Posts/Posts'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
-import Button from '../../components/Button/Button'
-import Profile from './Profile/Profile'
+import { useAuthContext } from '../../contextProviders/AuthProvider'
 
-import { Wrapper } from './ProfilePage.styled'
+import { CreatePostBtn, Wrapper } from './ProfilePage.styled'
 
 const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   match: { params },
@@ -28,19 +27,29 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
     )
   )
 
+  const isCurrentUser = currentUser?.uid === params.userId
+
   return (
     <Wrapper>
-      <Profile />
-
-      <Button onClick={() => setShowCreatePostForm(true)}>New post</Button>
+      <Profile
+        nick={currentUser!.nick}
+        createdAt={currentUser!.createdAt.toDate()}
+        photo={currentUser!.photoURL}
+      />
 
       {loading && <LoadingOverlay />}
+
+      {isCurrentUser && (
+        <CreatePostBtn onClick={() => setShowCreatePostForm(true)} reversed>
+          New post
+        </CreatePostBtn>
+      )}
 
       {showCreatePostForm && (
         <CreatePostForm onClose={() => setShowCreatePostForm(false)} />
       )}
 
-      <Posts areMyPosts={currentUser?.uid === params.userId} posts={posts} />
+      <Posts areMyPosts={isCurrentUser} posts={posts} />
     </Wrapper>
   )
 }

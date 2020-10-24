@@ -4,6 +4,7 @@ import { projectAuth, projectFirestore } from '../config/firebaseConfig'
 
 interface ICurrentUser extends firebase.User {
   nick: string
+  createdAt: firebase.firestore.Timestamp
 }
 
 interface IAuthContextValue {
@@ -21,9 +22,11 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const getUserNickAndPhoto = async (usr: firebase.User) => {
     const user = await projectFirestore.collection('users').doc(usr.uid).get()
-    const nick = user.data()?.nick
-    const photoUrl = user.data()?.photoUrl
-    return { ...usr, nick, photoUrl }
+    const userData = user.data() || {}
+    const nick = userData.nick
+    const photoUrl = userData.photoUrl
+    const createdAt = userData.createdAt
+    return { ...usr, nick, photoUrl, createdAt }
   }
 
   useEffect(() => {

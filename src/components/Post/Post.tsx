@@ -19,6 +19,7 @@ import {
   ShowMore,
   Wrapper,
 } from './Post.styled'
+import { ClockIcon } from '../Icons'
 
 interface IPostProps {
   post: IPost
@@ -46,7 +47,7 @@ const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
         <Header>
           <h2>{post.title}</h2>
           <CreatedAt>
-            <i className='far fa-clock'></i>
+            <ClockIcon />
             {createdAt}
           </CreatedAt>
 
