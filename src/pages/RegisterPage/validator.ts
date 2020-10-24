@@ -13,12 +13,6 @@ export const validate = async (model: IRegisterUserModel): Promise<IValidationRe
       error: 'Nick cannot be shorter than 4 chars and not longer than 20 chars.',
     })
 
-  if (model.password !== model.confirmPassword)
-    return Promise.resolve({
-      success: false,
-      error: 'Passwords do not match.',
-    })
-
   const usersWithSameNick = await projectFirestore
     .collection('users')
     .where('nick', '==', model.nick)

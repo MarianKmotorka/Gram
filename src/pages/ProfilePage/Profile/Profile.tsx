@@ -7,24 +7,24 @@ import { ProfilePhoto, Wrapper, Nick, BoldSpan, AboutSection } from './Profile.s
 interface IProfileProps {
   nick: string
   createdAt: Date
-  description?: string
+  aboutMe?: string
   photo?: string | null
 }
 
-const Profile: React.FC<IProfileProps> = ({ nick, description, createdAt, photo }) => {
+const Profile: React.FC<IProfileProps> = ({ nick, aboutMe, createdAt, photo }) => {
   return (
     <Wrapper>
       <ProfilePhoto src={photo || noPhotoPng} />
       <Nick>{nick}</Nick>
 
       <AboutSection>
-        {description && (
+        {aboutMe && (
           <p>
             <BoldSpan>
               <EditIcon margin='0 3px 0 0' />
               About me:
             </BoldSpan>
-            {description}
+            {aboutMe}
           </p>
         )}
 

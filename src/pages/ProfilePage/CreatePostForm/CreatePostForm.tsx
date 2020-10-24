@@ -5,7 +5,7 @@ import MessageStripe from '../../../components/MessageStripe'
 import { Padding } from '../../../components/UtilityComponents'
 import { getTimestamp, projectFirestore } from '../../../config/firebaseConfig'
 import { useAuthContext } from '../../../contextProviders/AuthProvider'
-import { IPost } from '../../../domain/IPost'
+import { IPost } from '../../../domain'
 import useStorage from '../../../hooks/useStorage'
 
 import {

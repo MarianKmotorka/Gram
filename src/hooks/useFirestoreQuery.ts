@@ -3,10 +3,10 @@ import { projectFirestore } from '../config/firebaseConfig'
 
 /**
  *
- * @param getQuery Function that returns a query, that will be run against firebase - needs to be wrappen in useCallback
+ * @param getQuery Function that returns a query, that will be run against firebase - needs to be wrapped in useCallback
  * @param startFetching Starts fetching only if set to true
  */
-const useFirestore = <T>(
+const useFirestoreQuery = <T>(
   getQuery: (
     query: firebase.firestore.Firestore
   ) => firebase.firestore.Query<firebase.firestore.DocumentData>,
@@ -48,4 +48,4 @@ const useFirestore = <T>(
   return [docs, loading, error]
 }
 
-export default useFirestore
+export default useFirestoreQuery

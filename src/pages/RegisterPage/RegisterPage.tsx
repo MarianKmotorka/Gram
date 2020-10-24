@@ -13,7 +13,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [email, setEmail] = useState('')
   const [nick, setNick] = useState('@')
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [aboutMe, setAboutMe] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { projectAuth } = useAuthContext()
@@ -26,7 +26,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   async function handleRegister() {
     setIsLoading(true)
 
-    const validationResult = await validate({ nick, email, password, confirmPassword })
+    const validationResult = await validate({ nick, email, password })
     setError(validationResult.error || '')
     if (!validationResult.success) return setIsLoading(false)
 
@@ -38,7 +38,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           projectFirestore
             .collection('users')
             .doc(user.uid)
-            .set({ nick, createdAt: getTimestamp() })
+            .set({ nick, aboutMe, createdAt: getTimestamp() })
       )
       .then(() => history.replace('/'))
       .catch(err => setError(err.message))
@@ -63,11 +63,11 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           label='Password'
         />
         <Input
-          value={confirmPassword}
-          onChange={setConfirmPassword}
-          type='password'
+          value={aboutMe}
+          onChange={setAboutMe}
           width='100%'
-          label='Confirm password'
+          label='About me'
+          rows={4}
         />
 
         <StyledButton isLoading={isLoading} onClick={handleRegister}>

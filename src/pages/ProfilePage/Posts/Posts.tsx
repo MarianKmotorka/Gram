@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 
 import Post from '../../../components/Post/Post'
-import { IPost } from '../../../domain/IPost'
+import { IPost } from '../../../domain'
 import { projectFirestore, projectStorage } from '../../../config/firebaseConfig'
 
 import { Grid, Image } from './Posts.styled'
 
 interface IPostsProps {
+  nick: string
   areMyPosts: boolean
   posts: IPost[]
 }
 
-const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts }) => {
+const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts, nick }) => {
   const [selectedPost, setSelectedPost] = useState<IPost>()
 
   const handlePostDeleted = async (post: IPost) => {
@@ -33,6 +34,14 @@ const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts }) => {
           onDelete={handlePostDeleted}
           canDelete={areMyPosts}
         />
+      )}
+
+      {posts.length === 0 && (
+        <p>
+          {areMyPosts
+            ? 'You have no posts yet ... :(('
+            : `${nick} has no posts yet ... :((`}
+        </p>
       )}
 
       <Grid>

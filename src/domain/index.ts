@@ -9,3 +9,11 @@ export interface IPost {
   userNick: string
   userPhotoUrl?: string | null
 }
+
+export interface IUser {
+  id: string
+  nick: string
+  createdAt: firebase.firestore.Timestamp
+  aboutMe?: string
+  photoUrl?: string
+}

@@ -1,7 +1,7 @@
 import moment from 'moment'
 import React, { useRef, useState } from 'react'
 import useDimensions from 'react-cool-dimensions'
-import { IPost } from '../../domain/IPost'
+import { IPost } from '../../domain'
 import Backdrop, { IBackdropProps } from '../Backdrop'
 import Button from '../Button/Button'
 

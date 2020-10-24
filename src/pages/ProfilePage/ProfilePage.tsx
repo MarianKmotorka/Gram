@@ -3,8 +3,9 @@ import { RouteComponentProps } from 'react-router-dom'
 
 import Posts from './Posts/Posts'
 import Profile from './Profile/Profile'
-import { IPost } from '../../domain/IPost'
-import useFirestore from '../../hooks/useFirestore'
+import { IPost, IUser } from '../../domain'
+import useFirestoreQuery from '../../hooks/useFirestoreQuery'
+import useFirestoreDoc from '../../hooks/useFirestoreDoc'
 import LoadingOverlay from '../../components/LoadingOverlay'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
@@ -16,7 +17,10 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 }) => {
   const [showCreatePostForm, setShowCreatePostForm] = useState(false)
   const { user: currentUser } = useAuthContext()
-  const [posts, loading] = useFirestore<IPost>(
+  const [user, userLoading, userError] = useFirestoreDoc<IUser>(
+    useCallback(x => x.collection('users').doc(params.userId), [params.userId])
+  )
+  const [posts, postsLoading] = useFirestoreQuery<IPost>(
     useCallback(
       x =>
         x
@@ -29,15 +33,17 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 
   const isCurrentUser = currentUser?.uid === params.userId
 
+  if (postsLoading || userLoading) return <LoadingOverlay />
+  if (userError) return <p>Error loading user: {userError.message}</p>
+
   return (
     <Wrapper>
       <Profile
-        nick={currentUser!.nick}
-        createdAt={currentUser!.createdAt.toDate()}
-        photo={currentUser!.photoURL}
+        nick={user!.nick}
+        createdAt={user!.createdAt.toDate()}
+        photo={user!.photoUrl}
+        aboutMe={user!.aboutMe}
       />
-
-      {loading && <LoadingOverlay />}
 
       {isCurrentUser && (
         <CreatePostBtn onClick={() => setShowCreatePostForm(true)} reversed>
@@ -49,7 +55,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
         <CreatePostForm onClose={() => setShowCreatePostForm(false)} />
       )}
 
-      <Posts areMyPosts={isCurrentUser} posts={posts} />
+      <Posts nick={user!.nick} areMyPosts={isCurrentUser} posts={posts} />
     </Wrapper>
   )
 }
