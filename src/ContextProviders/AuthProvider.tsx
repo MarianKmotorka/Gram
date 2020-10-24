@@ -23,10 +23,7 @@ const AuthProvider: React.FC = ({ children }) => {
   const getUserNickAndPhoto = async (usr: firebase.User) => {
     const user = await projectFirestore.collection('users').doc(usr.uid).get()
     const userData = user.data() || {}
-    const nick = userData.nick
-    const photoUrl = userData.photoUrl
-    const createdAt = userData.createdAt
-    return { ...usr, nick, photoUrl, createdAt }
+    return { ...usr, ...userData } as ICurrentUser
   }
 
   useEffect(() => {

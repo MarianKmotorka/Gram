@@ -81,7 +81,7 @@ export const AuthorContainer = styled.div`
 
 export const AuthorPicture = styled.img`
   height: 40px;
-  height: 40px;
+  width: 40px;
   object-fit: cover;
   border-radius: 50%;
   border: 3px solid ${({ theme }) => theme.green};

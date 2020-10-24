@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
 
 export const ProfilePhoto = styled.img`
   height: 200px;
+  width: 200px;
   object-fit: cover;
   border-radius: 50%;
   border: solid 3px ${({ theme }) => theme.green};
