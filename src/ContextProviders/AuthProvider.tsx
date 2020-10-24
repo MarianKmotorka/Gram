@@ -20,17 +20,18 @@ const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<ICurrentUser | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const getUserNickAndPhoto = async (usr: firebase.User) => {
+  const getAdditionalUserData = async (usr: firebase.User) => {
     const user = await projectFirestore.collection('users').doc(usr.uid).get()
     const userData = user.data() || {}
-    return { ...usr, ...userData } as ICurrentUser
+    const photoURL = userData.photoUrl
+    return { ...usr, ...userData, photoURL } as ICurrentUser
   }
 
   useEffect(() => {
     const unsub = projectAuth.onAuthStateChanged(async usr => {
-      setUser(usr ? await getUserNickAndPhoto(usr) : null)
-      setLoading(false)
+      setUser(usr ? await getAdditionalUserData(usr) : null)
     })
+    setLoading(false)
     return () => unsub()
   }, [])
 

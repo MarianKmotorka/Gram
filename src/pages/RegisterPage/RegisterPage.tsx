@@ -42,8 +42,6 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
       )
       .then(() => history.replace('/'))
       .catch(err => setError(err.message))
-
-    setIsLoading(false)
   }
 
   return (

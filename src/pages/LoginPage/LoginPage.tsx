@@ -22,8 +22,6 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
       .signInWithEmailAndPassword(email, password)
       .then(() => history.replace('/'))
       .catch(err => setError(err.message))
-
-    setIsLoading(false)
   }
 
   return (

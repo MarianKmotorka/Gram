@@ -25,11 +25,6 @@ export const Header = styled.header`
   }
 `
 
-export const Image = styled.img`
-  max-height: 70vh;
-  max-width: 100vw;
-`
-
 export const FileInput = styled.input`
   display: none;
 `
