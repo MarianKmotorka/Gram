@@ -30,8 +30,8 @@ const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     const unsub = projectAuth.onAuthStateChanged(async usr => {
       setUser(usr ? await getAdditionalUserData(usr) : null)
+      setLoading(false)
     })
-    setLoading(false)
     return () => unsub()
   }, [])
 
