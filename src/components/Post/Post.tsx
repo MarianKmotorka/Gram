@@ -4,6 +4,7 @@ import useDimensions from 'react-cool-dimensions'
 import { IPost } from '../../domain'
 import Backdrop, { IBackdropProps } from '../Backdrop'
 import Button from '../Button/Button'
+import { ClockIcon, CloseIcon, CommentsIcon, HeartIcon, TrashIcon } from '../Icons'
 
 import noPhotoPng from '../../images/no-photo.png'
 import {
@@ -19,7 +20,6 @@ import {
   ShowMore,
   Wrapper,
 } from './Post.styled'
-import { ClockIcon } from '../Icons'
 
 interface IPostProps {
   post: IPost
@@ -57,7 +57,7 @@ const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
             </ShowMore>
           )}
 
-          <Button buttonType='action' onClick={onClose} iconName='fas fa-times' />
+          <Button buttonType='action' onClick={onClose} icon={<CloseIcon />} />
         </Header>
 
         {showDescription && (
@@ -76,13 +76,13 @@ const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
             <AuthorNick>{post.userNick}</AuthorNick>
           </AuthorContainer>
 
-          <Button buttonType='action' iconName='far fa-heart' />
-          <Button buttonType='action' iconName='fas fa-comment-dots' />
+          <Button buttonType='action' icon={<HeartIcon />} />
+          <Button buttonType='action' icon={<CommentsIcon />} />
           {canDelete && (
             <Button
               buttonType='action'
               primaryColor='red'
-              iconName='far fa-trash-alt'
+              icon={<TrashIcon />}
               isLoading={deleteLoading}
               onClick={handleDelete}
             />

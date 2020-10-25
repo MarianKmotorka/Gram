@@ -1,8 +1,9 @@
 import React, { ButtonHTMLAttributes } from 'react'
+import { LoadingIcon } from '../Icons'
 import { LoadingProgress, StyledActionButton, StyledPrimaryButton } from './Button.styled'
 
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  iconName?: string
+  icon?: JSX.Element
   primaryColor?: string
   buttonType?: ButtonType
   disabled?: boolean
@@ -17,7 +18,7 @@ const Button: React.FC<IProps> = ({
   children,
   isLoading,
   buttonType = 'primary',
-  iconName,
+  icon,
   disabled,
   loadingProgress,
   ...rest
@@ -26,7 +27,7 @@ const Button: React.FC<IProps> = ({
     case 'action':
       return (
         <StyledActionButton {...rest} disabled={isLoading || disabled}>
-          <i className={isLoading ? 'fas fa-circle-notch fa-spin' : iconName} />
+          {isLoading ? <LoadingIcon progress={loadingProgress} /> : icon}
         </StyledActionButton>
       )
 

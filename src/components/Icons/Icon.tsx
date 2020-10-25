@@ -5,13 +5,14 @@ const I = styled.i<{ margin?: string }>`
   margin: ${({ margin }) => margin || '0'};
 `
 
-export interface IIconProps {
+export interface IIconBaseProps {
   name: string
   margin?: string
+  className?: string
 }
 
-const Component: React.FC<IIconProps> = ({ name, ...rest }) => {
-  return <I {...rest} className={name} />
+const Icon: React.FC<IIconBaseProps> = ({ name, className, ...rest }) => {
+  return <I {...rest} className={`${name} ${className}`} />
 }
 
-export default Component
+export default Icon

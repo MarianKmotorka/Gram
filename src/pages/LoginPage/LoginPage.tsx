@@ -21,7 +21,10 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
     await projectAuth
       .signInWithEmailAndPassword(email, password)
       .then(() => history.replace('/'))
-      .catch(err => setError(err.message))
+      .catch(err => {
+        setIsLoading(false)
+        setError(err.message)
+      })
   }
 
   return (

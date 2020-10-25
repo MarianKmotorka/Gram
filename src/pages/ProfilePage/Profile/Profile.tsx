@@ -2,7 +2,15 @@ import React from 'react'
 import moment from 'moment'
 import { ClockIcon, EditIcon } from '../../../components/Icons'
 import noPhotoPng from '../../../images/no-photo.png'
-import { ProfilePhoto, Wrapper, Nick, BoldSpan, AboutSection } from './Profile.styled'
+import {
+  ProfilePhoto,
+  Wrapper,
+  Nick,
+  BoldSpan,
+  AboutSection,
+  PhotoWrapper,
+  EditPhotoButton,
+} from './Profile.styled'
 
 interface IProfileProps {
   nick: string
@@ -14,7 +22,10 @@ interface IProfileProps {
 const Profile: React.FC<IProfileProps> = ({ nick, aboutMe, createdAt, photo }) => {
   return (
     <Wrapper>
-      <ProfilePhoto src={photo || noPhotoPng} />
+      <PhotoWrapper>
+        <ProfilePhoto src={photo || noPhotoPng} />
+        <EditPhotoButton buttonType='action' icon={<EditIcon />} />
+      </PhotoWrapper>
       <Nick>{nick}</Nick>
 
       <AboutSection>

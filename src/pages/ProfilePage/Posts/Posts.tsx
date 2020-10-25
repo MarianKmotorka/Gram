@@ -17,8 +17,8 @@ const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts, nick }) => {
 
   const handlePostDeleted = async (post: IPost) => {
     try {
-      await projectFirestore.collection('posts').doc(post.id).delete()
       await projectStorage.refFromURL(post.imageUrl).delete()
+      await projectFirestore.collection('posts').doc(post.id).delete()
       setSelectedPost(undefined)
     } catch (err) {
       console.log(err.response)

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Backdrop, { IBackdropProps } from '../../../components/Backdrop'
 import Button from '../../../components/Button/Button'
+import { CloseIcon } from '../../../components/Icons'
 import MessageStripe from '../../../components/MessageStripe'
 import { Padding } from '../../../components/UtilityComponents'
 import { getTimestamp, projectFirestore } from '../../../config/firebaseConfig'
@@ -69,7 +70,7 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ onClose }) => {
       <Wrapper initial={{ y: '-50vh' }} animate={{ y: 0 }}>
         <Header>
           <h2>New post</h2>
-          <Button buttonType='action' iconName='fas fa-times' onClick={onClose} />
+          <Button buttonType='action' icon={<CloseIcon />} onClick={onClose} />
         </Header>
 
         <Padding value='0 25px'>

@@ -41,7 +41,10 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
             .set({ nick, aboutMe, createdAt: getTimestamp() })
       )
       .then(() => history.replace('/'))
-      .catch(err => setError(err.message))
+      .catch(err => {
+        setIsLoading(false)
+        setError(err.message)
+      })
   }
 
   return (

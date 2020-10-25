@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Button from '../../../components/Button/Button'
 import { lightenColor } from '../../../utils/utils'
 
 export const Wrapper = styled.div`
@@ -11,12 +12,27 @@ export const Wrapper = styled.div`
   }
 `
 
-export const ProfilePhoto = styled.img`
+export const PhotoWrapper = styled.div`
   height: 200px;
   width: 200px;
-  object-fit: cover;
+
   border-radius: 50%;
   border: solid 3px ${({ theme }) => theme.green};
+
+  position: relative;
+`
+
+export const ProfilePhoto = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+`
+
+export const EditPhotoButton = styled(Button)`
+  position: absolute;
+  top: 82%;
+  left: 82%;
 `
 
 export const Nick = styled.p`
