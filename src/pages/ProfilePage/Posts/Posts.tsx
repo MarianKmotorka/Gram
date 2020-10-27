@@ -54,7 +54,10 @@ const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts, nick }) => {
             src={x.imageUrl}
             onClick={() => setSelectedPost(x)}
             layout
-            whileHover={{ y: -15, scale: 1.1 }}
+            whileHover={{
+              rotateZ: 5,
+              scale: 1.1,
+            }}
           />
         ))}
       </Grid>

@@ -26,6 +26,7 @@ const Profile: React.FC<IProfileProps> = ({ nick, aboutMe, createdAt, photo }) =
         <ProfilePhoto src={photo || noPhotoPng} />
         <EditPhotoButton buttonType='action' icon={<EditIcon />} />
       </PhotoWrapper>
+
       <Nick>{nick}</Nick>
 
       <AboutSection>

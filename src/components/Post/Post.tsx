@@ -67,7 +67,7 @@ const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
               initial={{ height: 0 }}
               animate={{ height: 'auto' }}
               exit={{ height: 0 }}
-              transition={{ duration: 0.1 }}
+              transition={{ type: 'tween', duration: 0.2 }}
               width={width}
             >
               {post.description}
