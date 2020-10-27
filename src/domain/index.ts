@@ -7,7 +7,7 @@ export interface IPost {
 
   userId: string
   userNick: string
-  userPhotoUrl?: string | null
+  userPhotoUrl: string | null
 }
 
 export interface IUser {

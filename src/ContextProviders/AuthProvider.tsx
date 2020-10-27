@@ -23,7 +23,7 @@ const AuthProvider: React.FC = ({ children }) => {
   const getAdditionalUserData = async (usr: firebase.User) => {
     const user = await projectFirestore.collection('users').doc(usr.uid).get()
     const userData = user.data() || {}
-    const photoURL = userData.photoUrl
+    const photoURL = userData.photoUrl || null
     return { ...usr, ...userData, photoURL } as ICurrentUser
   }
 

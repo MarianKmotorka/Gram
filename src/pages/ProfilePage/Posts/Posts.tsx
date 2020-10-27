@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 
 import Post from '../../../components/Post/Post'
 import { IPost } from '../../../domain'
@@ -27,14 +28,16 @@ const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts, nick }) => {
 
   return (
     <>
-      {selectedPost && (
-        <Post
-          post={selectedPost}
-          onClose={() => setSelectedPost(undefined)}
-          onDelete={handlePostDeleted}
-          canDelete={areMyPosts}
-        />
-      )}
+      <AnimatePresence>
+        {selectedPost && (
+          <Post
+            post={selectedPost}
+            onClose={() => setSelectedPost(undefined)}
+            onDelete={handlePostDeleted}
+            canDelete={areMyPosts}
+          />
+        )}
+      </AnimatePresence>
 
       {posts.length === 0 && (
         <p>
@@ -51,7 +54,7 @@ const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts, nick }) => {
             src={x.imageUrl}
             onClick={() => setSelectedPost(x)}
             layout
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ y: -15, scale: 1.1 }}
           />
         ))}
       </Grid>

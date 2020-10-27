@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 
 import Posts from './Posts/Posts'
 import Profile from './Profile/Profile'
@@ -51,9 +52,11 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
         </CreatePostBtn>
       )}
 
-      {showCreatePostForm && (
-        <CreatePostForm onClose={() => setShowCreatePostForm(false)} />
-      )}
+      <AnimatePresence>
+        {showCreatePostForm && (
+          <CreatePostForm onClose={() => setShowCreatePostForm(false)} />
+        )}
+      </AnimatePresence>
 
       <Posts nick={user!.nick} areMyPosts={isCurrentUser} posts={posts} />
     </Wrapper>

@@ -1,5 +1,6 @@
-import moment from 'moment'
 import React, { useRef, useState } from 'react'
+import moment from 'moment'
+import { AnimatePresence } from 'framer-motion'
 import useDimensions from 'react-cool-dimensions'
 import { IPost } from '../../domain'
 import Backdrop, { IBackdropProps } from '../Backdrop'
@@ -43,7 +44,7 @@ const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
 
   return (
     <Backdrop onClose={onClose}>
-      <Wrapper initial={{ y: '50vh' }} animate={{ y: 0 }}>
+      <Wrapper initial={{ y: '50vh' }} animate={{ y: 0 }} exit={{ y: '50vh' }}>
         <Header>
           <h2>{post.title}</h2>
           <CreatedAt>
@@ -60,11 +61,19 @@ const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
           <Button buttonType='action' onClick={onClose} icon={<CloseIcon />} />
         </Header>
 
-        {showDescription && (
-          <Description initial={{ height: 0 }} animate={{ height: 'auto' }} width={width}>
-            {post.description}
-          </Description>
-        )}
+        <AnimatePresence>
+          {showDescription && (
+            <Description
+              initial={{ height: 0 }}
+              animate={{ height: 'auto' }}
+              exit={{ height: 0 }}
+              transition={{ duration: 0.1 }}
+              width={width}
+            >
+              {post.description}
+            </Description>
+          )}
+        </AnimatePresence>
 
         <ImageContainer ref={imageRef}>
           <Image src={post.imageUrl} />

@@ -67,7 +67,7 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ onClose }) => {
 
   return (
     <Backdrop onClose={onClose}>
-      <Wrapper initial={{ y: '-50vh' }} animate={{ y: 0 }}>
+      <Wrapper initial={{ y: '-50vh' }} animate={{ y: 0 }} exit={{ y: '-50vh' }}>
         <Header>
           <h2>New post</h2>
           <Button buttonType='action' icon={<CloseIcon />} onClick={onClose} />
