@@ -1,14 +1,23 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { useAuthContext } from '../../contextProviders/AuthProvider'
+
 import { IUser } from '../../domain'
 import SearchInput from '../SearchInput/SearchInput'
+import { useAuthContext } from '../../contextProviders/AuthProvider'
+import noPhotoPng from '../../images/no-photo.png'
 
-import { LinksContainer, Logo, StyledLink, Wrapper } from './Navbar.styled'
+import { DropdownRow, LinksContainer, Logo, StyledLink, Wrapper } from './Navbar.styled'
 
 const Navbar = () => {
   const { isLoggedIn, user } = useAuthContext()
   const history = useHistory()
+
+  const rowRenderer = (user: IUser) => (
+    <DropdownRow>
+      <img src={user.photoUrl || noPhotoPng} alt='user' />
+      <p>{user.nick}</p>
+    </DropdownRow>
+  )
 
   return (
     <Wrapper>
@@ -17,11 +26,10 @@ const Navbar = () => {
       {isLoggedIn && (
         <SearchInput<IUser>
           searchPrefix='@'
-          rowRenderer={user => <p>{user.nick}</p>}
+          filterBy='nick'
+          collectionName='users'
+          rowRenderer={rowRenderer}
           onSelected={user => history.push(`/profile/${user.id}`)}
-          getFirestoreQuery={(text, db) =>
-            db.collection('users').where('nick', '>=', text).limit(5)
-          }
         />
       )}
 

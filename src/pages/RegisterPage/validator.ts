@@ -13,6 +13,12 @@ export const validate = async (model: IRegisterUserModel): Promise<IValidationRe
       error: 'Nick cannot be shorter than 4 chars and not longer than 20 chars.',
     })
 
+  if (model.nick.includes(' '))
+    return Promise.resolve({
+      success: false,
+      error: 'Nick cannot contain empty spaces. Use underscore instead.',
+    })
+
   const usersWithSameNick = await projectFirestore
     .collection('users')
     .where('nick', '==', model.nick)

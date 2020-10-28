@@ -36,3 +36,20 @@ export const StyledLink = styled(Link)`
     color: ${({ theme }) => theme.red};
   }
 `
+
+export const DropdownRow = styled.div`
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    margin-right: 8px;
+    border-radius: 50%;
+  }
+
+  p::first-letter {
+    color: ${({ theme }) => theme.green};
+  }
+`

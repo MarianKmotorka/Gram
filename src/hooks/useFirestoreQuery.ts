@@ -13,7 +13,7 @@ const useFirestoreQuery = <T>(
   startFetching: boolean = true
 ): [T[], boolean, firebase.firestore.FirestoreError | undefined] => {
   const [docs, setDocs] = useState<Array<T>>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState<firebase.firestore.FirestoreError | undefined>()
 
   const onNext = (
