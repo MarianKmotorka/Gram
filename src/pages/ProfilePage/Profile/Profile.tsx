@@ -14,17 +14,24 @@ import {
 
 interface IProfileProps {
   nick: string
+  isCurrentUser: boolean
   createdAt: Date
   aboutMe?: string
   photo?: string | null
 }
 
-const Profile: React.FC<IProfileProps> = ({ nick, aboutMe, createdAt, photo }) => {
+const Profile: React.FC<IProfileProps> = ({
+  nick,
+  aboutMe,
+  createdAt,
+  photo,
+  isCurrentUser,
+}) => {
   return (
     <Wrapper>
       <PhotoWrapper>
         <ProfilePhoto src={photo || noPhotoPng} />
-        <EditPhotoButton buttonType='action' icon={<EditIcon />} />
+        {isCurrentUser && <EditPhotoButton buttonType='action' icon={<EditIcon />} />}
       </PhotoWrapper>
 
       <Nick>{nick}</Nick>

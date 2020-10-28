@@ -1,5 +1,8 @@
-export interface IPost {
+export interface IEntity {
   id: string
+}
+
+export interface IPost extends IEntity {
   title: string
   imageUrl: string
   createdAt: firebase.firestore.Timestamp
@@ -10,8 +13,7 @@ export interface IPost {
   userPhotoUrl: string | null
 }
 
-export interface IUser {
-  id: string
+export interface IUser extends IEntity {
   nick: string
   createdAt: firebase.firestore.Timestamp
   aboutMe?: string

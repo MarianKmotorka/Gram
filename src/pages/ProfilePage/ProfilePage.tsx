@@ -41,6 +41,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
     <Wrapper>
       <Profile
         nick={user!.nick}
+        isCurrentUser={isCurrentUser}
         createdAt={user!.createdAt.toDate()}
         photo={user!.photoUrl}
         aboutMe={user!.aboutMe}
