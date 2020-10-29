@@ -40,6 +40,7 @@ export const StyledLink = styled(Link)`
 export const DropdownRow = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
 
   img {
     width: 30px;
@@ -47,6 +48,12 @@ export const DropdownRow = styled.div`
     object-fit: cover;
     margin-right: 8px;
     border-radius: 50%;
+    border: 2px solid ${({ theme }) => theme.green};
+    transition: margin-right 0.3s ease-in-out;
+  }
+
+  p {
+    font-weight: bolder;
   }
 
   p::first-letter {
