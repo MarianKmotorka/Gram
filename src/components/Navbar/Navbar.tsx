@@ -9,7 +9,7 @@ import noPhotoPng from '../../images/no-photo.png'
 import { DropdownRow, LinksContainer, Logo, StyledLink, Wrapper } from './Navbar.styled'
 
 const Navbar = () => {
-  const { isLoggedIn, user } = useAuthContext()
+  const { isLoggedIn, authUser } = useAuthContext()
   const history = useHistory()
 
   const rowRenderer = (user: IUser) => (
@@ -37,7 +37,7 @@ const Navbar = () => {
         {!isLoggedIn && <StyledLink to='/login'>Login</StyledLink>}
         {!isLoggedIn && <StyledLink to='/register'>Register</StyledLink>}
 
-        {isLoggedIn && <StyledLink to={`/profile/${user!.uid}`}>Profile</StyledLink>}
+        {isLoggedIn && <StyledLink to={`/profile/${authUser!.uid}`}>Profile</StyledLink>}
         {isLoggedIn && <StyledLink to='/signout'>Sign out</StyledLink>}
       </LinksContainer>
     </Wrapper>

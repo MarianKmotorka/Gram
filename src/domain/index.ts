@@ -1,6 +1,5 @@
 export interface IEntity {
   id: string
-  [key: string]: any
 }
 
 export interface IPost extends IEntity {

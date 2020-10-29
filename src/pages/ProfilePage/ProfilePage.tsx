@@ -5,10 +5,9 @@ import { AnimatePresence } from 'framer-motion'
 import Posts from './Posts/Posts'
 import Profile from './Profile/Profile'
 import { IPost, IUser } from '../../domain'
-import useFirestoreQuery from '../../hooks/useFirestoreQuery'
-import useFirestoreDoc from '../../hooks/useFirestoreDoc'
 import LoadingOverlay from '../../components/LoadingOverlay'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
+import { useFirestoreDoc, useFirestoreQuery } from '../../hooks'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 
 import { CreatePostBtn, Wrapper } from './ProfilePage.styled'
@@ -16,8 +15,8 @@ import { CreatePostBtn, Wrapper } from './ProfilePage.styled'
 const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   match: { params },
 }) => {
+  const { authUser } = useAuthContext()
   const [showCreatePostForm, setShowCreatePostForm] = useState(false)
-  const { user: currentUser } = useAuthContext()
   const [user, userLoading, userError] = useFirestoreDoc<IUser>(
     useCallback(x => x.collection('users').doc(params.userId), [params.userId])
   )
@@ -32,20 +31,14 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
     )
   )
 
-  const isCurrentUser = currentUser?.uid === params.userId
+  const isCurrentUser = authUser?.uid === params.userId
 
   if (postsLoading || userLoading) return <LoadingOverlay />
   if (userError) return <p>Error loading user: {userError.message}</p>
 
   return (
     <Wrapper>
-      <Profile
-        nick={user!.nick}
-        isCurrentUser={isCurrentUser}
-        createdAt={user!.createdAt.toDate()}
-        photo={user!.photoUrl}
-        aboutMe={user!.aboutMe}
-      />
+      <Profile user={user!} isCurrentUser={isCurrentUser} />
 
       {isCurrentUser && (
         <CreatePostBtn onClick={() => setShowCreatePostForm(true)} reversed>
@@ -55,7 +48,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 
       <AnimatePresence>
         {showCreatePostForm && (
-          <CreatePostForm onClose={() => setShowCreatePostForm(false)} />
+          <CreatePostForm user={user!} onClose={() => setShowCreatePostForm(false)} />
         )}
       </AnimatePresence>
 

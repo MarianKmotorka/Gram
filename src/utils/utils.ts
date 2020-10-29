@@ -8,3 +8,5 @@ export const lightenColor = (color: string, opacity: number) => {
 
   return `rgba(${r},${g},${b},${opacity})`
 }
+
+export const propertyOf = <T extends object>(name: keyof T) => name

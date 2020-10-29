@@ -6,12 +6,12 @@ const useStorage = (file?: File | null, startUpload: boolean = true) => {
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState<Error | null>(null)
   const [url, setUrl] = useState<string | null>(null)
-  const { user } = useAuthContext()
+  const { authUser } = useAuthContext()
 
   useEffect(() => {
     if (!file || !startUpload) return
 
-    const storageRef = projectStorage.ref(file.name + user?.uid + Date.now().toString())
+    const storageRef = projectStorage.ref(`${file.name}${authUser?.uid}${Date.now()}`)
 
     const unsub = storageRef.put(file).on(
       'state_changed',
@@ -21,7 +21,7 @@ const useStorage = (file?: File | null, startUpload: boolean = true) => {
     )
 
     return () => unsub()
-  }, [file, user, startUpload])
+  }, [file, authUser, startUpload])
 
   return { progress, url, error }
 }

@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion'
 
 import { IEntity } from '../../domain'
 import MessageStripe from '../MessageStripe'
+import { propertyOf } from '../../utils/utils'
 import { LoadingIcon, SearchIcon } from '../Icons'
 import { useFirestoreQuery, useDebounce, useOnClickOutside } from '../../hooks'
 
@@ -11,7 +12,7 @@ import { Wrapper, StyledInput, RowsContainer, Row } from './SearchInput.styled'
 interface ISearchInputProps<T extends IEntity> {
   searchPrefix?: string
   collectionName?: string
-  filterBy?: string // TODO: constrain only to names of keys of T
+  filterBy?: keyof T
   onSelected: (value: T) => void
   rowRenderer: (value: T) => JSX.Element
   getFirestoreQuery?: (
@@ -45,7 +46,10 @@ const SearchInput = <T extends IEntity>({
           'You must provide collectionName with filterBy parameter or getFirestoreQuery parameter.'
         )
 
-      return db.collection(collectionName).where(filterBy, '>=', text).limit(5)
+      return db
+        .collection(collectionName)
+        .where(`${propertyOf<T>(filterBy)}`, '>=', text)
+        .limit(5)
     },
     [collectionName, filterBy, getFirestoreQuery]
   )
@@ -68,7 +72,7 @@ const SearchInput = <T extends IEntity>({
 
   const filteredValues = filterBy
     ? values.filter(x =>
-        (x[filterBy] as string).toLowerCase().startsWith(debouncedText.toLowerCase())
+        `${x[filterBy]}`.toLowerCase().startsWith(debouncedText.toLowerCase())
       )
     : values
 

@@ -5,8 +5,7 @@ import { CloseIcon } from '../../../components/Icons'
 import MessageStripe from '../../../components/MessageStripe'
 import { Padding } from '../../../components/UtilityComponents'
 import { getTimestamp, projectFirestore } from '../../../config/firebaseConfig'
-import { useAuthContext } from '../../../contextProviders/AuthProvider'
-import { IPost } from '../../../domain'
+import { IPost, IUser } from '../../../domain'
 import useStorage from '../../../hooks/useStorage'
 
 import {
@@ -18,28 +17,28 @@ import {
 } from './CreatePostForm.styled'
 
 interface ICreatePostProps {
+  user: IUser
   onClose: Required<IBackdropProps>['onClose']
 }
 
-const CreatePostForm: React.FC<ICreatePostProps> = ({ onClose }) => {
-  const [file, setFile] = useState<File | null>()
+const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose }) => {
   const [title, setTitle] = useState('')
-  const [validationError, setValidationError] = useState('')
   const [description, setDescription] = useState('')
-  const [startUpload, setStartUpload] = useState(false)
+  const [validationError, setValidationError] = useState('')
 
+  const [file, setFile] = useState<File | null>()
+  const [startUpload, setStartUpload] = useState(false)
   const { progress, error: uploadError, url } = useStorage(file, startUpload)
-  const { user } = useAuthContext()
 
   useEffect(() => {
     const createPost = async () => {
-      if (!url || !user) return
+      if (!url) return
 
       const newPost: Omit<IPost, 'id'> = {
         createdAt: getTimestamp() as firebase.firestore.Timestamp,
-        userId: user.uid,
+        userId: user.id,
         userNick: user.nick,
-        userPhotoUrl: user.photoURL,
+        userPhotoUrl: user.photoUrl || null,
         imageUrl: url,
         title,
         description,
