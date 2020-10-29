@@ -1,14 +1,12 @@
-import styled, { keyframes } from 'styled-components'
-
-const rotate = keyframes`
-0%{
-    transform:rotate(80deg);
+export const loadingProgressVariants = {
+  animate: {
+    x: [-4, 4],
+    y: [5, -10],
+    rotateZ: [-10, 10],
+    transition: {
+      x: { yoyo: Infinity, duration: 0.4 },
+      y: { yoyo: Infinity, duration: 0.2 },
+      rotateZ: { yoyo: Infinity, duration: 0.4 },
+    },
+  },
 }
-100%{
-    transform:rotate(-440deg);
-}
-`
-
-export const LoadingProgress = styled.div`
-  animation: 2s ${rotate} ease-in-out infinite alternate;
-`

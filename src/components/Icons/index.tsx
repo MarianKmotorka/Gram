@@ -1,6 +1,7 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import Icon, { IIconBaseProps } from './Icon'
-import { LoadingProgress } from './index.styled'
+import { loadingProgressVariants } from './index.styled'
 
 export interface IIconProps extends Omit<IIconBaseProps, 'name'> {}
 
@@ -19,7 +20,9 @@ export const LoadingIcon: React.FC<IIconProps & { progress?: number }> = ({
   progress === undefined ? (
     <Icon name='fas fa-circle-notch fa-spin' {...rest} />
   ) : (
-    <LoadingProgress>{progress.toFixed()}%</LoadingProgress>
+    <motion.div variants={loadingProgressVariants} animate='animate'>
+      {progress.toFixed()}%
+    </motion.div>
   )
 
 export const CloseIcon: React.FC<IIconProps> = props => (
