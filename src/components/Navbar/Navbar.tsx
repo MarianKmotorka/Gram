@@ -62,6 +62,7 @@ const Navbar = () => {
                     to={x.to}
                     key={x.to}
                   >
+                    {x.icon}
                     {x.text}
                   </StyledLink>
                 )

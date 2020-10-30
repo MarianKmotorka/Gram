@@ -13,13 +13,13 @@ export const Wrapper = styled.div`
 `
 
 export const PhotoWrapper = styled.div`
-  height: 200px;
-  width: 200px;
-
+  height: 205px;
+  width: 205px;
+  padding: 3px;
   border-radius: 50%;
-  border: solid 3px ${({ theme }) => theme.green};
-
   position: relative;
+  background: ${({ theme }) =>
+    `linear-gradient(180deg, ${theme.green} , ${lightenColor(theme.green, 0.2)})`};
 `
 
 export const ProfilePhoto = styled.img`
@@ -27,6 +27,7 @@ export const ProfilePhoto = styled.img`
   width: 100%;
   object-fit: cover;
   border-radius: 50%;
+  border: solid 5px ${({ theme }) => theme.bg};
 `
 
 export const EditPhotoButton = styled(Button)`

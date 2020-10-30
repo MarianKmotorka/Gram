@@ -70,7 +70,7 @@ export const StyledLink = styled(Link)<{ isDark: boolean }>`
   padding: 0 20px;
   font-size: 1.1em;
   color: ${({ theme }) => theme.white};
-  transition: color 0.2s, background-color 0.2s;
+  transition: background-color 0.2s;
 
   background-color: ${({ theme, isDark }) =>
     isDark ? lightenColor(theme.black, 0.7) : theme.redLight};
@@ -78,6 +78,10 @@ export const StyledLink = styled(Link)<{ isDark: boolean }>`
   :hover {
     background: ${({ theme, isDark }) =>
       isDark ? theme.redLight : lightenColor(theme.black, 0.7)};
+  }
+
+  i {
+    color: inherit;
   }
 
   @media only screen and (max-width: 900px) {
@@ -100,7 +104,6 @@ export const DropdownRow = styled.div`
     margin-right: 8px;
     border-radius: 50%;
     border: 2px solid ${({ theme }) => theme.green};
-    transition: margin-right 0.3s ease-in-out;
   }
 
   p {

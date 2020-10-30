@@ -50,3 +50,7 @@ export const BurgerMenuIcon: React.FC<IIconProps & { menuExpanded?: boolean }> =
   ...rest
 }) =>
   menuExpanded === false ? <Icon name='fas fa-bars' {...rest} /> : <CloseIcon {...rest} />
+
+export const PowerOffIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-power-off' {...props} />
+)
