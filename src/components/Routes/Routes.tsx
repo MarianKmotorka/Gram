@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import Signout from '../../pages/Signout'
 import ProtectedRoute from './ProtectedRoute'
-import HomePage from '../../pages/HomePage/HomePage'
+import Feed from '../../pages/Feed/Feed'
 import LoginPage from '../../pages/LoginPage/LoginPage'
 import RegisterPage from '../../pages/RegisterPage/RegisterPage'
 import MyImages from '../../pages/ProfilePage/ProfilePage'
@@ -15,7 +15,7 @@ const Routes = () => (
     <NoAuthRoute path='/register' component={RegisterPage} />
     <Route path='/signout' component={Signout} />
     <ProtectedRoute path='/profile/:userId' component={MyImages} />
-    <ProtectedRoute path='/' component={HomePage} />
+    <ProtectedRoute path='/' component={Feed} />
   </Switch>
 )
 

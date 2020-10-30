@@ -1,39 +1,82 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { lightenColor } from '../../utils/utils'
+import { BurgerMenuIcon } from '../Icons'
 
 export const Wrapper = styled.nav`
   display: flex;
   align-items: center;
+  position: relative;
   height: 50px;
   width: 100%;
+  padding: 0 17.5%;
 
-  padding: 0 70px;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
   background-color: ${({ theme }) => theme.bg};
 
-  & > :first-child {
-    margin-right: 10%;
+  @media only screen and (max-width: 1250px) {
+    padding: 0 10%;
+  }
+
+  @media only screen and (max-width: 700px) {
+    padding: 0 5%;
   }
 `
 
 export const Logo = styled(Link)`
-  color: ${({ theme }) => theme.red};
+  color: ${({ theme }) => theme.black};
   font-size: 20px;
+  margin-right: 20px;
+
+  ::first-letter {
+    color: ${({ theme }) => theme.red};
+  }
 `
 
-export const LinksContainer = styled.div`
+export const LinksContainer = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: flex-end;
   flex: 1;
+
+  @media only screen and (max-width: 900px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 60px 0;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 90vw;
+    max-width: 400px;
+    height: calc(100vh - 50px);
+
+    background: ${({ theme }) => theme.bg};
+    box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
 `
 
 export const StyledLink = styled(Link)`
   margin: 0 20px;
-  transition: color 0.2s;
+  transition: color 0.2s, background-color 0.2s;
 
   :hover {
     color: ${({ theme }) => theme.red};
+  }
+
+  @media only screen and (max-width: 900px) {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    font-weight: 500;
+    color: ${({ theme }) => theme.white};
+    background: ${({ theme }) => lightenColor(theme.red, 0.65)};
+
+    :hover {
+      color: ${({ theme }) => theme.white};
+      background: ${({ theme }) => lightenColor(theme.black, 0.7)};
+    }
   }
 `
 
@@ -58,5 +101,21 @@ export const DropdownRow = styled.div`
 
   p::first-letter {
     color: ${({ theme }) => theme.green};
+  }
+`
+
+export const StyledMenuIcon = styled(BurgerMenuIcon)`
+  display: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: auto;
+  padding: 0 20px;
+
+  :hover {
+    color: ${({ theme }) => theme.red};
+  }
+
+  @media only screen and (max-width: 900px) {
+    display: block;
   }
 `

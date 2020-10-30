@@ -7,6 +7,7 @@ export const Wrapper = styled(motion.div)`
   border-radius: 25px;
   background-color: ${({ theme }) => theme.bg};
   max-height: 95vh;
+  max-width: 95vw;
   overflow: auto;
   position: relative;
 `

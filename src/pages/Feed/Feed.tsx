@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { Wrapper } from './HomePage.styled'
+import { Wrapper } from './Feed.styled'
 
 const HomePage: React.FC = () => {
-  return <Wrapper>HOME </Wrapper>
+  return <Wrapper>FEED </Wrapper>
 }
 
 export default HomePage

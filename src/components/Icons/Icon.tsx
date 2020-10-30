@@ -9,6 +9,7 @@ export interface IIconBaseProps {
   name: string
   margin?: string
   className?: string
+  onClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
 const Icon: React.FC<IIconBaseProps> = ({ name, className, ...rest }) => {

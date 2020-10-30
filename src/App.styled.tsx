@@ -41,6 +41,7 @@ export const GlobalStyles = createGlobalStyle`
    height: 100vh;
    overflow: auto;
    background: ${({ theme }) => theme.bg};
+   overflow-x: hidden;
  }
 
   p, h1, h2, h3, h4, h5, h6 {

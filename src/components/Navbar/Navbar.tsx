@@ -1,16 +1,28 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import { useHistory } from 'react-router-dom'
 
 import { IUser } from '../../domain'
+import { getLinksConfig } from './utils'
+import { useWindowSize } from '../../hooks'
+import noPhotoPng from '../../images/no-photo.png'
 import SearchInput from '../SearchInput/SearchInput'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
-import noPhotoPng from '../../images/no-photo.png'
 
-import { DropdownRow, LinksContainer, Logo, StyledLink, Wrapper } from './Navbar.styled'
+import {
+  Logo,
+  Wrapper,
+  StyledLink,
+  DropdownRow,
+  LinksContainer,
+  StyledMenuIcon,
+} from './Navbar.styled'
 
 const Navbar = () => {
+  const [menuExpanded, setMenuExpanded] = useState(false)
   const { isLoggedIn, authUser } = useAuthContext()
   const history = useHistory()
+  const { width } = useWindowSize()
 
   const rowRenderer = (user: IUser) => (
     <DropdownRow>
@@ -21,7 +33,7 @@ const Navbar = () => {
 
   return (
     <Wrapper>
-      <Logo to='/'>Gram</Logo>
+      <Logo to='/'>@GRAM</Logo>
 
       {isLoggedIn && (
         <SearchInput<IUser>
@@ -33,13 +45,30 @@ const Navbar = () => {
         />
       )}
 
-      <LinksContainer>
-        {!isLoggedIn && <StyledLink to='/login'>Login</StyledLink>}
-        {!isLoggedIn && <StyledLink to='/register'>Register</StyledLink>}
+      <AnimatePresence>
+        {(width > 900 || menuExpanded) && (
+          <LinksContainer
+            initial={{ right: -400 }}
+            animate={{ right: 0 }}
+            exit={{ right: -400 }}
+            transition={{ type: 'spring', mass: 0.1 }}
+          >
+            {getLinksConfig(authUser?.uid).map(
+              x =>
+                x.isLoggedIn === isLoggedIn && (
+                  <StyledLink onClick={() => setMenuExpanded(false)} to={x.to} key={x.to}>
+                    {x.text}
+                  </StyledLink>
+                )
+            )}
+          </LinksContainer>
+        )}
+      </AnimatePresence>
 
-        {isLoggedIn && <StyledLink to={`/profile/${authUser!.uid}`}>Profile</StyledLink>}
-        {isLoggedIn && <StyledLink to='/signout'>Sign out</StyledLink>}
-      </LinksContainer>
+      <StyledMenuIcon
+        menuExpanded={menuExpanded}
+        onClick={() => setMenuExpanded(x => !x)}
+      />
     </Wrapper>
   )
 }

@@ -55,8 +55,7 @@ const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts, nick }) => {
             onClick={() => setSelectedPost(x)}
             layout
             whileHover={{
-              rotateZ: 5,
-              scale: 1.1,
+              scale: 0.95,
             }}
           />
         ))}

@@ -20,7 +20,7 @@ export const LoadingIcon: React.FC<IIconProps & { progress?: number }> = ({
   progress === undefined ? (
     <Icon name='fas fa-circle-notch fa-spin' {...rest} />
   ) : (
-    <motion.div variants={loadingProgressVariants} animate='animate'>
+    <motion.div variants={loadingProgressVariants} {...rest} animate='animate'>
       {progress.toFixed()}%
     </motion.div>
   )
@@ -44,3 +44,9 @@ export const CommentsIcon: React.FC<IIconProps> = props => (
 export const SearchIcon: React.FC<IIconProps> = props => (
   <Icon name='fas fa-search' {...props} />
 )
+
+export const BurgerMenuIcon: React.FC<IIconProps & { menuExpanded?: boolean }> = ({
+  menuExpanded,
+  ...rest
+}) =>
+  menuExpanded === false ? <Icon name='fas fa-bars' {...rest} /> : <CloseIcon {...rest} />
