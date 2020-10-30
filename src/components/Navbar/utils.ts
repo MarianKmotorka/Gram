@@ -1,6 +1,6 @@
 export const getLinksConfig = (userId: string | undefined) => [
-  { text: 'Login', to: '/login', isLoggedIn: false },
-  { text: 'Register', to: '/register', isLoggedIn: false },
-  { text: 'Profile', to: `/profile/${userId}`, isLoggedIn: true },
-  { text: 'Sign out', to: '/signout', isLoggedIn: true },
+  { text: 'Login', to: '/login', isLoggedIn: false, isDark: false },
+  { text: 'Register', to: '/register', isLoggedIn: false, isDark: true },
+  { text: 'Profile', to: `/profile/${userId}`, isLoggedIn: true, isDark: false },
+  { text: 'Sign out', to: '/signout', isLoggedIn: true, isDark: true },
 ]

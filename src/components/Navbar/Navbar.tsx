@@ -56,7 +56,12 @@ const Navbar = () => {
             {getLinksConfig(authUser?.uid).map(
               x =>
                 x.isLoggedIn === isLoggedIn && (
-                  <StyledLink onClick={() => setMenuExpanded(false)} to={x.to} key={x.to}>
+                  <StyledLink
+                    isDark={x.isDark}
+                    onClick={() => setMenuExpanded(false)}
+                    to={x.to}
+                    key={x.to}
+                  >
                     {x.text}
                   </StyledLink>
                 )

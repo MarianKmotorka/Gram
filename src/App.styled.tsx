@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
+import { NAVBAR_HEIGHT } from './components/Navbar/Navbar.styled'
 
 export const CenteredContainer = styled.div`
   max-width: 65%;
@@ -15,7 +16,7 @@ export const CenteredContainer = styled.div`
 `
 
 export const AppContent = styled.div`
-  height: calc(100% - 50px);
+  height: calc(100% - ${NAVBAR_HEIGHT});
   overflow: auto;
 `
 

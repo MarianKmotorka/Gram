@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom'
 import { lightenColor } from '../../utils/utils'
 import { BurgerMenuIcon } from '../Icons'
 
+export const NAVBAR_HEIGHT = '66px'
+
 export const Wrapper = styled.nav`
   display: flex;
   align-items: center;
   position: relative;
-  height: 50px;
+  height: ${NAVBAR_HEIGHT};
   width: 100%;
   padding: 0 17.5%;
 
@@ -26,8 +28,9 @@ export const Wrapper = styled.nav`
 
 export const Logo = styled(Link)`
   color: ${({ theme }) => theme.black};
-  font-size: 20px;
+  font-size: 22px;
   margin-right: 20px;
+  font-weight: 500;
 
   ::first-letter {
     color: ${({ theme }) => theme.red};
@@ -39,6 +42,7 @@ export const LinksContainer = styled(motion.div)`
   align-items: center;
   justify-content: flex-end;
   flex: 1;
+  height: 100%;
 
   @media only screen and (max-width: 900px) {
     flex-direction: column;
@@ -49,7 +53,7 @@ export const LinksContainer = styled(motion.div)`
     right: 0;
     width: 90vw;
     max-width: 400px;
-    height: calc(100vh - 50px);
+    height: calc(100vh - ${NAVBAR_HEIGHT});
 
     background: ${({ theme }) => theme.bg};
     box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
@@ -57,26 +61,30 @@ export const LinksContainer = styled(motion.div)`
   }
 `
 
-export const StyledLink = styled(Link)`
-  margin: 0 20px;
+export const StyledLink = styled(Link)<{ isDark: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 120px;
+  padding: 0 20px;
+  font-size: 1.1em;
+  color: ${({ theme }) => theme.white};
   transition: color 0.2s, background-color 0.2s;
 
+  background-color: ${({ theme, isDark }) =>
+    isDark ? lightenColor(theme.black, 0.7) : theme.redLight};
+
   :hover {
-    color: ${({ theme }) => theme.red};
+    background: ${({ theme, isDark }) =>
+      isDark ? theme.redLight : lightenColor(theme.black, 0.7)};
   }
 
   @media only screen and (max-width: 900px) {
     width: 100%;
+    height: auto;
     text-align: center;
     padding: 20px 0;
-    font-weight: 500;
-    color: ${({ theme }) => theme.white};
-    background: ${({ theme }) => lightenColor(theme.red, 0.65)};
-
-    :hover {
-      color: ${({ theme }) => theme.white};
-      background: ${({ theme }) => lightenColor(theme.black, 0.7)};
-    }
   }
 `
 
@@ -107,7 +115,7 @@ export const DropdownRow = styled.div`
 export const StyledMenuIcon = styled(BurgerMenuIcon)`
   display: none;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 22px;
   margin-left: auto;
   padding: 0 20px;
 

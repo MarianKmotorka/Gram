@@ -49,7 +49,7 @@ export const AboutSection = styled.section`
   flex-direction: column;
   padding: 15px;
   border-radius: 15px;
-  background-color: ${({ theme }) => lightenColor(theme.green, 0.1)};
+  background-color: ${({ theme }) => lightenColor(theme.green, 0.2)};
   p {
     font-weight: 300;
   }

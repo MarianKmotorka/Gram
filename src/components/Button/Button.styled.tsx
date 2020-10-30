@@ -7,7 +7,7 @@ interface IProps {
 }
 
 export const StyledPrimaryButton = styled.button<IProps>`
-  ${({ primaryColor = 'red', reversed, disabled, theme }) => {
+  ${({ primaryColor = 'redLight', reversed, disabled, theme }) => {
     const color1 = reversed ? theme[primaryColor] : theme.white
     const color2 = reversed ? theme.white : theme[primaryColor]
 
