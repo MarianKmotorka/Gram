@@ -86,7 +86,7 @@ export const StyledLink = styled(Link)<{ isDark: boolean }>`
 
   @media only screen and (max-width: 900px) {
     width: 100%;
-    height: auto;
+    height: 70px;
     text-align: center;
     padding: 20px 0;
   }
