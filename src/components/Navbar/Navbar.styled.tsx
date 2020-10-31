@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { lightenColor } from '../../utils/utils'
 import { BurgerMenuIcon } from '../Icons'
 
 export const NAVBAR_HEIGHT = '66px'

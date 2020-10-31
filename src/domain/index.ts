@@ -17,5 +17,5 @@ export interface IUser extends IEntity {
   nick: string
   createdAt: firebase.firestore.Timestamp
   aboutMe?: string
-  photoUrl?: string
+  photoUrl: string | null
 }

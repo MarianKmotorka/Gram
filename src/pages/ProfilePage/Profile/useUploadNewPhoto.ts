@@ -10,7 +10,9 @@ const useUploadNewPhoto = (
   oldPhotoUrl?: string | null
 ) => {
   const [uploading, setUploading] = useState(false)
-  const { progress, url: newPhotoUrl } = useStorage(file, uploading)
+  const { progress, url: newPhotoUrl } = useStorage(file, uploading, {
+    maxWidthOrHeight: 500,
+  })
 
   const updateExistingPosts = useCallback(async () => {
     const postsSnapshot = await projectFirestore

@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react'
-import moment from 'moment'
 import { AnimatePresence } from 'framer-motion'
 import useDimensions from 'react-cool-dimensions'
+import moment from 'moment'
+
 import { IPost } from '../../domain'
-import Backdrop, { IBackdropProps } from '../Backdrop'
 import Button from '../Button/Button'
+import noPhotoPng from '../../images/no-photo.png'
+import Backdrop, { IBackdropProps } from '../Backdrop'
 import { ClockIcon, CloseIcon, CommentsIcon, HeartIcon, TrashIcon } from '../Icons'
 
-import noPhotoPng from '../../images/no-photo.png'
 import {
   ActionBar,
   AuthorContainer,
@@ -45,7 +46,7 @@ const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
   return (
     <Backdrop onClose={onClose}>
       <Wrapper initial={{ y: '50vh' }} animate={{ y: 0 }} exit={{ y: '50vh' }}>
-        <Header>
+        <Header maxWidth={width}>
           <h2>{post.title}</h2>
           <CreatedAt>
             <ClockIcon />
@@ -68,7 +69,7 @@ const Post: React.FC<IPostProps> = ({ post, canDelete, onClose, onDelete }) => {
               animate={{ height: 'auto' }}
               exit={{ height: 0 }}
               transition={{ type: 'tween', duration: 0.2 }}
-              width={width}
+              maxWidth={width}
             >
               {post.description}
             </Description>

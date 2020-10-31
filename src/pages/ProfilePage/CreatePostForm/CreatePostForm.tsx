@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import Backdrop, { IBackdropProps } from '../../../components/Backdrop'
-import Button from '../../../components/Button/Button'
+import React, { useState } from 'react'
+
+import { IUser } from '../../../domain'
+import useUplaodPost from './useUploadPost'
 import { CloseIcon } from '../../../components/Icons'
+import Button from '../../../components/Button/Button'
 import MessageStripe from '../../../components/MessageStripe'
 import { Padding } from '../../../components/UtilityComponents'
-import { getTimestamp, projectFirestore } from '../../../config/firebaseConfig'
-import { IPost, IUser } from '../../../domain'
-import useStorage from '../../../hooks/useStorage'
+import Backdrop, { IBackdropProps } from '../../../components/Backdrop'
 
 import {
   FileInput,
@@ -26,31 +26,18 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose }) => {
   const [description, setDescription] = useState('')
   const [validationError, setValidationError] = useState('')
 
-  const [file, setFile] = useState<File | null>()
-  const [startUpload, setStartUpload] = useState(false)
-  const { progress, error: uploadError, url } = useStorage(file, startUpload)
-
-  useEffect(() => {
-    const createPost = async () => {
-      if (!url) return
-
-      const newPost: Omit<IPost, 'id'> = {
-        createdAt: getTimestamp() as firebase.firestore.Timestamp,
-        userId: user.id,
-        userNick: user.nick,
-        userPhotoUrl: user.photoUrl || null,
-        imageUrl: url,
-        title,
-        description,
-      }
-
-      await projectFirestore.collection('posts').add(newPost)
-      onClose()
-    }
-
-    createPost()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, user])
+  const [file, setFile] = useState<File | null>(null)
+  const { startUpload, uploading, uploadError, progress } = useUplaodPost(
+    file,
+    {
+      title,
+      description,
+      userId: user.id,
+      userNick: user.nick,
+      userPhotoUrl: user.photoUrl,
+    },
+    onClose
+  )
 
   const handleSelectFile = () => {
     document.getElementById('create-post-form-file-input')?.click()
@@ -61,15 +48,20 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose }) => {
     setValidationError('')
     if (!title) return setValidationError('Post title cannot be empty.')
     if (!file) return setValidationError('Pick an image.')
-    setStartUpload(true)
+    startUpload()
+  }
+
+  const handleClosed = () => {
+    if (uploading) return setValidationError('Please wait until upload is finished.')
+    onClose()
   }
 
   return (
-    <Backdrop onClose={onClose}>
+    <Backdrop onClose={!startUpload ? onClose : undefined}>
       <Wrapper initial={{ y: '-50vh' }} animate={{ y: 0 }} exit={{ y: '-50vh' }}>
         <Header>
           <h2>New post</h2>
-          <Button buttonType='action' icon={<CloseIcon />} onClick={onClose} />
+          <Button buttonType='action' icon={<CloseIcon />} onClick={handleClosed} />
         </Header>
 
         <Padding value='0 25px'>
@@ -103,18 +95,18 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose }) => {
 
           <StyledButton
             primaryColor='green'
-            disabled={progress > 0}
+            disabled={uploading}
             onClick={handleSelectFile}
           >
             Pick an image
           </StyledButton>
 
           <StyledButton
-            onClick={handleSubmit}
-            loadingProgress={progress}
-            isLoading={startUpload}
             marginLeft='auto'
-            reversed={!startUpload}
+            loadingProgress={progress}
+            isLoading={uploading}
+            reversed={!uploading}
+            onClick={handleSubmit}
           >
             Submit
           </StyledButton>

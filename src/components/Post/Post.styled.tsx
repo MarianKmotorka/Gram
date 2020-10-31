@@ -12,11 +12,12 @@ export const Wrapper = styled(motion.div)`
   position: relative;
 `
 
-export const Header = styled.header`
+export const Header = styled.header<{ maxWidth: number }>`
   border-radius: 25px 25px 0 0;
   padding: 15px 25px;
   position: sticky;
   top: 0;
+  max-width: ${({ maxWidth }) => maxWidth + 'px'};
   background-color: ${({ theme }) => lightenColor(theme.white, 0.9)};
 
   p {
@@ -51,10 +52,10 @@ export const ActionBar = styled.div`
   align-items: center;
 `
 
-export const Description = styled(motion.p)<{ width: number }>`
+export const Description = styled(motion.p)<{ maxWidth: number }>`
   font-weight: 300;
   padding: 15px 25px;
-  max-width: ${({ width }) => width + 'px'};
+  max-width: ${({ maxWidth }) => maxWidth + 'px'};
   background: ${({ theme }) => lightenColor(theme.green, 0.3)};
 `
 
