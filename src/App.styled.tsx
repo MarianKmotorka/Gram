@@ -54,15 +54,15 @@ export const GlobalStyles = createGlobalStyle`
   }
 }
 
-input, textarea{
-  -webkit-appearance:none; // fixes box-shadow on input element for ios
-}
-
 #portal{
   position:absolute;
   width:0;
   height:0;
   top:0;
   left:0;
+}
+
+input, textarea { // needs to stay below #portal for some reason
+  -webkit-appearance:none; // fixes box-shadow on input element for ios
 }
 `
