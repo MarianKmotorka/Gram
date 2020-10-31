@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
 import Input from '../../components/Input'
+import Footer from '../../components/Footer/Footer'
 import MessageStripe from '../../components/MessageStripe'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 import { getTimestamp, projectFirestore } from '../../config/firebaseConfig'
@@ -48,34 +49,38 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   }
 
   return (
-    <Wrapper initial={{ scale: 0.2 }} animate={{ scale: 1 }}>
-      <StyledCard bg='white'>
-        <Title>Register</Title>
+    <>
+      <Wrapper initial={{ scale: 0.2 }} animate={{ scale: 1 }}>
+        <StyledCard bg='white'>
+          <Title>Register</Title>
 
-        {error && <MessageStripe textType='error' text={error} />}
+          {error && <MessageStripe textType='error' text={error} />}
 
-        <Input value={nick} onChange={prependNickWithAt} width='100%' label='Nick' />
-        <Input value={email} onChange={setEmail} width='100%' label='Email' />
-        <Input
-          value={password}
-          onChange={setPassword}
-          type='password'
-          width='100%'
-          label='Password'
-        />
-        <Input
-          value={aboutMe}
-          onChange={setAboutMe}
-          width='100%'
-          label='About me'
-          rows={4}
-        />
+          <Input value={nick} onChange={prependNickWithAt} width='100%' label='Nick' />
+          <Input value={email} onChange={setEmail} width='100%' label='Email' />
+          <Input
+            value={password}
+            onChange={setPassword}
+            type='password'
+            width='100%'
+            label='Password'
+          />
+          <Input
+            value={aboutMe}
+            onChange={setAboutMe}
+            width='100%'
+            label='About me'
+            rows={4}
+          />
 
-        <StyledButton isLoading={isLoading} onClick={handleRegister}>
-          Register
-        </StyledButton>
-      </StyledCard>
-    </Wrapper>
+          <StyledButton isLoading={isLoading} onClick={handleRegister}>
+            Register
+          </StyledButton>
+        </StyledCard>
+      </Wrapper>
+
+      <Footer />
+    </>
   )
 }
 

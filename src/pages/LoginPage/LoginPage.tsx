@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
+import Footer from '../../components/Footer/Footer'
 
 import Input from '../../components/Input'
 import MessageStripe from '../../components/MessageStripe'
@@ -28,27 +29,31 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   }
 
   return (
-    <Wrapper initial={{ scale: 0.2 }} animate={{ scale: 1 }}>
-      <StyledCard bg='white'>
-        <Title>Login</Title>
+    <>
+      <Wrapper initial={{ scale: 0.2 }} animate={{ scale: 1 }}>
+        <StyledCard bg='white'>
+          <Title>Login</Title>
 
-        {error && <MessageStripe textType='error' text={error} />}
+          {error && <MessageStripe textType='error' text={error} />}
 
-        <Input value={email} onChange={setEmail} width='100%' label='Email' />
+          <Input value={email} onChange={setEmail} width='100%' label='Email' />
 
-        <Input
-          value={password}
-          onChange={setPassword}
-          type='password'
-          width='100%'
-          label='Password'
-        />
+          <Input
+            value={password}
+            onChange={setPassword}
+            type='password'
+            width='100%'
+            label='Password'
+          />
 
-        <StyledButton isLoading={isLoading} onClick={handleLogin}>
-          Login
-        </StyledButton>
-      </StyledCard>
-    </Wrapper>
+          <StyledButton isLoading={isLoading} onClick={handleLogin}>
+            Login
+          </StyledButton>
+        </StyledCard>
+      </Wrapper>
+
+      <Footer />
+    </>
   )
 }
 

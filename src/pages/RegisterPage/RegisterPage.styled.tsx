@@ -5,7 +5,8 @@ import Card from '../../components/Card'
 
 export const Wrapper = styled(motion.div)`
   position: relative;
-  height: 100%;
+  min-height: 100%;
+  padding: 40px 0;
   display: grid;
   place-items: center;
 `
@@ -20,6 +21,10 @@ export const StyledCard = styled(Card)`
 
   > * + * {
     margin-top: 20px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    box-shadow: none;
   }
 `
 

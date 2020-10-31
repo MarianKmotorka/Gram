@@ -3,7 +3,7 @@ import React from 'react'
 import Routes from './components/Routes/Routes'
 import Navbar from './components/Navbar/Navbar'
 
-import { AppContent, GlobalStyles, CenteredContainer } from './App.styled'
+import { AppContent, GlobalStyles } from './App.styled'
 
 const App = () => {
   return (
@@ -13,9 +13,7 @@ const App = () => {
       <Navbar />
 
       <AppContent>
-        <CenteredContainer>
-          <Routes />
-        </CenteredContainer>
+        <Routes />
       </AppContent>
     </>
   )

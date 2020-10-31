@@ -12,6 +12,7 @@ declare module 'styled-components' {
     green: string
     white: string
     black: string
+    blackLight: string
     lightPink: string
 
     [key: string]: string
@@ -29,5 +30,6 @@ export const lightTheme: DefaultTheme = {
   green: '#59ce8f',
   white: '#ffffff',
   black: '#000000',
+  blackLight: '#000000b3',
   lightPink: '#ffebebc7',
 }

@@ -73,11 +73,10 @@ export const StyledLink = styled(Link)<{ isDark: boolean }>`
   transition: background-color 0.2s;
 
   background-color: ${({ theme, isDark }) =>
-    isDark ? lightenColor(theme.black, 0.7) : theme.redLight};
+    isDark ? theme.blackLight : theme.redLight};
 
   :hover {
-    background: ${({ theme, isDark }) =>
-      isDark ? theme.redLight : lightenColor(theme.black, 0.7)};
+    background: ${({ theme, isDark }) => (isDark ? theme.redLight : theme.blackLight)};
   }
 
   i {
@@ -127,7 +126,7 @@ export const StyledMenuIcon = styled(BurgerMenuIcon)`
   background-color: ${({ theme }) => theme.redLight};
 
   :hover {
-    background-color: ${({ theme }) => theme.black};
+    background-color: ${({ theme }) => theme.blackLight};
   }
 
   @media only screen and (max-width: 900px) {

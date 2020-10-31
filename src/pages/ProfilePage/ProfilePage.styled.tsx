@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import Button from '../../components/Button/Button'
+import { CenteredContainer } from '../../components/CenteredContainer'
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(CenteredContainer)`
   height: 100%;
   position: relative;
   padding-top: 15px;
