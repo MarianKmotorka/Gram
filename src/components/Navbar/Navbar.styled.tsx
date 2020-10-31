@@ -117,16 +117,21 @@ export const DropdownRow = styled.div`
 
 export const StyledMenuIcon = styled(BurgerMenuIcon)`
   display: none;
+  height: 100%;
   cursor: pointer;
   font-size: 22px;
   margin-left: auto;
   padding: 0 20px;
 
+  color: ${({ theme }) => theme.white};
+  background-color: ${({ theme }) => theme.redLight};
+
   :hover {
-    color: ${({ theme }) => theme.red};
+    background-color: ${({ theme }) => theme.black};
   }
 
   @media only screen and (max-width: 900px) {
-    display: block;
+    display: flex;
+    align-items: center;
   }
 `
