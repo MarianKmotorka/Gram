@@ -39,7 +39,7 @@ export const ImageContainer = styled.div`
 `
 
 export const Image = styled.img`
-  max-width: 100vw;
+  max-width: 100%;
   max-height: 65vh;
 `
 

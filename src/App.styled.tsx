@@ -40,9 +40,9 @@ export const GlobalStyles = createGlobalStyle`
 
   body > div {
    height: 100vh;
-   overflow: auto;
    background: ${({ theme }) => theme.bg};
    overflow-x: hidden;
+   overflow-y: auto;
  }
 
   p, h1, h2, h3, h4, h5, h6 {
@@ -54,8 +54,12 @@ export const GlobalStyles = createGlobalStyle`
   }
 }
 
+input, textarea{
+  -webkit-appearance:none; // fixes box-shadow on input element for ios
+}
+
 #portal{
-  position:fixed;
+  position:absolute;
   width:0;
   height:0;
   top:0;
