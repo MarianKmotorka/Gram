@@ -52,10 +52,10 @@ export const Copyright = styled(motion.p)`
 export const GithubLink = styled(motion.a)`
   i {
     font-size: 3em;
-    color: ${({ theme }) => theme.bg};
+    color: ${({ theme }) => theme.redLight};
   }
 
   :hover i {
-    color: ${({ theme }) => theme.blackLight};
+    color: ${({ theme }) => theme.bg};
   }
 `

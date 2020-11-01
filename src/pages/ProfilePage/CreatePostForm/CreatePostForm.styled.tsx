@@ -14,9 +14,13 @@ export const Wrapper = styled(motion.div)`
 
 export const Header = styled.header`
   border-radius: 25px 25px 0 0;
-  background: ${({ theme }) => theme.green};
+  background: ${({ theme }) => theme.blueGreenGradient};
   padding: 15px 25px;
   position: relative;
+
+  h2 {
+    color: ${({ theme }) => theme.white};
+  }
 
   button {
     position: absolute;

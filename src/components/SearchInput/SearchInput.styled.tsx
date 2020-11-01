@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { lightenColor } from '../../utils/utils'
 
 export const Wrapper = styled.div`
+  background-color: ${({ theme }) => theme.white};
   border: 1px ${({ theme }) => theme.black} solid;
   border-radius: 3px;
 
@@ -31,7 +32,7 @@ export const RowsContainer = styled(motion.div)`
   z-index: 10;
   overflow: hidden;
 
-  background-color: ${({ theme }) => theme.bg};
+  background-color: ${({ theme }) => theme.white};
   box-shadow: 0 5px 5px 1px rgba(0, 0, 0, 0.2);
 
   display: flex;

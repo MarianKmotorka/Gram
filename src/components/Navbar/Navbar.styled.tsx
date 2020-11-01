@@ -14,7 +14,7 @@ export const Wrapper = styled.nav`
   padding: 0 17.5%;
 
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
-  background-color: ${({ theme }) => theme.bg};
+  background-color: ${({ theme }) => theme.grayBlue};
 
   @media only screen and (max-width: 1250px) {
     padding: 0 10%;
@@ -26,13 +26,13 @@ export const Wrapper = styled.nav`
 `
 
 export const Logo = styled(Link)`
-  color: ${({ theme }) => theme.black};
+  color: ${({ theme }) => theme.white};
   font-size: 22px;
   margin-right: 20px;
   font-weight: 500;
 
   ::first-letter {
-    color: ${({ theme }) => theme.red};
+    color: ${({ theme }) => theme.redLight};
   }
 `
 
@@ -54,7 +54,7 @@ export const LinksContainer = styled(motion.div)`
     max-width: 400px;
     height: calc(100vh - ${NAVBAR_HEIGHT});
 
-    background: ${({ theme }) => theme.bg};
+    background: ${({ theme }) => theme.grayBlue};
     box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 10;
   }

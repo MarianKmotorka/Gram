@@ -56,7 +56,8 @@ export const Description = styled(motion.p)<{ maxWidth: number }>`
   font-weight: 300;
   padding: 15px 25px;
   max-width: ${({ maxWidth }) => maxWidth + 'px'};
-  background: ${({ theme }) => lightenColor(theme.green, 0.3)};
+  background: ${({ theme }) => theme.blueGreenGradient};
+  color: ${({ theme }) => theme.white};
 `
 
 export const ShowMore = styled.p`

@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import Button from '../../../components/Button/Button'
-import { lightenColor } from '../../../utils/utils'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -19,7 +18,7 @@ export const PhotoWrapper = styled.div`
   border-radius: 50%;
   position: relative;
   background: ${({ theme }) =>
-    `linear-gradient(180deg, ${theme.green} , ${lightenColor(theme.green, 0.2)})`};
+    `linear-gradient(180deg, ${theme.green} , ${theme.grayBlue})`};
 `
 
 export const ProfilePhoto = styled.img`
@@ -50,9 +49,16 @@ export const AboutSection = styled.section`
   flex-direction: column;
   padding: 15px;
   border-radius: 15px;
-  background-color: ${({ theme }) => lightenColor(theme.green, 0.2)};
+  color: ${({ theme }) => theme.white};
+  background: ${({ theme }) => theme.blueGreenGradient};
+
   p {
-    font-weight: 300;
+    font-weight: 200;
+    color: inherit;
+  }
+
+  i {
+    color: inherit;
   }
 
   > * + * {
@@ -61,6 +67,7 @@ export const AboutSection = styled.section`
 `
 
 export const BoldSpan = styled.span`
-  font-weight: 500;
+  font-weight: 400;
   margin-right: 10px;
+  color: ${({ theme }) => theme.redLight};
 `
