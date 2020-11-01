@@ -22,7 +22,6 @@ const Button: React.FC<IProps> = ({
   icon,
   disabled,
   loadingProgress,
-  className,
   ...rest
 }) => {
   switch (buttonType) {

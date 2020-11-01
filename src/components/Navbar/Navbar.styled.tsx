@@ -69,16 +69,22 @@ export const StyledLink = styled(Link)<{ isDark: boolean }>`
   font-size: 1.1em;
   color: ${({ theme }) => theme.white};
   transition: background-color 0.2s;
+  position: relative;
 
   background-color: ${({ theme, isDark }) =>
     isDark ? theme.blackLight : theme.redLight};
 
   :hover {
-    background: ${({ theme, isDark }) => (isDark ? theme.redLight : theme.blackLight)};
+    background: ${({ theme }) => theme.blackLight};
   }
 
-  i {
+  > * {
     color: inherit;
+    font-size: 20px;
+  }
+
+  > * + * {
+    margin-left: 7px;
   }
 
   @media only screen and (max-width: 900px) {
@@ -86,6 +92,27 @@ export const StyledLink = styled(Link)<{ isDark: boolean }>`
     height: 70px;
     text-align: center;
     padding: 20px 0;
+  }
+
+  @media only screen and (min-width: 901px) {
+    span {
+      display: none;
+    }
+
+    :hover span {
+      display: block;
+      position: absolute;
+      margin: 0;
+      padding: 10px;
+      width: 100%;
+      font-size: 18px;
+      text-align: center;
+      background: ${({ theme }) => theme.blackLight};
+
+      top: calc(100% + 10px);
+      left: 0;
+      z-index: 10;
+    }
   }
 `
 

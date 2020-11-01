@@ -54,3 +54,19 @@ export const BurgerMenuIcon: React.FC<IIconProps & { menuExpanded?: boolean }> =
 export const PowerOffIcon: React.FC<IIconProps> = props => (
   <Icon name='fas fa-power-off' {...props} />
 )
+
+export const IglooIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-igloo' {...props} />
+)
+
+export const UserIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-user' {...props} />
+)
+
+export const OpenLockIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-lock-open' {...props} />
+)
+
+export const PlusIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-plus' {...props} />
+)

@@ -25,6 +25,8 @@ const Navbar = () => {
   const history = useHistory()
   const { width } = useWindowSize()
 
+  const isWideScreen = width > 900
+
   const rowRenderer = (user: IUser) => (
     <DropdownRow>
       <img src={user.photoUrl || noPhotoPng} alt='user' />
@@ -49,7 +51,7 @@ const Navbar = () => {
       )}
 
       <AnimatePresence>
-        {(width > 900 || menuExpanded) && (
+        {(isWideScreen || menuExpanded) && (
           <LinksContainer
             initial={{ right: -400 }}
             animate={{ right: 0 }}
@@ -66,7 +68,7 @@ const Navbar = () => {
                     key={x.to}
                   >
                     {x.icon}
-                    {x.text}
+                    <span>{x.text}</span>
                   </StyledLink>
                 )
             )}
