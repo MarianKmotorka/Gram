@@ -46,6 +46,7 @@ export const GlobalStyles = createGlobalStyle`
   height:0;
   top:0;
   left:0;
+  z-index:1000;
 }
 
 input, textarea { // needs to stay below #portal for some reason
