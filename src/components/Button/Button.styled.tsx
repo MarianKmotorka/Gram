@@ -41,7 +41,6 @@ export const StyledPrimaryButton = styled.button<IProps>`
 
 export const StyledActionButton = styled.button<IProps>`
   font-size: 20px;
-  margin-left: 7px;
   width: 50px;
   height: 50px;
   background: transparent;

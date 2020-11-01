@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import moment from 'moment'
 
-import { ClockIcon } from '../Icons'
 import { IPost } from '../../domain'
+import Button from '../Button/Button'
 import noPhotoPng from '../../images/no-photo.png'
+import { ClockIcon, CommentsIcon, HeartIcon } from '../Icons'
 
 import {
   AuthorInfo,
@@ -16,6 +17,7 @@ import {
   ShowMore,
   Wrapper,
   AuthorName,
+  ActionBar,
 } from './FeedPost.styled'
 
 interface IFeedPostProps {
@@ -66,6 +68,11 @@ const FeedPost: React.FC<IFeedPostProps> = ({ post }) => {
         </AnimatePresence>
         <img src={post.imageUrl} alt='post' />
       </Body>
+
+      <ActionBar>
+        <Button buttonType='action' icon={<HeartIcon />} />
+        <Button buttonType='action' icon={<CommentsIcon />} />
+      </ActionBar>
     </Wrapper>
   )
 }

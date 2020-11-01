@@ -5,7 +5,7 @@ import Card from '../../components/Card'
 
 export const Wrapper = styled(motion.div)`
   position: relative;
-  height: 100%;
+  min-height: 100%;
   display: grid;
   place-items: center;
 `
@@ -17,6 +17,11 @@ export const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  background: ${({ theme }) => theme.blueGreenGradient};
+
+  label {
+    color: ${({ theme }) => theme.white};
+  }
 
   > * + * {
     margin-top: 20px;

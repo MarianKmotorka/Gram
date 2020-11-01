@@ -73,7 +73,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
             rows={4}
           />
 
-          <StyledButton isLoading={isLoading} onClick={handleRegister}>
+          <StyledButton isLoading={isLoading} onClick={handleRegister} reversed>
             Register
           </StyledButton>
         </StyledCard>

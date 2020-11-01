@@ -77,3 +77,22 @@ export const ShowMore = styled.p`
     content: ' ->';
   }
 `
+
+export const ActionBar = styled.div`
+  display: flex;
+  align-items: center;
+
+  > button {
+    border-radius: 0;
+    flex:1;
+
+    :hover {
+      background: ${({ theme }) => theme.blueGreenGradient};
+
+        i {
+          color: ${({ theme }) => theme.white};
+        }
+      }
+    }
+  }
+`

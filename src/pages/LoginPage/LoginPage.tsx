@@ -46,7 +46,7 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
             label='Password'
           />
 
-          <StyledButton isLoading={isLoading} onClick={handleLogin}>
+          <StyledButton isLoading={isLoading} onClick={handleLogin} reversed>
             Login
           </StyledButton>
         </StyledCard>

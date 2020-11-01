@@ -10,6 +10,7 @@ interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean
   reversed?: boolean
   loadingProgress?: number
+  className?: string
 }
 
 type ButtonType = 'primary' | 'action'
@@ -21,6 +22,7 @@ const Button: React.FC<IProps> = ({
   icon,
   disabled,
   loadingProgress,
+  className,
   ...rest
 }) => {
   switch (buttonType) {
