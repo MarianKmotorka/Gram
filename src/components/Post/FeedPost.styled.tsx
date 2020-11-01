@@ -19,12 +19,12 @@ export const Title = styled.h3`
 export const AuthorSection = styled.section`
   display: flex;
   align-items: center;
-  gap: 7px;
 
   img {
     border-radius: 50%;
     width: 45px;
     height: 45px;
+    margin-right: 7px;
     object-fit: cover;
     border: solid 2px ${({ theme }) => theme.green};
   }

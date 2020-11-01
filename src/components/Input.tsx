@@ -27,6 +27,7 @@ const StyledTextArea = styled.textarea`
   line-height: 30px;
   padding: 3px 10px;
   font-size: 18px;
+  width: 100%;
 
   border: 3px solid transparent;
   border-radius: 18px;
@@ -38,6 +39,7 @@ const StyledInput = styled.input`
   line-height: 30px;
   padding: 3px 10px;
   font-size: 18px;
+  width: 100%;
 
   border: 3px solid transparent;
   border-radius: 18px;

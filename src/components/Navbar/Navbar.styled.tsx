@@ -28,7 +28,6 @@ export const Wrapper = styled.nav`
 export const Logo = styled(Link)`
   color: ${({ theme }) => theme.white};
   font-size: 22px;
-  margin-right: 20px;
   font-weight: 500;
 
   ::first-letter {
@@ -88,6 +87,11 @@ export const StyledLink = styled(Link)<{ isDark: boolean }>`
     text-align: center;
     padding: 20px 0;
   }
+`
+
+export const SearchContainer = styled.div`
+  flex: 1;
+  margin: 0 15px;
 `
 
 export const DropdownRow = styled.div`

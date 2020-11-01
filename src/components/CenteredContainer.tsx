@@ -12,6 +12,11 @@ export const CenteredContainer = styled.div`
   @media only screen and (max-width: 700px) {
     max-width: 90%;
   }
+
+  @media only screen and (max-width: 400px) {
+    max-width: 100%;
+    padding: 0 5px;
+  }
 `
 
 export default CenteredContainer

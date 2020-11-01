@@ -16,6 +16,7 @@ import {
   DropdownRow,
   LinksContainer,
   StyledMenuIcon,
+  SearchContainer,
 } from './Navbar.styled'
 
 const Navbar = () => {
@@ -36,13 +37,15 @@ const Navbar = () => {
       <Logo to='/'>@GRAM</Logo>
 
       {isLoggedIn && (
-        <SearchInput<IUser>
-          searchPrefix='@'
-          filterBy='nick'
-          collectionName='users'
-          rowRenderer={rowRenderer}
-          onSelected={user => history.push(`/profile/${user.id}`)}
-        />
+        <SearchContainer>
+          <SearchInput<IUser>
+            searchPrefix='@'
+            filterBy='nick'
+            collectionName='users'
+            rowRenderer={rowRenderer}
+            onSelected={user => history.push(`/profile/${user.id}`)}
+          />
+        </SearchContainer>
       )}
 
       <AnimatePresence>

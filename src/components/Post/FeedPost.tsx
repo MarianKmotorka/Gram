@@ -25,7 +25,7 @@ interface IFeedPostProps {
 const FeedPost: React.FC<IFeedPostProps> = ({ post }) => {
   const [showMore, setShowMore] = useState(false)
 
-  const createdAt = moment(post.createdAt.toDate()).format('MMMM Do YYYY')
+  const createdAt = moment(post.createdAt.toDate()).fromNow()
 
   return (
     <Wrapper>

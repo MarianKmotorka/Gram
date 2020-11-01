@@ -5,7 +5,7 @@ import Card from '../../components/Card'
 
 export const Wrapper = styled(motion.div)`
   position: relative;
-  min-height: 100%;
+  height: 100%;
   padding: 40px 0;
   display: grid;
   place-items: center;
@@ -33,6 +33,6 @@ export const StyledButton = styled(Button)`
 `
 
 export const Title = styled.h2`
-  color: ${({ theme }) => theme.red};
+  color: ${({ theme }) => theme.redLight};
   margin-right: auto;
 `
