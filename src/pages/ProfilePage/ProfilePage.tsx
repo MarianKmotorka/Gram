@@ -5,16 +5,19 @@ import { AnimatePresence } from 'framer-motion'
 import Posts from './Posts/Posts'
 import Profile from './Profile/Profile'
 import { IPost, IUser } from '../../domain'
+import { PlusIcon } from '../../components/Icons'
+import Button from '../../components/Button/Button'
 import LoadingOverlay from '../../components/LoadingOverlay'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
-import { useFirestoreDoc, useFirestoreQuery } from '../../hooks'
+import { useFirestoreDoc, useFirestoreQuery, useWindowSize } from '../../hooks'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 
-import { CreatePostBtn, Wrapper } from './ProfilePage.styled'
+import { DraggableWrapper, Wrapper } from './ProfilePage.styled'
 
 const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   match: { params },
 }) => {
+  const { height } = useWindowSize()
   const { authUser } = useAuthContext()
   const [showCreatePostForm, setShowCreatePostForm] = useState(false)
   const [user, userLoading, userError] = useFirestoreDoc<IUser>(
@@ -41,9 +44,16 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
       <Profile user={user!} isCurrentUser={isCurrentUser} />
 
       {isCurrentUser && (
-        <CreatePostBtn onClick={() => setShowCreatePostForm(true)} reversed>
-          New post
-        </CreatePostBtn>
+        <DraggableWrapper
+          drag='y'
+          dragMomentum={false}
+          dragConstraints={{ bottom: 0, top: 200 - height }}
+        >
+          <Button onClick={() => setShowCreatePostForm(true)} reversed>
+            <PlusIcon />
+            <span>New</span>
+          </Button>
+        </DraggableWrapper>
       )}
 
       <AnimatePresence>

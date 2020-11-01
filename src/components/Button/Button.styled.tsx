@@ -8,13 +8,13 @@ interface IProps {
 
 export const StyledPrimaryButton = styled.button<IProps>`
   ${({ primaryColor = 'redLight', reversed, disabled, theme }) => {
-    const color1 = reversed ? theme[primaryColor] : theme.white
-    const color2 = reversed ? theme.white : theme[primaryColor]
+    const color1 = reversed ? theme[primaryColor] : theme.bg
+    const color2 = reversed ? theme.bg : theme[primaryColor]
 
     return css`
       outline: none;
       border-radius: 18px;
-      border: 1px solid ${theme[primaryColor]};
+      border: none;
 
       font-size: 18px;
       cursor: ${disabled ? 'auto' : 'pointer'};
