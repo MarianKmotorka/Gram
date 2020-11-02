@@ -41,12 +41,11 @@ export const GlobalStyles = createGlobalStyle`
 }
 
 #portal{
-  position:absolute;
-  width:0;
-  height:0;
+  position:fixed;
   top:0;
   left:0;
   z-index:1000;
+  background-color:transparent;
 }
 
 input, textarea { // needs to stay below #portal for some reason

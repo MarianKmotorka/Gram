@@ -6,7 +6,6 @@ import styled from 'styled-components'
 const Wrapper = styled(motion.div)`
   height: 100vh;
   width: 100vw;
-  position: fixed;
   display: grid;
   place-items: center;
   background-color: rgba(0, 0, 0, 0.3);
