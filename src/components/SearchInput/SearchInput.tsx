@@ -25,9 +25,9 @@ const SearchInput = <T extends IEntity>({
   searchPrefix,
   collectionName,
   filterBy,
-  getFirestoreQuery,
-  rowRenderer,
   onSelected,
+  rowRenderer,
+  getFirestoreQuery,
 }: ISearchInputProps<T>) => {
   const [expanded, setExpanded] = useState(false)
   const [text, setTextInternal] = useState('')
@@ -49,7 +49,7 @@ const SearchInput = <T extends IEntity>({
       return db
         .collection(collectionName)
         .where(`${propertyOf<T>(filterBy)}`, '>=', text)
-        .limit(5)
+        .limit(10)
     },
     [collectionName, filterBy, getFirestoreQuery]
   )

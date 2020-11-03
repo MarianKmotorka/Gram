@@ -57,7 +57,7 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose }) => {
   }
 
   return (
-    <Backdrop onClose={!uploading ? onClose : undefined}>
+    <Backdrop onClose={uploading ? undefined : onClose}>
       <Wrapper initial={{ y: '-50vh' }} animate={{ y: 0 }} exit={{ y: '-50vh' }}>
         <Header>
           <h2>New post</h2>
