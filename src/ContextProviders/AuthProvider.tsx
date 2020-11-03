@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import LoadingOverlay from '../components/LoadingOverlay'
+import LoadingOverlay from '../components/Loaders/LoadingOverlay'
 import { projectAuth } from '../config/firebaseConfig'
 
 interface IAuthContextValue {

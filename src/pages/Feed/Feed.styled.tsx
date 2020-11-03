@@ -10,3 +10,7 @@ export const PostsContainer = styled.div`
     margin-top: 10px;
   }
 `
+
+export const BottomDiv = styled.div`
+  height: 1px;
+`

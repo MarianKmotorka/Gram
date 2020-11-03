@@ -14,3 +14,7 @@ export const Image = styled(motion.img)`
   object-fit: cover;
   cursor: pointer;
 `
+
+export const BottomDiv = styled.div`
+  height: 1px;
+`

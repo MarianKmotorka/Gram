@@ -24,7 +24,7 @@ const usePagedQuery = <T>(
   const nextPage = () => {
     if (!hasMore) return
 
-    setGetQueryPaged((prev: any) => (db: firebase.firestore.Firestore) =>
+    setGetQueryPaged(() => (db: firebase.firestore.Firestore) =>
       getQuery(db)
         .startAfter(firebaseDocsPage[firebaseDocsPage.length - 1])
         .limit(pageSize)
@@ -35,6 +35,14 @@ const usePagedQuery = <T>(
     setDocs(prev => [...prev, ...docsPage])
     setHasMore(docsPage.length >= pageSize)
   }, [docsPage, pageSize])
+
+  useEffect(() => {
+    setDocs([])
+    setHasMore(false)
+    setGetQueryPaged(() => (db: firebase.firestore.Firestore) =>
+      getQuery(db).limit(pageSize)
+    )
+  }, [getQuery, pageSize])
 
   return [docs, loading, nextPage, hasMore, error]
 }

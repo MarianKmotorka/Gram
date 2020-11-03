@@ -7,10 +7,10 @@ import Profile from './Profile/Profile'
 import { IPost, IUser } from '../../domain'
 import { PlusIcon } from '../../components/Icons'
 import Button from '../../components/Button/Button'
-import LoadingOverlay from '../../components/LoadingOverlay'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
-import { useFirestoreDoc, useFirestoreQuery, useWindowSize } from '../../hooks'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
+import LoadingOverlay from '../../components/Loaders/LoadingOverlay'
+import { useFirestoreDoc, usePagedQuery, useWindowSize } from '../../hooks'
 
 import { DraggableWrapper, Wrapper } from './ProfilePage.styled'
 
@@ -20,10 +20,11 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   const { height } = useWindowSize()
   const { authUser } = useAuthContext()
   const [showCreatePostForm, setShowCreatePostForm] = useState(false)
+
   const [user, userLoading, userError] = useFirestoreDoc<IUser>(
     useCallback(x => x.collection('users').doc(params.userId), [params.userId])
   )
-  const [posts, postsLoading] = useFirestoreQuery<IPost>(
+  const [posts, postsLoading, loadMore] = usePagedQuery<IPost>(
     useCallback(
       x =>
         x
@@ -31,12 +32,13 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
           .where('userId', '==', params.userId)
           .orderBy('createdAt', 'desc'),
       [params.userId]
-    )
+    ),
+    6
   )
 
   const isCurrentUser = authUser?.uid === params.userId
 
-  if (postsLoading || userLoading) return <LoadingOverlay />
+  if (userLoading) return <LoadingOverlay />
   if (userError) return <p>Error loading user: {userError.message}</p>
 
   return (
@@ -62,7 +64,13 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
         )}
       </AnimatePresence>
 
-      <Posts nick={user!.nick} areMyPosts={isCurrentUser} posts={posts} />
+      <Posts
+        nick={user!.nick}
+        areMyPosts={isCurrentUser}
+        posts={posts}
+        loadMore={loadMore}
+        loading={postsLoading}
+      />
     </Wrapper>
   )
 }

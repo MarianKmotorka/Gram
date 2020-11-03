@@ -1,9 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { LoadingIcon } from '../Icons'
+
+import { NAVBAR_HEIGHT } from '../Navbar/Navbar.styled'
+
 const Overlay = styled.div`
   position: absolute;
-  top: 0;
+  top: ${NAVBAR_HEIGHT};
   bottom: 0;
   left: 0;
   right: 0;
@@ -13,15 +17,11 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000;
-
-  i {
-    color: ${({ theme }) => theme.red};
-  }
 `
 
 const LoadingOverlay = () => (
   <Overlay>
-    <i className='fas fa-circle-notch fa-2x fa-spin'></i>
+    <LoadingIcon />
   </Overlay>
 )
 

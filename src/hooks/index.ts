@@ -1,4 +1,5 @@
 export { default as useStorage } from './useStorage'
+export { default as useObserver } from './useObserver'
 export { default as useDebounce } from './useDebounce'
 export { default as useWindowSize } from './useWindowSize'
 export { default as usePagedQuery } from './usePagedQuery'

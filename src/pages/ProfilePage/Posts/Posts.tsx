@@ -1,20 +1,25 @@
 import React, { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 
-import Post from '../../../components/Post/Post'
 import { IPost } from '../../../domain'
+import { useObserver } from '../../../hooks'
+import Post from '../../../components/Post/Post'
+import LoadingRow from '../../../components/Loaders/LoadingRow'
 import { projectFirestore, projectStorage } from '../../../config/firebaseConfig'
 
-import { Grid, Image } from './Posts.styled'
+import { BottomDiv, Grid, Image } from './Posts.styled'
 
 interface IPostsProps {
   nick: string
   areMyPosts: boolean
   posts: IPost[]
+  loading?: boolean
+  loadMore: () => void
 }
 
-const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts, nick }) => {
+const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts, nick, loading, loadMore }) => {
   const [selectedPost, setSelectedPost] = useState<IPost>()
+  const observe = useObserver<HTMLDivElement>(loadMore, !loading)
 
   const handlePostDeleted = async (post: IPost) => {
     try {
@@ -53,13 +58,16 @@ const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts, nick }) => {
             key={x.id}
             src={x.imageUrl}
             onClick={() => setSelectedPost(x)}
-            layout
             whileHover={{
               scale: 0.95,
             }}
           />
         ))}
       </Grid>
+
+      {loading && <LoadingRow />}
+
+      <BottomDiv ref={observe} />
     </>
   )
 }
