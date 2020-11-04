@@ -4,8 +4,8 @@ import { IEntity } from '../domain'
 import useFirestoreQuery from './useFirestoreQuery'
 
 /**
- *
  * @param getQuery Function that returns a query, that will be run against firebase - must be ordered and wrapped in useCallback
+ * @returns [documents, isLoading, loadMore(), hasMore, refresh(), error]
  */
 const usePagedQuery = <T extends IEntity>(
   getQuery: (
@@ -54,9 +54,7 @@ const usePagedQuery = <T extends IEntity>(
 
   useEffect(() => resetState(), [resetState])
 
-  const refresh = () => resetState()
-
-  return [docs, loading, nextPage, hasMore, refresh, error]
+  return [docs, loading, nextPage, hasMore, resetState, error]
 }
 
 export default usePagedQuery

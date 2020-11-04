@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { projectFirestore } from '../config/firebaseConfig'
 
 /**
- *
  * @param getQuery Function that returns a query, that will be run against firebase - needs to be wrapped in useCallback
  * @param startFetching Starts fetching only if set to true
  */
