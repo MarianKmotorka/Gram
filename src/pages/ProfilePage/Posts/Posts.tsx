@@ -15,9 +15,17 @@ interface IPostsProps {
   posts: IPost[]
   loading?: boolean
   loadMore: () => void
+  refresh: () => void
 }
 
-const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts, nick, loading, loadMore }) => {
+const Posts: React.FC<IPostsProps> = ({
+  areMyPosts,
+  posts,
+  nick,
+  loading,
+  loadMore,
+  refresh,
+}) => {
   const [selectedPost, setSelectedPost] = useState<IPost>()
   const observe = useObserver<HTMLDivElement>(loadMore, !loading)
 
@@ -26,6 +34,7 @@ const Posts: React.FC<IPostsProps> = ({ areMyPosts, posts, nick, loading, loadMo
       await projectStorage.refFromURL(post.imageUrl).delete()
       await projectFirestore.collection('posts').doc(post.id).delete()
       setSelectedPost(undefined)
+      refresh()
     } catch (err) {
       console.log(err.response)
     }

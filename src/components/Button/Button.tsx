@@ -28,14 +28,14 @@ const Button: React.FC<IProps> = ({
     case 'action':
       return (
         <StyledActionButton {...rest} disabled={isLoading || disabled}>
-          {isLoading ? <LoadingIcon progress={loadingProgress} /> : icon}
+          {isLoading ? <LoadingIcon progress={loadingProgress} fontSize='20px' /> : icon}
         </StyledActionButton>
       )
 
     default:
       return (
         <StyledPrimaryButton {...rest} disabled={isLoading || disabled}>
-          {isLoading ? <i className='fas fa-circle-notch fa-spin'></i> : children}
+          {isLoading ? <LoadingIcon fontSize='20px' /> : children}
           {isLoading && loadingProgress !== undefined && (
             <LoadingProgress>{loadingProgress.toFixed()}</LoadingProgress>
           )}

@@ -15,17 +15,19 @@ const useFirestoreQuery = <T>(
   T[],
   boolean,
   firebase.firestore.FirestoreError | undefined,
+  () => void,
   firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]
 ] => {
   const [docs, setDocs] = useState<Array<T>>([])
   const [loading, setLoading] = useState(false)
+  const [refreshObject, setRefreshObject] = useState({})
   const [error, setError] = useState<firebase.firestore.FirestoreError | undefined>()
 
   const [firebaseDocs, setFirebaseDocs] = useState<
     firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]
   >([])
 
-  const onNext = (
+  const mapDocs = (
     snap: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
   ) => {
     let documents: any = []
@@ -42,20 +44,21 @@ const useFirestoreQuery = <T>(
     setLoading(false)
   }
 
+  const refresh = () => setRefreshObject(prev => ({ ...prev }))
+
   useEffect(() => {
     if (!startFetching) return
 
     setLoading(true)
     setError(undefined)
-    const unsub = getQuery(projectFirestore).onSnapshot(onNext, onError)
+    getQuery(projectFirestore).get().then(mapDocs).catch(onError)
 
     return () => {
-      unsub()
       setLoading(false)
     }
-  }, [getQuery, startFetching])
+  }, [getQuery, startFetching, refreshObject])
 
-  return [docs, loading, error, firebaseDocs]
+  return [docs, loading, error, refresh, firebaseDocs]
 }
 
 export default useFirestoreQuery

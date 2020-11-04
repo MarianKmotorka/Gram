@@ -54,6 +54,7 @@ export const Row = styled.div<{ fontSize?: number }>`
 
   > i {
     color: ${({ theme }) => theme.green};
+    font-size: 20px;
     margin: 0 auto;
   }
 `

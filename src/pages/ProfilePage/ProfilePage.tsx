@@ -24,7 +24,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   const [user, userLoading, userError] = useFirestoreDoc<IUser>(
     useCallback(x => x.collection('users').doc(params.userId), [params.userId])
   )
-  const [posts, postsLoading, loadMore] = usePagedQuery<IPost>(
+  const [posts, postsLoading, loadMore, , refresh] = usePagedQuery<IPost>(
     useCallback(
       x =>
         x
@@ -40,6 +40,11 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 
   if (userLoading) return <LoadingOverlay />
   if (userError) return <p>Error loading user: {userError.message}</p>
+
+  const handleCreatePostFormClosed = () => {
+    setShowCreatePostForm(false)
+    refresh()
+  }
 
   return (
     <Wrapper>
@@ -60,16 +65,17 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 
       <AnimatePresence>
         {showCreatePostForm && (
-          <CreatePostForm user={user!} onClose={() => setShowCreatePostForm(false)} />
+          <CreatePostForm user={user!} onClose={handleCreatePostFormClosed} />
         )}
       </AnimatePresence>
 
       <Posts
-        nick={user!.nick}
-        areMyPosts={isCurrentUser}
         posts={posts}
-        loadMore={loadMore}
+        nick={user!.nick}
         loading={postsLoading}
+        areMyPosts={isCurrentUser}
+        refresh={refresh}
+        loadMore={loadMore}
       />
     </Wrapper>
   )
