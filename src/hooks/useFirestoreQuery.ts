@@ -15,8 +15,8 @@ const useFirestoreQuery = <T>(
   T[],
   boolean,
   firebase.firestore.FirestoreError | undefined,
-  () => void,
-  firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]
+  firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[],
+  () => void
 ] => {
   const [docs, setDocs] = useState<Array<T>>([])
   const [loading, setLoading] = useState(false)
@@ -58,7 +58,7 @@ const useFirestoreQuery = <T>(
     }
   }, [getQuery, startFetching, refreshObject])
 
-  return [docs, loading, error, refresh, firebaseDocs]
+  return [docs, loading, error, firebaseDocs, refresh]
 }
 
 export default useFirestoreQuery

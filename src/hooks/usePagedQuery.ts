@@ -22,15 +22,12 @@ const usePagedQuery = <T extends IEntity>(
 ] => {
   const [hasMore, setHasMore] = useState(false)
   const [docs, setDocs] = useState<Array<T>>([])
+  const [getQueryPaged, setGetQueryPaged] = useState<typeof getQuery>(undefined!)
 
-  const [
+  const [docsPage, loading, error, firebaseDocsPage] = useFirestoreQuery<T>(
     getQueryPaged,
-    setGetQueryPaged,
-  ] = useState(() => (db: firebase.firestore.Firestore) => getQuery(db).limit(pageSize))
-
-  const [docsPage, loading, error, refreshInternal, firebaseDocsPage] = useFirestoreQuery<
-    T
-  >(getQueryPaged)
+    !!getQueryPaged
+  )
 
   const nextPage = () => {
     if (!hasMore) return
@@ -51,19 +48,13 @@ const usePagedQuery = <T extends IEntity>(
   }, [getQuery, pageSize])
 
   useEffect(() => {
-    setDocs(prev => [
-      ...prev,
-      ...docsPage.filter(x => !prev.map(p => p.id).includes(x.id)),
-    ])
+    setDocs(prev => [...prev, ...docsPage])
     setHasMore(docsPage.length === pageSize)
   }, [docsPage, pageSize])
 
   useEffect(() => resetState(), [resetState])
 
-  const refresh = () => {
-    resetState()
-    refreshInternal()
-  }
+  const refresh = () => resetState()
 
   return [docs, loading, nextPage, hasMore, refresh, error]
 }
