@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { BurgerMenuIcon } from '../Icons'
 
 export const NAVBAR_HEIGHT = '66px'
+export const NAVBAR_HEIGHT_NUMBER = 66
 
 export const Wrapper = styled.nav`
   display: flex;

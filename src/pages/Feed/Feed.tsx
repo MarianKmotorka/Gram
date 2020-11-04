@@ -2,15 +2,17 @@ import React, { useCallback } from 'react'
 
 import { IPost } from '../../domain'
 import FeedPost from '../../components/Post/FeedPost'
-import { useObserver, usePagedQuery } from '../../hooks'
+import { useNotifyError, useObserver, usePagedQuery } from '../../hooks'
 import LoadingRow from '../../components/Loaders/LoadingRow'
 
 import { BottomDiv, PostsContainer, Wrapper } from './Feed.styled'
 
 const Feed: React.FC = () => {
-  const [posts, loading, nextPage, hasMore] = usePagedQuery<IPost>(
+  const [posts, loading, nextPage, hasMore, , error] = usePagedQuery<IPost>(
     useCallback(db => db.collection('posts').orderBy('createdAt', 'desc'), [])
   )
+
+  useNotifyError(error)
 
   const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !loading)
 

@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
-import { projectFirestore, projectStorage } from '../../../config/firebaseConfig'
+
 import { IPost, IUser } from '../../../domain'
-import { useStorage } from '../../../hooks'
 import { propertyOf } from '../../../utils/utils'
+import { useNotifyError, useStorage } from '../../../hooks'
+import { projectFirestore, projectStorage } from '../../../config/firebaseConfig'
+import { useApiErrorContext } from '../../../contextProviders/ApiErrorProvider'
 
 const useUploadNewPhoto = (
   file: File | null,
@@ -10,9 +12,12 @@ const useUploadNewPhoto = (
   oldPhotoUrl?: string | null
 ) => {
   const [uploading, setUploading] = useState(false)
-  const { progress, url: newPhotoUrl } = useStorage(file, uploading, {
+  const { progress, url: newPhotoUrl, error: uploadError } = useStorage(file, uploading, {
     maxWidthOrHeight: 500,
   })
+
+  const { setError } = useApiErrorContext()
+  useNotifyError(uploadError && { code: uploadError.name, message: uploadError.message })
 
   const updateExistingPosts = useCallback(async () => {
     const postsSnapshot = await projectFirestore
@@ -29,7 +34,12 @@ const useUploadNewPhoto = (
 
   useEffect(() => {
     const deleteOldPhotoAndUpdateUser = async () => {
-      if (oldPhotoUrl) await projectStorage.refFromURL(oldPhotoUrl).delete()
+      if (oldPhotoUrl) {
+        await projectStorage
+          .refFromURL(oldPhotoUrl)
+          .delete()
+          .catch(() => setError({ message: 'problem with deleting old photo' }))
+      }
 
       await projectFirestore
         .doc(`users/${userId}`)
@@ -40,7 +50,7 @@ const useUploadNewPhoto = (
     }
 
     if (newPhotoUrl && newPhotoUrl !== oldPhotoUrl) deleteOldPhotoAndUpdateUser()
-  }, [newPhotoUrl, oldPhotoUrl, file, userId, updateExistingPosts])
+  }, [newPhotoUrl, oldPhotoUrl, file, userId, updateExistingPosts, setError])
 
   return { uploading, progress, startUploading: () => setUploading(true) }
 }

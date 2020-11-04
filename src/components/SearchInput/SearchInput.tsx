@@ -5,7 +5,12 @@ import { IEntity } from '../../domain'
 import MessageStripe from '../MessageStripe'
 import { propertyOf } from '../../utils/utils'
 import { LoadingIcon, SearchIcon } from '../Icons'
-import { useFirestoreQuery, useDebounce, useOnClickOutside } from '../../hooks'
+import {
+  useDebounce,
+  useNotifyError,
+  useOnClickOutside,
+  useFirestoreQuery,
+} from '../../hooks'
 
 import { Wrapper, StyledInput, RowsContainer, Row } from './SearchInput.styled'
 
@@ -58,6 +63,8 @@ const SearchInput = <T extends IEntity>({
     useCallback(db => getQuery(debouncedText, db), [getQuery, debouncedText]),
     expanded
   )
+
+  useNotifyError(error)
 
   const setText = (value: string) => {
     if (!searchPrefix) setTextInternal(value)

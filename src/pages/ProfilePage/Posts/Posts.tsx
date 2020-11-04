@@ -6,6 +6,7 @@ import { useObserver } from '../../../hooks'
 import Post from '../../../components/Post/Post'
 import LoadingRow from '../../../components/Loaders/LoadingRow'
 import { projectFirestore, projectStorage } from '../../../config/firebaseConfig'
+import { useApiErrorContext } from '../../../contextProviders/ApiErrorProvider'
 
 import { BottomDiv, Grid, Image } from './Posts.styled'
 
@@ -28,16 +29,13 @@ const Posts: React.FC<IPostsProps> = ({
 }) => {
   const [selectedPost, setSelectedPost] = useState<IPost>()
   const observe = useObserver<HTMLDivElement>(loadMore, !loading)
+  const { setError } = useApiErrorContext()
 
   const handlePostDeleted = async (post: IPost) => {
-    try {
-      await projectStorage.refFromURL(post.imageUrl).delete()
-      await projectFirestore.collection('posts').doc(post.id).delete()
-      setSelectedPost(undefined)
-      refresh()
-    } catch (err) {
-      console.log(err.response)
-    }
+    await projectStorage.refFromURL(post.imageUrl).delete().catch(setError)
+    await projectFirestore.collection('posts').doc(post.id).delete().catch(setError)
+    setSelectedPost(undefined)
+    refresh()
   }
 
   return (

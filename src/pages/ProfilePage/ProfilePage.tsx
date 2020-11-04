@@ -10,7 +10,12 @@ import Button from '../../components/Button/Button'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 import LoadingOverlay from '../../components/Loaders/LoadingOverlay'
-import { useFirestoreDoc, usePagedQuery, useWindowSize } from '../../hooks'
+import {
+  useFirestoreDoc,
+  useNotifyError,
+  usePagedQuery,
+  useWindowSize,
+} from '../../hooks'
 
 import { DraggableWrapper, Wrapper } from './ProfilePage.styled'
 
@@ -36,10 +41,12 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
     6
   )
 
+  useNotifyError(userError)
+
   const isCurrentUser = authUser?.uid === params.userId
 
   if (userLoading) return <LoadingOverlay />
-  if (userError) return <p>Error loading user: {userError.message}</p>
+  if (userError) return <></>
 
   const handleCreatePostFormClosed = () => {
     setShowCreatePostForm(false)

@@ -4,6 +4,7 @@ import Routes from './components/Routes/Routes'
 import Navbar from './components/Navbar/Navbar'
 
 import { AppContent, GlobalStyles } from './App.styled'
+import ApiErrorNotification from './components/ApiErrorNotification/ApiErrorNotification'
 
 const App = () => {
   return (
@@ -15,6 +16,8 @@ const App = () => {
       <AppContent>
         <Routes />
       </AppContent>
+
+      <ApiErrorNotification />
     </>
   )
 }
