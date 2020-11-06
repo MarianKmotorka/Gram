@@ -7,7 +7,7 @@ export const PostsContainer = styled.div`
   max-width: 600px;
   margin: 0 auto;
   > * {
-    margin-top: 10px;
+    margin-top: 15px;
   }
 `
 

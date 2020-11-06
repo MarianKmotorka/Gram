@@ -16,14 +16,15 @@ export const Wrapper = styled(motion.div)`
   max-width: 500px;
   width: calc(100% - 20px);
 
-  background-color: ${({ theme }) => lightenColor(theme.bg, 0.97)};
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2), 0 3px 8px rgba(0, 0, 0, 0.1);
+  background-color: ${({ theme }) => lightenColor(theme.white, 0.97)};
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   font-weight: 300;
+  border-radius: 5px;
 
   i {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
     cursor: pointer;
   }
 `

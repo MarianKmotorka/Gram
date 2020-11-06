@@ -22,7 +22,8 @@ const ApiErrorNotification: React.FC = () => {
           animate={{ top: NAVBAR_HEIGHT_NUMBER + 20 }}
           exit={{ top: -100 }}
         >
-          <Title>Error</Title> {error.code && <Bold>{error.code}:</Bold>}
+          <Title>Error</Title>
+          {error.code && <Bold>{error.code}:</Bold>}
           <p>{error.message}</p>
           <CloseIcon onClick={removeError} />
         </Wrapper>

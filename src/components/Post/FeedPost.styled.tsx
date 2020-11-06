@@ -4,8 +4,10 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   width: 100%;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
   background-color: ${({ theme }) => theme.white};
+  border-radius: 30px;
+  overflow: hidden;
 `
 
 export const Header = styled.div`
@@ -81,18 +83,17 @@ export const ShowMore = styled.p`
 export const ActionBar = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
 
   > button {
-    border-radius: 0;
-    flex:1;
+    border-radius: 30px;
+    margin: 5px 10px 10px;
+    width: 100px;
+
+    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1);
 
     :hover {
-      background: ${({ theme }) => theme.blueGreenGradient};
-
-        i {
-          color: ${({ theme }) => theme.white};
-        }
-      }
+      box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1) inset;
     }
   }
 `
