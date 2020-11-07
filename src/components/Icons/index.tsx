@@ -18,7 +18,7 @@ export const LoadingIcon: React.FC<IIconProps & { progress?: number }> = ({
   ...rest
 }) =>
   progress === undefined ? (
-    <Icon name='fas fa-circle-notch fa-spin' color='redLight' fontSize='30px' {...rest} />
+    <Icon name='fas fa-circle-notch fa-spin' color='accent' fontSize='30px' {...rest} />
   ) : (
     <motion.div variants={loadingProgressVariants} {...rest} animate='animate'>
       {progress.toFixed()}%

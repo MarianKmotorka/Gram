@@ -18,7 +18,7 @@ export const PhotoWrapper = styled.div`
   border-radius: 50%;
   position: relative;
   background: ${({ theme }) =>
-    `linear-gradient(180deg, ${theme.green} , ${theme.grayBlue})`};
+    `linear-gradient(180deg, ${theme.green} , ${theme.primary})`};
 `
 
 export const ProfilePhoto = styled.img`
@@ -69,5 +69,5 @@ export const AboutSection = styled.section`
 export const BoldSpan = styled.span`
   font-weight: 400;
   margin-right: 10px;
-  color: ${({ theme }) => theme.redLight};
+  color: ${({ theme }) => theme.accent};
 `

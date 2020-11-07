@@ -15,7 +15,7 @@ export const Wrapper = styled.nav`
   padding: 0 17.5%;
 
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
-  background-color: ${({ theme }) => theme.grayBlue};
+  background-color: ${({ theme }) => theme.primary};
 
   @media only screen and (max-width: 1250px) {
     padding: 0 10%;
@@ -32,7 +32,7 @@ export const Logo = styled(Link)`
   font-weight: 500;
 
   ::first-letter {
-    color: ${({ theme }) => theme.redLight};
+    color: ${({ theme }) => theme.accent};
   }
 `
 
@@ -54,7 +54,7 @@ export const LinksContainer = styled(motion.div)`
     max-width: 400px;
     height: calc(100vh - ${NAVBAR_HEIGHT});
 
-    background: ${({ theme }) => theme.grayBlue};
+    background: ${({ theme }) => theme.primary};
     box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 10;
   }
@@ -72,8 +72,7 @@ export const StyledLink = styled(Link)<{ isDark: boolean }>`
   transition: background-color 0.2s;
   position: relative;
 
-  background-color: ${({ theme, isDark }) =>
-    isDark ? theme.blackLight : theme.redLight};
+  background-color: ${({ theme, isDark }) => (isDark ? theme.blackLight : theme.accent)};
 
   :hover {
     background: ${({ theme }) => theme.blackLight};
@@ -154,7 +153,7 @@ export const StyledMenuIcon = styled(BurgerMenuIcon)`
   padding: 0 20px;
 
   color: ${({ theme }) => theme.white};
-  background-color: ${({ theme }) => theme.redLight};
+  background-color: ${({ theme }) => theme.accent};
 
   :hover {
     background-color: ${({ theme }) => theme.blackLight};

@@ -72,7 +72,7 @@ const FeedPost: React.FC<IFeedPostProps> = ({ post, onLikeClick, isLiked }) => {
 
       <ActionBar>
         <button onClick={async () => await onLikeClick(post)}>
-          {isLiked ? <HeartFilledIcon color='redLight' /> : <HeartIcon />}
+          {isLiked ? <HeartFilledIcon color='accent' /> : <HeartIcon />}
           <span>{post.likes ? post.likes.length : 0}</span>
         </button>
 

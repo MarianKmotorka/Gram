@@ -50,7 +50,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
 
   return (
     <>
-      <Wrapper initial={{ scale: 0.2 }} animate={{ scale: 1 }}>
+      <Wrapper>
         <StyledCard bg='white'>
           <Title>Register</Title>
 

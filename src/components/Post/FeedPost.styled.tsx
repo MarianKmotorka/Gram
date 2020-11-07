@@ -59,7 +59,7 @@ export const Body = styled.div`
 `
 
 export const Description = styled(motion.p)`
-  background: ${({ theme }) => theme.grayBlue};
+  background: ${({ theme }) => theme.primary};
   padding: 20px;
 
   color: ${({ theme }) => theme.white};
@@ -99,12 +99,12 @@ export const ActionBar = styled.div`
     cursor: pointer;
 
     box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1);
-    color: ${({ theme }) => theme.grayBlue};
+    color: ${({ theme }) => theme.primary};
 
     :hover {
       box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1) inset;
-      background: ${({ theme }) => theme.greenLight};
-      color: ${({ theme }) => theme.grayBlue};
+      background: ${({ theme }) => theme.accent2};
+      color: ${({ theme }) => theme.primary};
     }
 
     span,

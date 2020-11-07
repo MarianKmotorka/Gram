@@ -14,7 +14,7 @@ export const getLinksConfig = (userId: string | undefined) => [
     icon: <PlusIcon />,
     to: '/register',
     isLoggedIn: false,
-    isDark: true,
+    isDark: false,
   },
   {
     text: 'HOME',

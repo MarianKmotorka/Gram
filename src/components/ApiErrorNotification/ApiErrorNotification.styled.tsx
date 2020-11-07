@@ -32,7 +32,7 @@ export const Wrapper = styled(motion.div)`
 export const Title = styled.h3`
   margin-right: auto;
   font-size: 1.3em;
-  color: ${({ theme }) => theme.redLight};
+  color: ${({ theme }) => theme.accent};
 `
 
 export const Bold = styled.span`

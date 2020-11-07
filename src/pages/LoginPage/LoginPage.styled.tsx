@@ -1,9 +1,8 @@
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
 import Button from '../../components/Button/Button'
 import Card from '../../components/Card'
 
-export const Wrapper = styled(motion.div)`
+export const Wrapper = styled.div`
   position: relative;
   min-height: 100%;
   display: grid;
@@ -17,10 +16,12 @@ export const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  background: ${({ theme }) => theme.blueGreenGradient};
+  border-radius: 30px;
+  background: ${({ theme }) => theme.white};
+  box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.5), 6px 6px 10px rgba(0, 0, 0, 0.1);
 
   label {
-    color: ${({ theme }) => theme.white};
+    color: ${({ theme }) => theme.primary};
   }
 
   > * + * {
@@ -37,6 +38,6 @@ export const StyledButton = styled(Button)`
 `
 
 export const Title = styled.h2`
-  color: ${({ theme }) => theme.redLight};
+  color: ${({ theme }) => theme.accent};
   margin-right: auto;
 `

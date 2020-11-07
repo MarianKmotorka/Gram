@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { CenteredContainer } from '../CenteredContainer'
 
 export const Wrapper = styled.div`
-  background: ${({ theme }) => theme.blackLight};
+  background: #222222;
   width: 100%;
 `
 
@@ -30,7 +30,7 @@ export const Logo = styled(motion.div)`
   border-radius: 15px;
 
   ::first-letter {
-    color: ${({ theme }) => theme.redLight};
+    color: ${({ theme }) => theme.accent};
   }
 `
 
@@ -45,14 +45,14 @@ export const Copyright = styled(motion.p)`
   cursor: pointer;
 
   ::first-letter {
-    color: ${({ theme }) => theme.redLight};
+    color: ${({ theme }) => theme.accent};
   }
 `
 
 export const GithubLink = styled(motion.a)`
   i {
     font-size: 3em;
-    color: ${({ theme }) => theme.redLight};
+    color: ${({ theme }) => theme.accent};
   }
 
   :hover i {
