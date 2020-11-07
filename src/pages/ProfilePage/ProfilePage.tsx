@@ -48,7 +48,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   if (userLoading) return <LoadingOverlay />
   if (userError) return <></>
 
-  const handleCreatePostFormClosed = () => {
+  const handlePostCreated = () => {
     setShowCreatePostForm(false)
     refresh()
   }
@@ -72,7 +72,11 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 
       <AnimatePresence>
         {showCreatePostForm && (
-          <CreatePostForm user={user!} onClose={handleCreatePostFormClosed} />
+          <CreatePostForm
+            user={user!}
+            onPostCreated={handlePostCreated}
+            onClose={() => setShowCreatePostForm(false)}
+          />
         )}
       </AnimatePresence>
 

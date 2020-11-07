@@ -19,9 +19,10 @@ import {
 interface ICreatePostProps {
   user: IUser
   onClose: Required<IBackdropProps>['onClose']
+  onPostCreated: () => void
 }
 
-const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose }) => {
+const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreated }) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [validationError, setValidationError] = useState('')
@@ -36,7 +37,7 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose }) => {
       userNick: user.nick,
       userPhotoUrl: user.photoUrl,
     },
-    onClose
+    onPostCreated
   )
 
   const handleSelectFile = () => {

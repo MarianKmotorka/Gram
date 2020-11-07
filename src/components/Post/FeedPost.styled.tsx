@@ -86,14 +86,32 @@ export const ActionBar = styled.div`
   justify-content: center;
 
   > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 30px;
     margin: 5px 10px 10px;
     width: 100px;
 
     box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1);
+    color: ${({ theme }) => theme.grayBlue};
 
     :hover {
       box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1) inset;
+      background: ${({ theme }) => theme.greenLight};
+      color: ${({ theme }) => theme.grayBlue};
+    }
+
+    i,
+    span,
+    :hover i,
+    :hover span {
+      color: inherit;
+    }
+
+    span {
+      font-size: smaller;
+      margin-left: 5px;
     }
   }
 `

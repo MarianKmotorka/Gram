@@ -70,8 +70,15 @@ const FeedPost: React.FC<IFeedPostProps> = ({ post }) => {
       </Body>
 
       <ActionBar>
-        <Button buttonType='action' icon={<HeartIcon />} />
-        <Button buttonType='action' icon={<CommentsIcon />} />
+        <Button>
+          <HeartIcon />
+          <span>12</span>
+        </Button>
+
+        <Button>
+          <CommentsIcon />
+          <span>933</span>
+        </Button>
       </ActionBar>
     </Wrapper>
   )
