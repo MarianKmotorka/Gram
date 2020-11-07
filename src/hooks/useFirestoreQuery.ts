@@ -18,7 +18,7 @@ const useFirestoreQuery = <T>(
   () => void
 ] => {
   const [docs, setDocs] = useState<Array<T>>([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(startFetching)
   const [refreshObject, setRefreshObject] = useState({})
   const [error, setError] = useState<firebase.firestore.FirestoreError | undefined>()
 
