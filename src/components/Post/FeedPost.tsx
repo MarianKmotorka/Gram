@@ -3,9 +3,8 @@ import { AnimatePresence } from 'framer-motion'
 import moment from 'moment'
 
 import { IPost } from '../../domain'
-import Button from '../Button/Button'
 import noPhotoPng from '../../images/no-photo.png'
-import { ClockIcon, CommentsIcon, HeartIcon } from '../Icons'
+import { ClockIcon, CommentsIcon, HeartFilledIcon, HeartIcon } from '../Icons'
 
 import {
   AuthorInfo,
@@ -22,9 +21,11 @@ import {
 
 interface IFeedPostProps {
   post: IPost
+  isLiked: boolean
+  onLikeClick: (post: IPost) => Promise<void>
 }
 
-const FeedPost: React.FC<IFeedPostProps> = ({ post }) => {
+const FeedPost: React.FC<IFeedPostProps> = ({ post, onLikeClick, isLiked }) => {
   const [showMore, setShowMore] = useState(false)
 
   const createdAt = moment(post.createdAt.toDate()).fromNow()
@@ -70,15 +71,15 @@ const FeedPost: React.FC<IFeedPostProps> = ({ post }) => {
       </Body>
 
       <ActionBar>
-        <Button>
-          <HeartIcon />
-          <span>12</span>
-        </Button>
+        <button onClick={async () => await onLikeClick(post)}>
+          {isLiked ? <HeartFilledIcon color='redLight' /> : <HeartIcon />}
+          <span>{post.likes ? post.likes.length : 0}</span>
+        </button>
 
-        <Button>
+        <button>
           <CommentsIcon />
-          <span>933</span>
-        </Button>
+          <span>-1</span>
+        </button>
       </ActionBar>
     </Wrapper>
   )

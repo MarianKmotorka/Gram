@@ -11,6 +11,11 @@ export interface IPost extends IEntity {
   userId: string
   userNick: string
   userPhotoUrl: string | null
+
+  /**
+   * Array of user nicks who liked the post
+   */
+  likes?: Array<string>
 }
 
 export interface IUser extends IEntity {

@@ -1,10 +1,13 @@
-import React, { createContext, useState, useEffect, useContext } from 'react'
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react'
 import LoadingOverlay from '../components/Loaders/LoadingOverlay'
 import { projectAuth } from '../config/firebaseConfig'
+import { IUser } from '../domain'
+import { useFirestoreDoc } from '../hooks'
 
 interface IAuthContextValue {
   isLoggedIn: boolean
   authUser: firebase.User | null
+  currentUser: IUser | undefined
   projectAuth: firebase.auth.Auth
 }
 
@@ -14,6 +17,10 @@ export const useAuthContext = () => useContext(AuthContext)
 const AuthProvider: React.FC = ({ children }) => {
   const [authUser, setUser] = useState<IAuthContextValue['authUser']>(null)
   const [loading, setLoading] = useState(true)
+  const [currentUser, currentUserLoading] = useFirestoreDoc<IUser>(
+    useCallback(x => x.doc(`users/${authUser!.uid}`), [authUser]),
+    !!authUser
+  )
 
   useEffect(() => {
     const unsub = projectAuth.onAuthStateChanged(async usr => {
@@ -23,11 +30,12 @@ const AuthProvider: React.FC = ({ children }) => {
     return () => unsub()
   }, [])
 
-  if (loading) return <LoadingOverlay />
+  if (loading || currentUserLoading) return <LoadingOverlay />
 
   const value = {
     isLoggedIn: !!authUser,
     authUser,
+    currentUser,
     projectAuth,
   }
 

@@ -89,9 +89,14 @@ export const ActionBar = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    outline: none;
+    border: none;
+    padding: 8px 20px;
     border-radius: 30px;
+    font-size: 18px;
     margin: 5px 10px 10px;
     width: 100px;
+    cursor: pointer;
 
     box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1);
     color: ${({ theme }) => theme.grayBlue};
@@ -102,14 +107,9 @@ export const ActionBar = styled.div`
       color: ${({ theme }) => theme.grayBlue};
     }
 
-    i,
     span,
-    :hover i,
     :hover span {
       color: inherit;
-    }
-
-    span {
       font-size: smaller;
       margin-left: 5px;
     }

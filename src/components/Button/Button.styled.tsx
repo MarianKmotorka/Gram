@@ -13,8 +13,8 @@ export const StyledPrimaryButton = styled.button<IProps>`
 
     return css`
       outline: none;
-      border-radius: 18px;
       border: none;
+      border-radius: 18px;
 
       font-size: 18px;
       cursor: ${disabled ? 'auto' : 'pointer'};

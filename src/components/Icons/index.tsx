@@ -37,6 +37,10 @@ export const HeartIcon: React.FC<IIconProps> = props => (
   <Icon name='far fa-heart' {...props} />
 )
 
+export const HeartFilledIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-heart' {...props} />
+)
+
 export const CommentsIcon: React.FC<IIconProps> = props => (
   <Icon name='fas fa-comment-dots' {...props} />
 )

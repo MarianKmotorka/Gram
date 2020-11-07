@@ -1,7 +1,7 @@
-import * as firebase from "firebase/app"
-import "firebase/storage"
-import "firebase/firestore"
-import "firebase/auth"
+import * as firebase from 'firebase/app'
+import 'firebase/storage'
+import 'firebase/firestore'
+import 'firebase/auth'
 
 var firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -19,5 +19,6 @@ const projectStorage = firebase.storage()
 const projectFirestore = firebase.firestore()
 const projectAuth = firebase.auth()
 const getTimestamp = firebase.firestore.FieldValue.serverTimestamp
+const FieldValue = firebase.firestore.FieldValue
 
-export { projectStorage, projectFirestore, projectAuth, getTimestamp }
+export { projectStorage, projectFirestore, projectAuth, getTimestamp, FieldValue }

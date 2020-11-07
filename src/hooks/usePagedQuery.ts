@@ -18,7 +18,8 @@ const usePagedQuery = <T extends IEntity>(
   () => void,
   boolean,
   () => void,
-  firebase.firestore.FirestoreError | undefined
+  firebase.firestore.FirestoreError | undefined,
+  (modifiedDoc: T) => void
 ] => {
   const [hasMore, setHasMore] = useState(false)
   const [docs, setDocs] = useState<Array<T>>([])
@@ -54,7 +55,16 @@ const usePagedQuery = <T extends IEntity>(
 
   useEffect(() => resetState(), [resetState])
 
-  return [docs, loading, nextPage, hasMore, resetState, error]
+  const modifyDoc = (modifiedDoc: T) => {
+    setDocs(prev =>
+      prev.map(x => {
+        if (x.id === modifiedDoc.id) return { ...modifiedDoc }
+        else return x
+      })
+    )
+  }
+
+  return [docs, loading, nextPage, hasMore, resetState, error, modifyDoc]
 }
 
 export default usePagedQuery
