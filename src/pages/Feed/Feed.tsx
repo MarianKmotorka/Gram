@@ -5,7 +5,7 @@ import { IPost } from '../../domain'
 import FeedPost from '../../components/Post/FeedPost'
 import LoadingRow from '../../components/Loaders/LoadingRow'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
-import { FieldValue, projectFirestore } from '../../config/firebaseConfig'
+import { FieldValue, projectFirestore } from '../../firebase/firebaseConfig'
 import { useNotifyError, useObserver, usePagedQuery } from '../../hooks'
 import noPhoto from '../../images/no-photo.png'
 
@@ -33,8 +33,7 @@ const Feed: React.FC = () => {
 
   const handleLikeClicked = async (post: IPost) => {
     const { arrayUnion, arrayRemove } = FieldValue
-    const likes = post.likes || []
-    const isLiked = likes.includes(currentUser!.nick) || false
+    const isLiked = post.likes.includes(currentUser!.nick) || false
     const arrayOperation = isLiked ? arrayRemove : arrayUnion
 
     await projectFirestore
@@ -42,8 +41,8 @@ const Feed: React.FC = () => {
       .update({ likes: arrayOperation(currentUser!.nick) })
 
     const newLikes = isLiked
-      ? likes.filter(x => x !== currentUser!.nick)
-      : [...likes, currentUser!.nick]
+      ? post.likes.filter(x => x !== currentUser!.nick)
+      : [...post.likes, currentUser!.nick]
 
     modifyPost({ ...post, likes: newLikes })
   }
@@ -57,17 +56,16 @@ const Feed: React.FC = () => {
           onClick={() => history.push(`/profile/${currentUser?.id}`)}
         />
         <Nick>{currentUser?.nick}</Nick>
-
         <CardSeparator />
-
         <Stat>
-          <b>followed by:</b>-
+          <b>followed by:</b>0
         </Stat>
         <Stat>
-          <b>following:</b>-
+          <b>following:</b>0
         </Stat>
         <Stat>
-          <b>#posts:</b>-
+          <b>#posts:</b>
+          {currentUser?.postCount}
         </Stat>
       </SideCard>
 

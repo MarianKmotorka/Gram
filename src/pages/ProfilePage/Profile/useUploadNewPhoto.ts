@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { IPost, IUser } from '../../../domain'
 import { propertyOf } from '../../../utils/utils'
 import { useNotifyError, useStorage } from '../../../hooks'
-import { projectFirestore, projectStorage } from '../../../config/firebaseConfig'
+import { projectFirestore, projectStorage } from '../../../firebase/firebaseConfig'
 import { useApiErrorContext } from '../../../contextProviders/ApiErrorProvider'
 
 const useUploadNewPhoto = (

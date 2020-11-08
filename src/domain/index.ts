@@ -10,17 +10,18 @@ export interface IPost extends IEntity {
 
   userId: string
   userNick: string
-  userPhotoUrl: string | null
+  userPhotoUrl?: string
 
   /**
    * Array of user nicks who liked the post
    */
-  likes?: Array<string>
+  likes: Array<string>
 }
 
 export interface IUser extends IEntity {
   nick: string
   createdAt: firebase.firestore.Timestamp
   aboutMe?: string
-  photoUrl: string | null
+  photoUrl?: string
+  postCount: number
 }

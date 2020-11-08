@@ -1,4 +1,4 @@
-import { projectFirestore } from '../../config/firebaseConfig'
+import { projectFirestore } from '../../firebase/firebaseConfig'
 import { IRegisterUserModel } from './IRegisterUserModel'
 
 interface IValidationResult {

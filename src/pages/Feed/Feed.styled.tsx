@@ -25,7 +25,7 @@ export const BottomDiv = styled.div`
 export const SideCard = styled.div`
   background-color: ${({ theme }) => theme.white};
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
-  height: 400px;
+  height: 370px;
   min-width: 250px;
   width: 300px;
   overflow: hidden;
@@ -55,7 +55,7 @@ export const ProfilePhoto = styled.img`
 `
 
 export const CardTop = styled.div`
-  height: 65px;
+  height: 75px;
   width: 100%;
   background-color: ${({ theme }) => theme.primary};
 `

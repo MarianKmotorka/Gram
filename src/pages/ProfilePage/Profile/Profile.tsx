@@ -3,16 +3,23 @@ import moment from 'moment'
 import { IUser } from '../../../domain'
 import useUploadNewPhoto from './useUploadNewPhoto'
 import noPhotoPng from '../../../images/no-photo.png'
-import { ClockIcon, EditIcon } from '../../../components/Icons'
+import {
+  ClockIcon,
+  EditIcon,
+  UserSecretIcon,
+  BlindManIcon,
+  EnvelopeIcon,
+} from '../../../components/Icons'
 
 import {
   ProfilePhoto,
   Wrapper,
   Nick,
-  BoldSpan,
+  Bold,
   AboutSection,
   PhotoWrapper,
   EditPhotoButton,
+  InfoCard,
 } from './Profile.styled'
 
 interface IProfileProps {
@@ -64,23 +71,46 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
       <Nick>{user.nick}</Nick>
 
       <AboutSection>
-        {user.aboutMe && (
+        <InfoCard>
           <p>
-            <BoldSpan>
-              <EditIcon margin='0 3px 0 0' />
-              About me:
-            </BoldSpan>
+            <Bold>
+              <EditIcon />
+              <span>About me:</span>
+            </Bold>
             {user.aboutMe}
           </p>
-        )}
+        </InfoCard>
 
-        <p>
-          <BoldSpan>
-            <ClockIcon margin='0 3px 0 0' />
-            Account created:
-          </BoldSpan>
-          {moment(user.createdAt.toDate()).format('MMMM Do YYYY')}
-        </p>
+        <InfoCard>
+          <p>
+            <Bold>
+              <EnvelopeIcon />
+              <span>Posts:</span>
+            </Bold>
+            {user.postCount}
+          </p>
+          <p>
+            <Bold>
+              <BlindManIcon />
+              <span>Following:</span>
+            </Bold>
+            {0}
+          </p>
+          <p>
+            <Bold>
+              <UserSecretIcon />
+              <span>Followed by:</span>
+            </Bold>
+            {0}
+          </p>
+          <p>
+            <Bold>
+              <ClockIcon />
+              <span>Account created:</span>
+            </Bold>
+            {moment(user.createdAt.toDate()).format('MMMM Do YYYY')}
+          </p>
+        </InfoCard>
       </AboutSection>
     </Wrapper>
   )

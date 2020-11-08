@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react'
 import LoadingOverlay from '../components/Loaders/LoadingOverlay'
-import { projectAuth } from '../config/firebaseConfig'
+import { projectAuth } from '../firebase/firebaseConfig'
 import { IUser } from '../domain'
 import { useFirestoreDoc } from '../hooks'
 

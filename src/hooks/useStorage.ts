@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import imageCompression from 'browser-image-compression'
 
-import { projectStorage } from '../config/firebaseConfig'
+import { projectStorage } from '../firebase/firebaseConfig'
 import { useAuthContext } from '../contextProviders/AuthProvider'
 
 interface ICompressionOptions {

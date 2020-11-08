@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 
-import { IPost } from '../../../domain'
+import { IPost, IUser } from '../../../domain'
 import { useObserver } from '../../../hooks'
 import Post from '../../../components/Post/Post'
+import { propertyOf } from '../../../utils/utils'
 import LoadingRow from '../../../components/Loaders/LoadingRow'
-import { projectFirestore, projectStorage } from '../../../config/firebaseConfig'
 import { useApiErrorContext } from '../../../contextProviders/ApiErrorProvider'
+import {
+  FieldValue,
+  projectFirestore,
+  projectStorage,
+} from '../../../firebase/firebaseConfig'
 
 import { BottomDiv, Grid, Image } from './Posts.styled'
 
@@ -32,8 +37,16 @@ const Posts: React.FC<IPostsProps> = ({
   const { setError } = useApiErrorContext()
 
   const handlePostDeleted = async (post: IPost) => {
-    await projectStorage.refFromURL(post.imageUrl).delete().catch(setError)
-    await projectFirestore.collection('posts').doc(post.id).delete().catch(setError)
+    const { increment } = FieldValue
+
+    await Promise.all([
+      projectStorage.refFromURL(post.imageUrl).delete(),
+      projectFirestore.collection('posts').doc(post.id).delete(),
+      projectFirestore
+        .doc(`users/${post.userId}`)
+        .update({ [propertyOf<IUser>('postCount')]: increment(-1) }),
+    ]).catch(setError)
+
     setSelectedPost(undefined)
     refresh()
   }

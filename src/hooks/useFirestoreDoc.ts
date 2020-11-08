@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { projectFirestore } from '../config/firebaseConfig'
+import { projectFirestore } from '../firebase/firebaseConfig'
 
 /**
  *

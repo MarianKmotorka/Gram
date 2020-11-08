@@ -46,11 +46,11 @@ export const Nick = styled.p`
 export const AboutSection = styled.section`
   width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   padding: 15px;
   border-radius: 15px;
-  color: ${({ theme }) => theme.white};
-  background: ${({ theme }) => theme.blueGreenGradient};
+  flex-wrap: wrap;
+  gap: 20px;
 
   p {
     font-weight: 200;
@@ -60,14 +60,37 @@ export const AboutSection = styled.section`
   i {
     color: inherit;
   }
+`
+
+export const Bold = styled.b`
+  font-weight: 400;
+  margin-right: 10px;
+  color: ${({ theme }) => theme.accent};
+
+  i {
+    width: 23px;
+  }
+
+  span {
+    color: inherit;
+  }
+`
+
+export const InfoCard = styled.div`
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.white};
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  min-width: 360px;
+  min-height: 150px;
+  max-width: 600px;
+  flex: 1;
 
   > * + * {
     margin-top: 15px;
   }
-`
 
-export const BoldSpan = styled.span`
-  font-weight: 400;
-  margin-right: 10px;
-  color: ${({ theme }) => theme.accent};
+  @media only screen and (max-width: 400px) {
+    min-width: 200px;
+  }
 `

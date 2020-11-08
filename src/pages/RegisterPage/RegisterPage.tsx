@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
+import { IUser } from '../../domain'
+import { validate } from './validator'
 import Input from '../../components/Input'
 import Footer from '../../components/Footer/Footer'
 import MessageStripe from '../../components/MessageStripe'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
-import { getTimestamp, projectFirestore } from '../../config/firebaseConfig'
-import { validate } from './validator'
+import { getTimestamp, projectFirestore } from '../../firebase/firebaseConfig'
 
 import { StyledCard, StyledButton, Title, Wrapper } from './RegisterPage.styled'
 
@@ -33,14 +34,16 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
 
     await projectAuth
       .createUserWithEmailAndPassword(email, password)
-      .then(
-        ({ user }) =>
-          user &&
-          projectFirestore
-            .collection('users')
-            .doc(user.uid)
-            .set({ nick, aboutMe, createdAt: getTimestamp() })
-      )
+      .then(({ user }) => {
+        const newUser: Omit<IUser, 'id'> = {
+          nick,
+          aboutMe,
+          postCount: 0,
+          createdAt: getTimestamp() as firebase.firestore.Timestamp,
+        }
+
+        user && projectFirestore.collection('users').doc(user.uid).set(newUser)
+      })
       .then(() => history.replace('/'))
       .catch(err => {
         setIsLoading(false)

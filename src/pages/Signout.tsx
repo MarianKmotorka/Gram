@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { projectAuth } from '../config/firebaseConfig'
+import { projectAuth } from '../firebase/firebaseConfig'
 
 const Signout = () => {
   const history = useHistory()
