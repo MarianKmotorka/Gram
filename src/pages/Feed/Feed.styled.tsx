@@ -24,7 +24,7 @@ export const BottomDiv = styled.div`
 
 export const SideCard = styled.div`
   background-color: ${({ theme }) => theme.white};
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
   height: 370px;
   min-width: 250px;
   width: 300px;
@@ -65,6 +65,7 @@ export const Nick = styled.h3`
     color: ${({ theme }) => theme.green};
   }
 
+  font-size: 1.3em;
   margin-top: -35px;
 `
 
@@ -77,8 +78,9 @@ export const CardSeparator = styled.div`
 `
 
 export const Stat = styled.p`
+  font-weight: 200;
   b {
-    font-weight: bolder;
+    font-weight: 500;
     color: ${({ theme }) => theme.accent};
     margin-right: 10px;
   }

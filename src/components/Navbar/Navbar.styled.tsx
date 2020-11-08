@@ -68,14 +68,14 @@ export const StyledLink = styled(Link)<{ isDark: boolean }>`
   width: 120px;
   padding: 0 20px;
   font-size: 1.1em;
-  color: ${({ theme }) => theme.white};
   transition: background-color 0.2s;
   position: relative;
-
-  background-color: ${({ theme, isDark }) => (isDark ? theme.blackLight : theme.accent)};
+  color: ${({ theme, isDark }) => (isDark ? theme.accent2 : theme.white)};
+  background-color: ${({ theme, isDark }) => (isDark ? theme.primary : theme.accent)};
 
   :hover {
-    background: ${({ theme }) => theme.blackLight};
+    color: ${({ theme }) => theme.accent2};
+    background-color: ${({ theme }) => theme.primary};
   }
 
   > * {
@@ -107,7 +107,8 @@ export const StyledLink = styled(Link)<{ isDark: boolean }>`
       width: 100%;
       font-size: 18px;
       text-align: center;
-      background: ${({ theme }) => theme.blackLight};
+      background: ${({ theme }) => theme.primary};
+      border-radius: 5px;
 
       top: calc(100% + 10px);
       left: 0;

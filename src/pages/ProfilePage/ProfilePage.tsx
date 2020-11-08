@@ -63,7 +63,11 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
           dragMomentum={false}
           dragConstraints={{ bottom: 0, top: 200 - height }}
         >
-          <Button onClick={() => setShowCreatePostForm(true)} reversed>
+          <Button
+            primaryColor='primary'
+            onClick={() => setShowCreatePostForm(true)}
+            reversed
+          >
             <PlusIcon />
             <span>New</span>
           </Button>

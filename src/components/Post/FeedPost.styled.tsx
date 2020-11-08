@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   width: 100%;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  box-shadow: -5px -5px 30px rgba(0, 0, 0, 0.1), 8px 8px 10px rgba(0, 0, 0, 0.1);
   background-color: ${({ theme }) => theme.white};
   border-radius: 30px;
   overflow: hidden;

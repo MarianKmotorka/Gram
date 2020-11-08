@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 import Button from '../../components/Button/Button'
 import Card from '../../components/Card'
+import pattern from '../../images/patternpad.svg'
 
 export const Wrapper = styled.div`
   position: relative;
   min-height: 100%;
   display: grid;
   place-items: center;
+  background-image: url(${pattern});
 `
 
 export const StyledCard = styled(Card)`
@@ -18,7 +20,8 @@ export const StyledCard = styled(Card)`
   align-items: flex-end;
   border-radius: 30px;
   background: ${({ theme }) => theme.white};
-  box-shadow: 6px 6px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 2px 2px 3px rgba(0, 0, 0, 0.1) inset,
+    5px 5px 50px rgba(0, 0, 0, 0.1);
 
   label {
     color: ${({ theme }) => theme.primary};

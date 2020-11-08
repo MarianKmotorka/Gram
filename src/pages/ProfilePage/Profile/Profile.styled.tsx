@@ -1,10 +1,15 @@
 import styled from 'styled-components'
 import Button from '../../../components/Button/Button'
+import pattern from '../../../images/patternpad2.svg'
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  > div:first-of-type {
+    background-image: url(${pattern});
+  }
 
   > * {
     margin-top: 20px;
@@ -17,6 +22,7 @@ export const PhotoWrapper = styled.div`
   padding: 3px;
   border-radius: 50%;
   position: relative;
+  margin: 0 auto;
   background: ${({ theme }) =>
     `linear-gradient(180deg, ${theme.green} , ${theme.primary})`};
 `
@@ -26,7 +32,6 @@ export const ProfilePhoto = styled.img`
   width: 100%;
   object-fit: cover;
   border-radius: 50%;
-  border: solid 5px ${({ theme }) => theme.bg};
 `
 
 export const EditPhotoButton = styled(Button)`
@@ -36,8 +41,9 @@ export const EditPhotoButton = styled(Button)`
 `
 
 export const Nick = styled.p`
-  font-weight: 400;
   font-size: 2em;
+  text-align: center;
+  font-weight: bolder;
   :first-letter {
     color: ${({ theme }) => theme.green};
   }
@@ -47,18 +53,22 @@ export const AboutSection = styled.section`
   width: 100%;
   display: flex;
   justify-content: space-around;
-  padding: 15px;
-  border-radius: 15px;
-  flex-wrap: wrap;
-  gap: 20px;
 
-  p {
-    font-weight: 200;
-    color: inherit;
+  > * + * {
+    margin-left: 15px;
+
+    @media only screen and (max-width: 900px) {
+      margin-left: 0;
+      margin-top: 15px;
+    }
   }
 
-  i {
-    color: inherit;
+  > div:first-of-type {
+    flex: 2;
+  }
+
+  @media only screen and (max-width: 900px) {
+    flex-direction: column;
   }
 `
 
@@ -76,6 +86,16 @@ export const Bold = styled.b`
   }
 `
 
+export const Text = styled.p`
+  font-weight: 200;
+  line-height: 30px;
+  color: inherit;
+
+  i {
+    color: inherit;
+  }
+`
+
 export const InfoCard = styled.div`
   border-radius: 20px;
   background-color: ${({ theme }) => theme.white};
@@ -83,7 +103,7 @@ export const InfoCard = styled.div`
   padding: 25px;
   min-width: 360px;
   min-height: 150px;
-  max-width: 600px;
+  width: 100%;
   flex: 1;
 
   > * + * {

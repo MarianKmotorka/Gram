@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components'
 import { lightenColor } from '../../utils/utils'
 
-interface IProps {
+export interface IButtonProps {
   primaryColor?: string
   reversed?: boolean
 }
 
-export const StyledPrimaryButton = styled.button<IProps>`
+export const StyledPrimaryButton = styled.button<IButtonProps>`
   ${({ primaryColor = 'accent', reversed, disabled, theme }) => {
     const color1 = reversed ? theme[primaryColor] : theme.bg
     const color2 = reversed ? theme.bg : theme[primaryColor]
@@ -39,7 +39,7 @@ export const StyledPrimaryButton = styled.button<IProps>`
   }}
 `
 
-export const StyledActionButton = styled.button<IProps>`
+export const StyledActionButton = styled.button<IButtonProps>`
   font-size: 20px;
   width: 50px;
   height: 50px;

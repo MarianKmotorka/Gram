@@ -20,6 +20,7 @@ import {
   PhotoWrapper,
   EditPhotoButton,
   InfoCard,
+  Text,
 } from './Profile.styled'
 
 interface IProfileProps {
@@ -54,62 +55,64 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
         id='upload-profile-photo-file-input'
         onChange={handleInputChanged}
       />
+      <InfoCard>
+        <PhotoWrapper>
+          <ProfilePhoto src={user.photoUrl || noPhotoPng} />
 
-      <PhotoWrapper>
-        <ProfilePhoto src={user.photoUrl || noPhotoPng} />
-        {isCurrentUser && (
-          <EditPhotoButton
-            buttonType='action'
-            icon={<EditIcon />}
-            isLoading={uploading}
-            loadingProgress={progress}
-            onClick={handleEditPhotoClicked}
-          />
-        )}
-      </PhotoWrapper>
+          {isCurrentUser && (
+            <EditPhotoButton
+              buttonType='action'
+              icon={<EditIcon />}
+              isLoading={uploading}
+              loadingProgress={progress}
+              onClick={handleEditPhotoClicked}
+            />
+          )}
+        </PhotoWrapper>
 
-      <Nick>{user.nick}</Nick>
+        <Nick>{user.nick}</Nick>
+      </InfoCard>
 
       <AboutSection>
         <InfoCard>
-          <p>
+          <Text>
             <Bold>
               <EditIcon />
               <span>About me:</span>
             </Bold>
             {user.aboutMe}
-          </p>
+          </Text>
         </InfoCard>
 
         <InfoCard>
-          <p>
+          <Text>
             <Bold>
               <EnvelopeIcon />
               <span>Posts:</span>
             </Bold>
             {user.postCount}
-          </p>
-          <p>
+          </Text>
+          <Text>
             <Bold>
               <BlindManIcon />
               <span>Following:</span>
             </Bold>
             {0}
-          </p>
-          <p>
+          </Text>
+          <Text>
             <Bold>
               <UserSecretIcon />
               <span>Followed by:</span>
             </Bold>
             {0}
-          </p>
-          <p>
+          </Text>
+          <Text>
             <Bold>
               <ClockIcon />
               <span>Account created:</span>
             </Bold>
             {moment(user.createdAt.toDate()).format('MMMM Do YYYY')}
-          </p>
+          </Text>
         </InfoCard>
       </AboutSection>
     </Wrapper>

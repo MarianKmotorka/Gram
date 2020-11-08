@@ -13,6 +13,7 @@ export const Image = styled(motion.img)`
   width: 100%;
   object-fit: cover;
   cursor: pointer;
+  border-radius: 15px;
 `
 
 export const BottomDiv = styled.div`
