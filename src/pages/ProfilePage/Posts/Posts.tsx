@@ -6,6 +6,7 @@ import { useObserver } from '../../../hooks'
 import Post from '../../../components/Post/Post'
 import { propertyOf } from '../../../utils/utils'
 import LoadingRow from '../../../components/Loaders/LoadingRow'
+import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
 import { useApiErrorContext } from '../../../contextProviders/ApiErrorProvider'
 import {
   FieldValue,
@@ -13,7 +14,7 @@ import {
   projectStorage,
 } from '../../../firebase/firebaseConfig'
 
-import { BottomDiv, Grid, Image } from './Posts.styled'
+import { BottomDiv, Grid, Image, LayoutControls, VerticalSeparator } from './Posts.styled'
 
 interface IPostsProps {
   nick: string
@@ -32,6 +33,7 @@ const Posts: React.FC<IPostsProps> = ({
   loadMore,
   refresh,
 }) => {
+  const [displayGrid, setDisplayGrid] = useState(true)
   const [selectedPost, setSelectedPost] = useState<IPost>()
   const observe = useObserver<HTMLDivElement>(loadMore, !loading)
   const { setError } = useApiErrorContext()
@@ -53,6 +55,18 @@ const Posts: React.FC<IPostsProps> = ({
 
   return (
     <>
+      <LayoutControls>
+        <RoundSquareIcon
+          color={displayGrid ? 'primary' : 'accent'}
+          onClick={() => setDisplayGrid(false)}
+        />
+        <VerticalSeparator />
+        <GridIcon
+          color={displayGrid ? 'accent' : 'primary'}
+          onClick={() => setDisplayGrid(true)}
+        />
+      </LayoutControls>
+
       <AnimatePresence>
         {selectedPost && (
           <Post
@@ -72,15 +86,13 @@ const Posts: React.FC<IPostsProps> = ({
         </p>
       )}
 
-      <Grid>
+      <Grid smallScreenGrid={displayGrid}>
         {posts.map(x => (
           <Image
             key={x.id}
             src={x.imageUrl}
             onClick={() => setSelectedPost(x)}
-            whileHover={{
-              scale: 0.95,
-            }}
+            smallScreenGrid={displayGrid}
           />
         ))}
       </Grid>

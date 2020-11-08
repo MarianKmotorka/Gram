@@ -86,3 +86,11 @@ export const UserSecretIcon: React.FC<IIconProps> = props => (
 export const BlindManIcon: React.FC<IIconProps> = props => (
   <Icon name='fas fa-blind' {...props} />
 )
+
+export const GridIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-th' {...props} />
+)
+
+export const RoundSquareIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-stop' {...props} />
+)

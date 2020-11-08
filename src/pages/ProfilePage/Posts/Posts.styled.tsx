@@ -1,21 +1,70 @@
-import { motion } from 'framer-motion'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const Grid = styled.div`
+const smallScreenWidth = '600px'
+
+export const Grid = styled.div<{ smallScreenGrid: boolean }>`
   display: grid;
   grid-gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   margin-bottom: 15px;
+
+  @media only screen and (max-width: ${smallScreenWidth}) {
+    ${({ smallScreenGrid }) =>
+      smallScreenGrid &&
+      css`
+        grid-gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      `}
+  }
 `
 
-export const Image = styled(motion.img)`
+export const Image = styled.img<{ smallScreenGrid: boolean }>`
   height: 250px;
   width: 100%;
   object-fit: cover;
   cursor: pointer;
   border-radius: 15px;
+  transition: transform 0.15s;
+
+  :hover {
+    transform: scale(0.95);
+  }
+
+  @media only screen and (max-width: ${smallScreenWidth}) {
+    ${({ smallScreenGrid }) =>
+      smallScreenGrid &&
+      css`
+        height: 90px;
+      `}
+  }
 `
 
 export const BottomDiv = styled.div`
   height: 1px;
+`
+
+export const LayoutControls = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+
+  i {
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  > * + * {
+    margin-left: 15px;
+  }
+
+  @media only screen and (min-width: ${smallScreenWidth}) {
+    display: none;
+  }
+`
+
+export const VerticalSeparator = styled.div`
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 35px;
 `
