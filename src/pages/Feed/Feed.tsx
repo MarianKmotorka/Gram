@@ -6,12 +6,12 @@ import FeedPost from '../../components/Post/FeedPost'
 import LoadingRow from '../../components/Loaders/LoadingRow'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 import { FieldValue, projectFirestore } from '../../firebase/firebaseConfig'
-import { useNotifyError, useObserver, usePagedQuery } from '../../hooks'
+import { useNotifyError, useObserver, usePagedQuery, useScroll } from '../../hooks'
 import noPhoto from '../../images/no-photo.png'
 
 import {
   Stat,
-  BottomDiv,
+  DummymSpan,
   CardSeparator,
   CardTop,
   Nick,
@@ -19,7 +19,9 @@ import {
   ProfilePhoto,
   SideCard,
   Wrapper,
+  ScrollUpButton,
 } from './Feed.styled'
+import { ChevronUpIcon } from '../../components/Icons'
 
 const Feed: React.FC = () => {
   const [posts, loading, nextPage, hasMore, , error, modifyPost] = usePagedQuery<IPost>(
@@ -28,8 +30,9 @@ const Feed: React.FC = () => {
 
   useNotifyError(error)
   const history = useHistory()
-  const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !loading)
+  const [topRef, scrollUp] = useScroll()
   const { currentUser } = useAuthContext()
+  const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !loading)
 
   const handleLikeClicked = async (post: IPost) => {
     const { arrayUnion, arrayRemove } = FieldValue
@@ -70,6 +73,7 @@ const Feed: React.FC = () => {
       </SideCard>
 
       <PostsContainer>
+        <DummymSpan ref={topRef} />
         {posts.map(x => (
           <FeedPost
             post={x}
@@ -81,7 +85,11 @@ const Feed: React.FC = () => {
 
         {loading && <LoadingRow />}
 
-        <BottomDiv ref={observe} />
+        <ScrollUpButton reversed onClick={scrollUp}>
+          <ChevronUpIcon />
+        </ScrollUpButton>
+
+        <DummymSpan ref={observe} />
       </PostsContainer>
     </Wrapper>
   )

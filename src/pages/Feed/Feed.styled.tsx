@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Button from '../../components/Button/Button'
 import { CenteredContainer } from '../../components/CenteredContainer'
 
 export const Wrapper = styled(CenteredContainer)`
@@ -13,13 +14,14 @@ export const Wrapper = styled(CenteredContainer)`
 export const PostsContainer = styled.div`
   width: 100%;
   max-width: 600px;
-  > * {
+  > div + div {
     margin-top: 15px;
   }
 `
 
-export const BottomDiv = styled.div`
+export const DummymSpan = styled.span`
   height: 1px;
+  display: inline-block;
 `
 
 export const SideCard = styled.div`
@@ -31,7 +33,8 @@ export const SideCard = styled.div`
   overflow: hidden;
 
   position: sticky;
-  top: 15px;
+  top: 25px;
+  margin-top: 25px;
 
   border-radius: 20px;
   display: flex;
@@ -85,4 +88,17 @@ export const Stat = styled.p`
     margin-right: 10px;
   }
   margin: 8px auto 0 40px;
+`
+
+export const ScrollUpButton = styled(Button)`
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

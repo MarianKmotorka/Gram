@@ -94,3 +94,7 @@ export const GridIcon: React.FC<IIconProps> = props => (
 export const RoundSquareIcon: React.FC<IIconProps> = props => (
   <Icon name='fas fa-stop' {...props} />
 )
+
+export const ChevronUpIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-chevron-up' {...props} />
+)

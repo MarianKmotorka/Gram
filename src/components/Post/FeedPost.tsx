@@ -78,7 +78,7 @@ const FeedPost: React.FC<IFeedPostProps> = ({ post, onLikeClick, isLiked }) => {
 
         <button>
           <CommentsIcon />
-          <span>-1</span>
+          <span>0</span>
         </button>
       </ActionBar>
     </Wrapper>

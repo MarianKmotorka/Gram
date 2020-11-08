@@ -100,6 +100,7 @@ export const ActionBar = styled.div`
 
     box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1);
     color: ${({ theme }) => theme.primary};
+    background: ${({ theme }) => theme.white};
 
     :hover {
       box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1) inset;
