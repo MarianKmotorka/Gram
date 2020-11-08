@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import { IPost } from '../../domain'
 import FeedPost from '../../components/Post/FeedPost'
@@ -6,8 +7,19 @@ import LoadingRow from '../../components/Loaders/LoadingRow'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 import { FieldValue, projectFirestore } from '../../config/firebaseConfig'
 import { useNotifyError, useObserver, usePagedQuery } from '../../hooks'
+import noPhoto from '../../images/no-photo.png'
 
-import { BottomDiv, PostsContainer, Wrapper } from './Feed.styled'
+import {
+  Stat,
+  BottomDiv,
+  CardSeparator,
+  CardTop,
+  Nick,
+  PostsContainer,
+  ProfilePhoto,
+  SideCard,
+  Wrapper,
+} from './Feed.styled'
 
 const Feed: React.FC = () => {
   const [posts, loading, nextPage, hasMore, , error, modifyPost] = usePagedQuery<IPost>(
@@ -15,6 +27,7 @@ const Feed: React.FC = () => {
   )
 
   useNotifyError(error)
+  const history = useHistory()
   const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !loading)
   const { currentUser } = useAuthContext()
 
@@ -37,6 +50,27 @@ const Feed: React.FC = () => {
 
   return (
     <Wrapper>
+      <SideCard>
+        <CardTop />
+        <ProfilePhoto
+          src={currentUser?.photoUrl || noPhoto}
+          onClick={() => history.push(`/profile/${currentUser?.id}`)}
+        />
+        <Nick>{currentUser?.nick}</Nick>
+
+        <CardSeparator />
+
+        <Stat>
+          <b>followed by:</b>-
+        </Stat>
+        <Stat>
+          <b>following:</b>-
+        </Stat>
+        <Stat>
+          <b>#posts:</b>-
+        </Stat>
+      </SideCard>
+
       <PostsContainer>
         {posts.map(x => (
           <FeedPost

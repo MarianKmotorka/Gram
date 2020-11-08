@@ -18,7 +18,7 @@ export const StyledCard = styled(Card)`
   align-items: flex-end;
   border-radius: 30px;
   background: ${({ theme }) => theme.white};
-  box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.5), 6px 6px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 6px 6px 30px rgba(0, 0, 0, 0.1);
 
   label {
     color: ${({ theme }) => theme.primary};

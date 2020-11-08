@@ -12,7 +12,7 @@ export const Wrapper = styled.nav`
   position: relative;
   height: ${NAVBAR_HEIGHT};
   width: 100%;
-  padding: 0 17.5%;
+  padding: 0 12.5%;
 
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
   background-color: ${({ theme }) => theme.primary};

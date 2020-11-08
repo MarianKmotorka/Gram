@@ -26,7 +26,7 @@ declare module 'styled-components' {
 export const lightTheme: DefaultTheme = {
   primary: '#283e4a',
   accent: '#fc5e49',
-  bg: '#f5f5f5',
+  bg: '#fafafa',
 
   primaryText: '#000000',
   secondaryText: '#777777',

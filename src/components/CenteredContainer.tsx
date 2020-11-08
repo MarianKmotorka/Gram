@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const CenteredContainer = styled.div`
-  max-width: 65%;
+  max-width: 75%;
   margin: 0 auto;
   height: 100%;
 
