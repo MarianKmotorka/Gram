@@ -29,8 +29,8 @@ const useUplaodPost = (
         likes: post.likes,
         userId: post.userId,
         userNick: post.userNick,
-        description: post.description,
-        userPhotoUrl: post.userPhotoUrl,
+        description: post.description || '',
+        userPhotoUrl: post.userPhotoUrl || '',
         createdAt: getTimestamp() as firebase.firestore.Timestamp,
       }
 
