@@ -1,11 +1,15 @@
 import styled from 'styled-components'
 import Button from '../../components/Button/Button'
 import { CenteredContainer } from '../../components/CenteredContainer'
+import pattern from '../../images/patternpad.svg'
 
 export const Wrapper = styled(CenteredContainer)`
   display: flex;
   height: auto;
-  gap: 22px;
+
+  > div:first-of-type {
+    margin-right: 22px;
+  }
 
   @media only screen and (max-width: 1000px) {
     justify-content: center;
@@ -63,12 +67,23 @@ export const CardTop = styled.div`
   background-color: ${({ theme }) => theme.primary};
 `
 
+export const CardMiddle = styled.div`
+  background-image: url(${pattern});
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 25px;
+`
+
 export const Nick = styled.h3`
   ::first-letter {
     color: ${({ theme }) => theme.green};
   }
 
-  font-size: 1.3em;
+  font-size: 1.6em;
+  font-weight: 500;
   margin-top: -35px;
 `
 
@@ -77,7 +92,7 @@ export const CardSeparator = styled.div`
   height: 1px;
   background-color: rgba(0, 0, 0, 0.1);
 
-  margin: 25px 0 30px;
+  margin-bottom: 30px;
 `
 
 export const Stat = styled.p`

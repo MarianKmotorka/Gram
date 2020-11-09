@@ -20,6 +20,7 @@ import {
   SideCard,
   Wrapper,
   ScrollUpButton,
+  CardMiddle,
 } from './Feed.styled'
 import { ChevronUpIcon } from '../../components/Icons'
 
@@ -54,12 +55,16 @@ const Feed: React.FC = () => {
     <Wrapper>
       <SideCard>
         <CardTop />
-        <ProfilePhoto
-          src={currentUser?.photoUrl || noPhoto}
-          onClick={() => history.push(`/profile/${currentUser?.id}`)}
-        />
-        <Nick>{currentUser?.nick}</Nick>
+        <CardMiddle>
+          <ProfilePhoto
+            src={currentUser?.photoUrl || noPhoto}
+            onClick={() => history.push(`/profile/${currentUser?.id}`)}
+          />
+          <Nick>{currentUser?.nick}</Nick>
+        </CardMiddle>
+
         <CardSeparator />
+
         <Stat>
           <b>followed by:</b>0
         </Stat>
