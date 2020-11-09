@@ -14,7 +14,7 @@ export const StyledPrimaryButton = styled.button<IButtonProps>`
     return css`
       outline: none;
       border: none;
-      border-radius: 18px;
+      border-radius: 100rem;
 
       font-size: 18px;
       cursor: ${disabled ? 'auto' : 'pointer'};
