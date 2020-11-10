@@ -14,25 +14,27 @@ import {
 
 import { Wrapper, StyledInput, RowsContainer, Row } from './SearchInput.styled'
 
-interface ISearchInputProps<T extends IEntity> {
+export interface ISearchInputProps<T extends IEntity> {
   searchPrefix?: string
-  collectionName?: string
-  filterBy?: keyof T
+  onFocus?: () => void
+  onBlur?: () => void
   onSelected: (value: T) => void
   rowRenderer: (value: T) => JSX.Element
-  getFirestoreQuery?: (
-    searchText: string,
-    query: firebase.firestore.Firestore
-  ) => firebase.firestore.Query<firebase.firestore.DocumentData>
+  query:
+    | ((
+        searchText: string,
+        db: firebase.firestore.Firestore
+      ) => firebase.firestore.Query<firebase.firestore.DocumentData>)
+    | { collectionName: string; filterBy: keyof T }
 }
 
 const SearchInput = <T extends IEntity>({
   searchPrefix,
-  collectionName,
-  filterBy,
+  onBlur,
+  onFocus,
   onSelected,
   rowRenderer,
-  getFirestoreQuery,
+  query,
 }: ISearchInputProps<T>) => {
   const [expanded, setExpanded] = useState(false)
   const [text, setTextInternal] = useState('')
@@ -41,22 +43,19 @@ const SearchInput = <T extends IEntity>({
   const wrapperRef = useOnClickOutside<HTMLDivElement>(() => {
     setExpanded(false)
     setTextInternal('')
+    onBlur && onBlur()
   })
 
   const getQuery = useCallback(
     (text: string, db: firebase.firestore.Firestore) => {
-      if (getFirestoreQuery) return getFirestoreQuery(text, db)
-      if (!collectionName || !filterBy)
-        throw new Error(
-          'You must provide collectionName with filterBy parameter or getFirestoreQuery parameter.'
-        )
+      if (typeof query === 'function') return query(text, db)
 
       return db
-        .collection(collectionName)
-        .where(`${propertyOf<T>(filterBy)}`, '>=', text)
+        .collection(query.collectionName)
+        .where(`${propertyOf<T>(query.filterBy)}`, '>=', text)
         .limit(10)
     },
-    [collectionName, filterBy, getFirestoreQuery]
+    [query]
   )
 
   const [values, loading, error] = useFirestoreQuery<T>(
@@ -77,11 +76,17 @@ const SearchInput = <T extends IEntity>({
     onSelected(value)
   }
 
-  const filteredValues = filterBy
-    ? values.filter(x =>
-        `${x[filterBy]}`.toLowerCase().startsWith(debouncedText.toLowerCase())
-      )
-    : values
+  const handleFocused = () => {
+    setExpanded(true)
+    onFocus && onFocus()
+  }
+
+  const filteredValues =
+    typeof query === 'object' && query.filterBy
+      ? values.filter(x =>
+          `${x[query.filterBy]}`.toLowerCase().startsWith(debouncedText.toLowerCase())
+        )
+      : values
 
   return (
     <Wrapper ref={wrapperRef}>
@@ -89,9 +94,9 @@ const SearchInput = <T extends IEntity>({
 
       <StyledInput
         value={text}
-        onChange={e => setText(e.target.value)}
-        onFocus={() => setExpanded(true)}
         placeholder='Search...'
+        onFocus={handleFocused}
+        onChange={e => setText(e.target.value)}
       ></StyledInput>
 
       <AnimatePresence>

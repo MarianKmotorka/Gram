@@ -96,6 +96,8 @@ const Feed: React.FC = () => {
 
         <DummymSpan ref={observe} />
       </PostsContainer>
+
+      <SideCard visibility='hidden'></SideCard>
     </Wrapper>
   )
 }

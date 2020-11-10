@@ -148,6 +148,7 @@ export const DropdownRow = styled.div`
 export const StyledMenuIcon = styled(BurgerMenuIcon)`
   display: none;
   height: 100%;
+  width: 60px;
   cursor: pointer;
   font-size: 22px;
   margin-left: auto;
@@ -163,5 +164,6 @@ export const StyledMenuIcon = styled(BurgerMenuIcon)`
   @media only screen and (max-width: 900px) {
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 `

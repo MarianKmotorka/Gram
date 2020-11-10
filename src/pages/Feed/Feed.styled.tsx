@@ -6,13 +6,14 @@ import pattern from '../../images/patternpad.svg'
 export const Wrapper = styled(CenteredContainer)`
   display: flex;
   height: auto;
+  justify-content: center;
 
   > div:first-of-type {
     margin-right: 22px;
   }
 
-  @media only screen and (max-width: 1000px) {
-    justify-content: center;
+  > div:nth-of-type(3) {
+    margin-left: 22px;
   }
 `
 export const PostsContainer = styled.div`
@@ -28,7 +29,7 @@ export const DummymSpan = styled.span`
   display: inline-block;
 `
 
-export const SideCard = styled.div`
+export const SideCard = styled.div<{ visibility?: string }>`
   background-color: ${({ theme }) => theme.white};
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
   height: 370px;
@@ -41,11 +42,12 @@ export const SideCard = styled.div`
   margin-top: 25px;
 
   border-radius: 20px;
+  visibility: ${({ visibility }) => visibility || 'auto'};
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 1200px) {
     display: none;
   }
 `

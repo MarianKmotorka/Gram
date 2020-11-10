@@ -30,7 +30,7 @@ const StyledTextArea = styled.textarea`
   width: 100%;
 
   border: 3px solid transparent;
-  border-radius: 18px;
+  border-radius: 16px;
   outline: none;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 2px 2px 3px rgba(0, 0, 0, 0.1) inset;
 `
@@ -42,7 +42,7 @@ const StyledInput = styled.input`
   width: 100%;
 
   border: 3px solid transparent;
-  border-radius: 18px;
+  border-radius: 100rem;
   outline: none;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 2px 2px 3px rgba(0, 0, 0, 0.1) inset;
 `

@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.white};
   border: 1px ${({ theme }) => theme.black} solid;
   border-radius: 3px;
+  z-index: 10;
 
   display: flex;
   align-items: center;
@@ -27,9 +28,8 @@ export const StyledInput = styled(motion.input)`
 export const RowsContainer = styled(motion.div)`
   width: 100%;
   position: absolute;
-  top: calc(100% + 1px);
+  top: calc(100% - 1px);
   left: 0;
-  z-index: 10;
   overflow: hidden;
 
   background-color: ${({ theme }) => theme.white};
@@ -37,6 +37,8 @@ export const RowsContainer = styled(motion.div)`
 
   display: flex;
   flex-direction: column;
+  padding: 5px 0;
+  border-radius: 0 0 8px 8px;
 `
 
 export const Row = styled.div<{ fontSize?: number }>`

@@ -98,12 +98,12 @@ export const ActionBar = styled.div`
     width: 100px;
     cursor: pointer;
 
-    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     color: ${({ theme }) => theme.primary};
     background: ${({ theme }) => theme.white};
 
     :hover {
-      box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.1) inset;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) inset;
       background: ${({ theme }) => theme.accent2};
       color: ${({ theme }) => theme.primary};
     }

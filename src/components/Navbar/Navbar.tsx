@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom'
 
 import { IUser } from '../../domain'
 import { getLinksConfig } from './utils'
-import { useWindowSize } from '../../hooks'
+import NavbarSearch from './NavbarSearch'
+import { useOnClickOutside, useWindowSize } from '../../hooks'
 import noPhotoPng from '../../images/no-photo.png'
-import SearchInput from '../SearchInput/SearchInput'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 
 import {
@@ -16,7 +16,6 @@ import {
   DropdownRow,
   LinksContainer,
   StyledMenuIcon,
-  SearchContainer,
 } from './Navbar.styled'
 
 const Navbar = () => {
@@ -24,6 +23,7 @@ const Navbar = () => {
   const { isLoggedIn, authUser } = useAuthContext()
   const history = useHistory()
   const { width } = useWindowSize()
+  const linksRef = useOnClickOutside<HTMLDivElement>(() => setMenuExpanded(false))
 
   const isWideScreen = width > 900
 
@@ -39,15 +39,12 @@ const Navbar = () => {
       <Logo to='/'>@GRAM</Logo>
 
       {isLoggedIn && (
-        <SearchContainer>
-          <SearchInput<IUser>
-            searchPrefix='@'
-            filterBy='nick'
-            collectionName='users'
-            rowRenderer={rowRenderer}
-            onSelected={user => history.push(`/profile/${user.id}`)}
-          />
-        </SearchContainer>
+        <NavbarSearch
+          searchPrefix='@'
+          rowRenderer={rowRenderer}
+          query={{ filterBy: 'nick', collectionName: 'users' }}
+          onSelected={user => history.push(`/profile/${user.id}`)}
+        />
       )}
 
       <AnimatePresence>
@@ -57,6 +54,7 @@ const Navbar = () => {
             animate={{ right: 0 }}
             exit={{ right: -400 }}
             transition={{ type: 'spring', mass: 0.1 }}
+            ref={linksRef}
           >
             {getLinksConfig(authUser?.uid).map(
               x =>
