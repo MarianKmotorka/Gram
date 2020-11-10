@@ -23,7 +23,7 @@ const Navbar = () => {
   const { isLoggedIn, authUser } = useAuthContext()
   const history = useHistory()
   const { width } = useWindowSize()
-  const linksRef = useOnClickOutside<HTMLDivElement>(() => setMenuExpanded(false))
+  const navbarRef = useOnClickOutside<HTMLDivElement>(() => setMenuExpanded(false))
 
   const isWideScreen = width > 900
 
@@ -35,7 +35,7 @@ const Navbar = () => {
   )
 
   return (
-    <Wrapper>
+    <Wrapper ref={navbarRef}>
       <Logo to='/'>@GRAM</Logo>
 
       {isLoggedIn && (
@@ -54,7 +54,6 @@ const Navbar = () => {
             animate={{ right: 0 }}
             exit={{ right: -400 }}
             transition={{ type: 'spring', mass: 0.1 }}
-            ref={linksRef}
           >
             {getLinksConfig(authUser?.uid).map(
               x =>
