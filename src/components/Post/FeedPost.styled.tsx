@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { lightenColor } from '../../utils/utils'
+import IconButton from '../Button/IconButton'
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -12,6 +14,7 @@ export const Wrapper = styled.div`
 
 export const Header = styled.div`
   padding: 20px;
+  position: relative;
 `
 
 export const Title = styled.h3`
@@ -53,8 +56,11 @@ export const AuthorName = styled(Link)`
 `
 
 export const Body = styled.div`
+  position: relative;
+  margin-bottom: -6px;
   img {
     width: 100%;
+    cursor: pointer;
   }
 `
 
@@ -83,36 +89,49 @@ export const ShowMore = styled.p`
 export const ActionBar = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  padding: 0 10px;
+  width: 100%;
+`
+
+export const CardButton = styled.button`
+  display: flex;
+  align-items: center;
   justify-content: center;
+  outline: none;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 18px;
+  margin: 5px 10px 10px;
+  width: 100px;
+  cursor: pointer;
 
-  > button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    outline: none;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 30px;
-    font-size: 18px;
-    margin: 5px 10px 10px;
-    width: 100px;
-    cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  color: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => lightenColor(theme.white, 0.7)};
 
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    color: ${({ theme }) => theme.primary};
+  :hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) inset;
     background: ${({ theme }) => theme.white};
+    color: ${({ theme }) => theme.primary};
+  }
 
-    :hover {
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) inset;
-      background: ${({ theme }) => theme.accent2};
-      color: ${({ theme }) => theme.primary};
-    }
+  span,
+  :hover span {
+    color: inherit;
+    font-size: smaller;
+    margin-left: 5px;
+  }
+`
 
-    span,
-    :hover span {
-      color: inherit;
-      font-size: smaller;
-      margin-left: 5px;
-    }
+export const StyledIconButton = styled(IconButton)`
+  background: ${({ theme }) => theme.white};
+  font-size: 1.1rem;
+  :hover {
+    background: rgba(0, 0, 0, 0.1);
   }
 `

@@ -70,11 +70,11 @@ export const StyledLink = styled(Link)<{ isDark: boolean }>`
   font-size: 1.1em;
   transition: background-color 0.2s;
   position: relative;
-  color: ${({ theme, isDark }) => (isDark ? theme.accent2 : theme.white)};
+  color: ${({ theme }) => theme.white};
   background-color: ${({ theme, isDark }) => (isDark ? theme.primary : theme.accent)};
 
   :hover {
-    color: ${({ theme }) => theme.accent2};
+    color: ${({ theme, isDark }) => (isDark ? theme.accent : theme.white)};
     background-color: ${({ theme }) => theme.primary};
   }
 

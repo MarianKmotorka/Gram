@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { IPost } from '../../domain'
@@ -23,6 +23,7 @@ import {
   CardMiddle,
 } from './Feed.styled'
 import { ChevronUpIcon } from '../../components/Icons'
+import PostDetail from '../../components/Post/Detail/PostDetail'
 
 const Feed: React.FC = () => {
   const [posts, loading, nextPage, hasMore, , error, modifyPost] = usePagedQuery<IPost>(
@@ -31,6 +32,7 @@ const Feed: React.FC = () => {
 
   useNotifyError(error)
   const history = useHistory()
+  const [postDetail, setPostDetail] = useState<IPost>()
   const [topRef, scrollUp] = useScroll()
   const { currentUser } = useAuthContext()
   const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !loading)
@@ -52,53 +54,60 @@ const Feed: React.FC = () => {
   }
 
   return (
-    <Wrapper>
-      <SideCard>
-        <CardTop />
-        <CardMiddle>
-          <ProfilePhoto
-            src={currentUser?.photoUrl || noPhoto}
-            onClick={() => history.push(`/profile/${currentUser?.id}`)}
-          />
-          <Nick>{currentUser?.nick}</Nick>
-        </CardMiddle>
+    <>
+      {postDetail && (
+        <PostDetail post={postDetail} onClose={() => setPostDetail(undefined)} />
+      )}
 
-        <CardSeparator />
+      <Wrapper>
+        <SideCard>
+          <CardTop />
+          <CardMiddle>
+            <ProfilePhoto
+              src={currentUser?.photoUrl || noPhoto}
+              onClick={() => history.push(`/profile/${currentUser?.id}`)}
+            />
+            <Nick>{currentUser?.nick}</Nick>
+          </CardMiddle>
 
-        <Stat>
-          <b>followed by:</b>0
-        </Stat>
-        <Stat>
-          <b>following:</b>0
-        </Stat>
-        <Stat>
-          <b>#posts:</b>
-          {currentUser?.postCount}
-        </Stat>
-      </SideCard>
+          <CardSeparator />
 
-      <PostsContainer>
-        <DummymSpan ref={topRef} />
-        {posts.map(x => (
-          <FeedPost
-            post={x}
-            key={x.id}
-            onLikeClick={handleLikeClicked}
-            isLiked={x.likes?.includes(currentUser!.nick) || false}
-          />
-        ))}
+          <Stat>
+            <b>followed by:</b>0
+          </Stat>
+          <Stat>
+            <b>following:</b>0
+          </Stat>
+          <Stat>
+            <b>#posts:</b>
+            {currentUser?.postCount}
+          </Stat>
+        </SideCard>
 
-        {loading && <LoadingRow />}
+        <PostsContainer>
+          <DummymSpan ref={topRef} />
+          {posts.map(x => (
+            <FeedPost
+              post={x}
+              key={x.id}
+              onLikeClick={handleLikeClicked}
+              onOpenDetail={setPostDetail}
+              isLiked={x.likes?.includes(currentUser!.nick) || false}
+            />
+          ))}
 
-        <ScrollUpButton reversed onClick={scrollUp}>
-          <ChevronUpIcon />
-        </ScrollUpButton>
+          {loading && <LoadingRow />}
 
-        <DummymSpan ref={observe} />
-      </PostsContainer>
+          <ScrollUpButton reversed onClick={scrollUp}>
+            <ChevronUpIcon />
+          </ScrollUpButton>
 
-      <SideCard visibility='hidden'></SideCard>
-    </Wrapper>
+          <DummymSpan ref={observe} />
+        </PostsContainer>
+
+        <SideCard visibility='hidden'></SideCard>
+      </Wrapper>
+    </>
   )
 }
 

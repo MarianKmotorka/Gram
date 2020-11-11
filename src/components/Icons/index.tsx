@@ -98,3 +98,15 @@ export const RoundSquareIcon: React.FC<IIconProps> = props => (
 export const ChevronUpIcon: React.FC<IIconProps> = props => (
   <Icon name='fas fa-chevron-up' {...props} />
 )
+
+export const ChevronLeftIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-chevron-left' {...props} />
+)
+
+export const ChevronRightIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-chevron-right' {...props} />
+)
+
+export const ExpandIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-expand-alt' {...props} />
+)
