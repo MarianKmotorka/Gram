@@ -57,10 +57,10 @@ const usePagedQuery = <T extends IEntity>(
 
   useEffect(() => resetState(), [resetState])
 
-  const modifyDoc = (modifiedDoc: T) => {
+  const modifyDoc = (newDoc: T) => {
     setDocs(prev =>
       prev.map(x => {
-        if (x.id === modifiedDoc.id) return { ...modifiedDoc }
+        if (x.id === newDoc.id) return { ...newDoc }
         else return x
       })
     )

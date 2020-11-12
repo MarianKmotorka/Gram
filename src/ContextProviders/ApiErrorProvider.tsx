@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useState } from 'react'
 
-interface IError {
+export interface IError {
   code?: string
   message: string
 }
@@ -15,7 +15,7 @@ const ApiErrorContext = createContext<IApiErrorContextValue>(undefined!)
 export const useApiErrorContext = () => useContext(ApiErrorContext)
 
 const ApiErrorProvider: React.FC = ({ children }) => {
-  const [error, setError] = useState<IApiErrorContextValue['error']>(undefined)
+  const [error, setError] = useState<IError>()
 
   const value = {
     error,

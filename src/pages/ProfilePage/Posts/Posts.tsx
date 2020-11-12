@@ -1,18 +1,12 @@
 import React, { useState } from 'react'
 
-import { IPost, IUser } from '../../../domain'
+import { IPost } from '../../../domain'
 import { useObserver } from '../../../hooks'
-import { propertyOf } from '../../../utils/utils'
 import LoadingRow from '../../../components/Loaders/LoadingRow'
 import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
 import { useApiErrorContext } from '../../../contextProviders/ApiErrorProvider'
 import PostDetail from '../../../components/Post/Detail/PostDetail'
-import { isLiked } from '../../../utils/postUtils'
-import {
-  FieldValue,
-  projectFirestore,
-  projectStorage,
-} from '../../../firebase/firebaseConfig'
+import { isLiked, deletePost } from '../../../services/postService'
 
 import { BottomDiv, Grid, Image, LayoutControls, VerticalSeparator } from './Posts.styled'
 
@@ -43,16 +37,7 @@ const Posts: React.FC<IPostsProps> = ({
   const getPostById = (id: string) => posts.find(x => x.id === id)!
 
   const handlePostDeleted = async (post: IPost) => {
-    const { increment } = FieldValue
-
-    await Promise.all([
-      projectStorage.refFromURL(post.imageUrl).delete(),
-      projectFirestore.collection('posts').doc(post.id).delete(),
-      projectFirestore
-        .doc(`users/${post.userId}`)
-        .update({ [propertyOf<IUser>('postCount')]: increment(-1) }),
-    ]).catch(setError)
-
+    await deletePost(post, setError)
     setSelectedPostId(undefined)
     refresh()
   }
@@ -73,6 +58,8 @@ const Posts: React.FC<IPostsProps> = ({
 
       {selectedPostId && (
         <PostDetail
+          canDelete={areMyPosts}
+          onDelete={handlePostDeleted}
           post={getPostById(selectedPostId)}
           onClose={() => setSelectedPostId(undefined)}
           isLiked={isLiked(getPostById(selectedPostId), nick)}

@@ -10,6 +10,7 @@ import Button from '../../components/Button/Button'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
 import { useAuthContext } from '../../contextProviders/AuthProvider'
 import LoadingOverlay from '../../components/Loaders/LoadingOverlay'
+import { isLiked, likePost } from '../../services/postService'
 import {
   useFirestoreDoc,
   useNotifyError,
@@ -18,8 +19,6 @@ import {
 } from '../../hooks'
 
 import { DraggableWrapper, Wrapper } from './ProfilePage.styled'
-import { FieldValue, projectFirestore } from '../../firebase/firebaseConfig'
-import { isLiked } from '../../utils/postUtils'
 
 const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   match: { params },
@@ -51,12 +50,8 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   const isCurrentUser = currentUser?.id === params.userId
 
   const handleLiked = async (post: IPost) => {
-    const { arrayUnion, arrayRemove } = FieldValue
-    const arrayOperation = isLiked(post, currentUser!.nick) ? arrayRemove : arrayUnion
-
-    await projectFirestore
-      .doc(`posts/${post.id}`)
-      .update({ likes: arrayOperation(currentUser!.nick) })
+    const { nick } = currentUser!
+    await likePost(post, nick)
 
     const newLikes = isLiked(post, currentUser!.nick)
       ? post.likes.filter(x => x !== currentUser!.nick)

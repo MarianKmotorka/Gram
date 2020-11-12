@@ -8,7 +8,7 @@ const Wrapper = styled(motion.div)`
   width: 100vw;
   display: grid;
   place-items: center;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.7);
 `
 
 export interface IBackdropProps {

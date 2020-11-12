@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 
 import { IPost } from '../../../domain'
 import { useMouseMoving, useWindowSize } from '../../../hooks'
+import PostInfo from './PostInfo/PostInfo'
 import IconButton from '../../Button/IconButton'
 import {
   ChevronLeftIcon,
@@ -11,6 +12,7 @@ import {
   CommentsIcon,
   HeartFilledIcon,
   HeartIcon,
+  TrashIcon,
 } from '../../Icons'
 
 import {
@@ -22,16 +24,24 @@ import {
   ImageContainer,
   Wrapper,
 } from './PostDetail.styled'
-import PostInfo from './PostInfo/PostInfo'
 
 interface IPostDetailProps {
   post: IPost
   isLiked: boolean
-  onLike: () => Promise<void>
+  canDelete: boolean
   onClose: () => void
+  onLike: () => Promise<void>
+  onDelete?: (post: IPost) => Promise<void>
 }
 
-const PostDetail: FC<IPostDetailProps> = ({ post, isLiked, onClose, onLike }) => {
+const PostDetail: FC<IPostDetailProps> = ({
+  post,
+  isLiked,
+  canDelete,
+  onClose,
+  onLike,
+  onDelete,
+}) => {
   const [mouseMoving, onMouseMove] = useMouseMoving()
   const { width } = useWindowSize()
   const [expanded, setExpanded] = useState(width > 600)
@@ -74,6 +84,12 @@ const PostDetail: FC<IPostDetailProps> = ({ post, isLiked, onClose, onLike }) =>
             <BottomButton>
               <CommentsIcon color='bg' /> <span>-</span>
             </BottomButton>
+
+            {canDelete && (
+              <BottomButton onClick={() => onDelete && onDelete(post)}>
+                <TrashIcon color='accent' />
+              </BottomButton>
+            )}
           </BottomButtonsContainer>
         )}
       </ImageContainer>
