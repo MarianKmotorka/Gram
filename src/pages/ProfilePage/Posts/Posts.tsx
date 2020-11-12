@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { IPost } from '../../../domain'
+import { IPost, IUser } from '../../../domain'
 import { useObserver } from '../../../hooks'
 import LoadingRow from '../../../components/Loaders/LoadingRow'
 import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
@@ -11,20 +11,20 @@ import { isLiked, deletePost } from '../../../services/postService'
 import { BottomDiv, Grid, Image, LayoutControls, VerticalSeparator } from './Posts.styled'
 
 interface IPostsProps {
-  nick: string
-  areMyPosts: boolean
   posts: IPost[]
   loading?: boolean
+  postsOwner: IUser
+  currentUser: IUser
   loadMore: () => void
   refresh: () => void
   onLike: (post: IPost) => Promise<void>
 }
 
 const Posts: React.FC<IPostsProps> = ({
-  areMyPosts,
   posts,
-  nick,
   loading,
+  postsOwner,
+  currentUser,
   loadMore,
   refresh,
   onLike,
@@ -58,22 +58,16 @@ const Posts: React.FC<IPostsProps> = ({
 
       {selectedPostId && (
         <PostDetail
-          canDelete={areMyPosts}
+          canDelete={postsOwner.id === currentUser.id}
           onDelete={handlePostDeleted}
           post={getPostById(selectedPostId)}
           onClose={() => setSelectedPostId(undefined)}
-          isLiked={isLiked(getPostById(selectedPostId), nick)}
+          isLiked={isLiked(getPostById(selectedPostId), currentUser.nick)}
           onLike={async () => await onLike(getPostById(selectedPostId))}
         />
       )}
 
-      {posts.length === 0 && (
-        <p>
-          {areMyPosts
-            ? 'You have no posts yet ... :(('
-            : `${nick} has no posts yet ... :((`}
-        </p>
-      )}
+      {posts.length === 0 && <p>Nothing here ... :(</p>}
 
       <Grid smallScreenGrid={displayGrid}>
         {posts.map(x => (

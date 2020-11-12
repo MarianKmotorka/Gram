@@ -98,9 +98,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 
       <Posts
         posts={posts}
-        nick={user!.nick}
+        postsOwner={user!}
         loading={postsLoading}
-        areMyPosts={isCurrentUser}
+        currentUser={currentUser!}
         refresh={refresh}
         loadMore={loadMore}
         onLike={handleLiked}

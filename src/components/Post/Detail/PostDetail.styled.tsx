@@ -17,7 +17,6 @@ export const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-  }
 `
 
 export const BlurredBackground = styled.img`
@@ -42,6 +41,10 @@ export const DetailContainer = styled.div`
   min-width: 340px;
   background-color: ${({ theme }) => theme.bg};
   z-index: 3;
+
+  @media only screen and (max-width: 600px) {
+    min-width: 100%;
+  }
 `
 
 export const BottomButtonsContainer = styled.div`
