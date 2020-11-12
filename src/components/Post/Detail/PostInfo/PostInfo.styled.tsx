@@ -54,4 +54,5 @@ export const Title = styled.h2`
 export const Text = styled.p`
   font-weight: 300;
   overflow-y: auto;
+  margin-bottom: 40px;
 `

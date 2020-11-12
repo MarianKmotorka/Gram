@@ -108,6 +108,7 @@ export const CardButton = styled.button`
 export const StyledIconButton = styled(IconButton)`
   background: ${({ theme }) => theme.white};
   font-size: 1.1rem;
+  z-index: 0;
   :hover {
     background: rgba(0, 0, 0, 0.1);
   }
