@@ -3,16 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { IEntity } from '../domain'
 import useFirestoreQuery from './useFirestoreQuery'
 
-/**
- * @param getQuery Function that returns a query, that will be run against firebase - must be ordered and wrapped in useCallback
- * @returns [documents, isLoading, loadMore(), hasMore, refresh(), error]
- */
-const usePagedQuery = <T extends IEntity>(
-  getQuery: (
-    query: firebase.firestore.Firestore
-  ) => firebase.firestore.Query<firebase.firestore.DocumentData>,
-  pageSize: number = 5
-): [
+type Result<T> = [
   T[],
   boolean,
   () => void,
@@ -20,7 +11,18 @@ const usePagedQuery = <T extends IEntity>(
   () => void,
   firebase.firestore.FirestoreError | undefined,
   (modifiedDoc: T) => void
-] => {
+]
+
+/**
+ * @param getQuery Function that returns a query, that will be run against firebase - must be ordered and wrapped in useCallback
+ * @returns [documents, isLoading, loadMore(), hasMore, refresh(), error, modifyDoc(doc:T)]
+ */
+const usePagedQuery = <T extends IEntity>(
+  getQuery: (
+    query: firebase.firestore.Firestore
+  ) => firebase.firestore.Query<firebase.firestore.DocumentData>,
+  pageSize: number = 5
+): Result<T> => {
   const [hasMore, setHasMore] = useState(false)
   const [docs, setDocs] = useState<Array<T>>([])
   const [getQueryPaged, setGetQueryPaged] = useState<typeof getQuery>(undefined!)

@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { lightenColor } from '../../utils/utils'
@@ -57,32 +56,10 @@ export const AuthorName = styled(Link)`
 
 export const Body = styled.div`
   position: relative;
-  margin-bottom: -6px;
+  margin-bottom: -7px;
   img {
     width: 100%;
     cursor: pointer;
-  }
-`
-
-export const Description = styled(motion.p)`
-  background: ${({ theme }) => theme.primary};
-  padding: 20px;
-
-  color: ${({ theme }) => theme.white};
-  font-weight: lighter;
-`
-
-export const ShowMore = styled.p`
-  text-decoration: underline;
-  margin-left: 20px;
-
-  cursor: pointer;
-  :hover {
-    font-weight: 400;
-  }
-
-  ::after {
-    content: ' ->';
   }
 `
 

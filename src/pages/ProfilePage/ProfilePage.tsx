@@ -18,18 +18,20 @@ import {
 } from '../../hooks'
 
 import { DraggableWrapper, Wrapper } from './ProfilePage.styled'
+import { FieldValue, projectFirestore } from '../../firebase/firebaseConfig'
+import { isLiked } from '../../utils/postUtils'
 
 const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   match: { params },
 }) => {
   const { height } = useWindowSize()
-  const { authUser } = useAuthContext()
+  const { currentUser } = useAuthContext()
   const [showCreatePostForm, setShowCreatePostForm] = useState(false)
 
   const [user, userLoading, userError] = useFirestoreDoc<IUser>(
     useCallback(x => x.collection('users').doc(params.userId), [params.userId])
   )
-  const [posts, postsLoading, loadMore, , refresh] = usePagedQuery<IPost>(
+  const [posts, postsLoading, loadMore, , refresh, , modifyPost] = usePagedQuery<IPost>(
     useCallback(
       x =>
         x
@@ -43,10 +45,25 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 
   useNotifyError(userError)
 
-  const isCurrentUser = authUser?.uid === params.userId
-
   if (userLoading) return <LoadingOverlay />
   if (userError) return <></>
+
+  const isCurrentUser = currentUser?.id === params.userId
+
+  const handleLiked = async (post: IPost) => {
+    const { arrayUnion, arrayRemove } = FieldValue
+    const arrayOperation = isLiked(post, currentUser!.nick) ? arrayRemove : arrayUnion
+
+    await projectFirestore
+      .doc(`posts/${post.id}`)
+      .update({ likes: arrayOperation(currentUser!.nick) })
+
+    const newLikes = isLiked(post, currentUser!.nick)
+      ? post.likes.filter(x => x !== currentUser!.nick)
+      : [...post.likes, currentUser!.nick]
+
+    modifyPost({ ...post, likes: newLikes })
+  }
 
   const handlePostCreated = () => {
     setShowCreatePostForm(false)
@@ -91,6 +108,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
         areMyPosts={isCurrentUser}
         refresh={refresh}
         loadMore={loadMore}
+        onLike={handleLiked}
       />
     </Wrapper>
   )

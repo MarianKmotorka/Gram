@@ -21,8 +21,10 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const { projectAuth } = useAuthContext()
 
   function prependNickWithAt(value: string) {
-    if (!value || value[0] !== '@') return setNick('@' + value)
-    return setNick(value)
+    const lowerCaseValue = value.toLowerCase()
+
+    if (!lowerCaseValue || lowerCaseValue[0] !== '@') return setNick('@' + lowerCaseValue)
+    return setNick(lowerCaseValue)
   }
 
   async function handleRegister() {

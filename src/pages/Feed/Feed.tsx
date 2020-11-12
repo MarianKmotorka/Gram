@@ -24,6 +24,7 @@ import {
 } from './Feed.styled'
 import { ChevronUpIcon } from '../../components/Icons'
 import PostDetail from '../../components/Post/Detail/PostDetail'
+import { isLiked } from '../../utils/postUtils'
 
 const Feed: React.FC = () => {
   const [posts, loading, nextPage, hasMore, , error, modifyPost] = usePagedQuery<IPost>(
@@ -32,31 +33,33 @@ const Feed: React.FC = () => {
 
   useNotifyError(error)
   const history = useHistory()
-  const [postDetail, setPostDetail] = useState<IPost>()
+  const [postDetailId, setPostDetailId] = useState<string>()
   const [topRef, scrollUp] = useScroll()
   const { currentUser } = useAuthContext()
   const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !loading)
 
+  const getPostById = (id: string) => posts.find(x => x.id === id)!
+
   const handleLikeClicked = async (post: IPost) => {
     const { arrayUnion, arrayRemove } = FieldValue
-    const isLiked = post.likes.includes(currentUser!.nick) || false
-    const arrayOperation = isLiked ? arrayRemove : arrayUnion
+    const { nick } = currentUser!
+    const liked = isLiked(post, nick)
+    const arrayOperation = liked ? arrayRemove : arrayUnion
 
-    await projectFirestore
-      .doc(`posts/${post.id}`)
-      .update({ likes: arrayOperation(currentUser!.nick) })
-
-    const newLikes = isLiked
-      ? post.likes.filter(x => x !== currentUser!.nick)
-      : [...post.likes, currentUser!.nick]
-
+    await projectFirestore.doc(`posts/${post.id}`).update({ likes: arrayOperation(nick) })
+    const newLikes = liked ? post.likes.filter(x => x !== nick) : [...post.likes, nick]
     modifyPost({ ...post, likes: newLikes })
   }
 
   return (
     <>
-      {postDetail && (
-        <PostDetail post={postDetail} onClose={() => setPostDetail(undefined)} />
+      {postDetailId && (
+        <PostDetail
+          post={getPostById(postDetailId)}
+          onClose={() => setPostDetailId(undefined)}
+          isLiked={isLiked(getPostById(postDetailId), currentUser!.nick)}
+          onLike={() => handleLikeClicked(getPostById(postDetailId))}
+        />
       )}
 
       <Wrapper>
@@ -91,8 +94,8 @@ const Feed: React.FC = () => {
               post={x}
               key={x.id}
               onLikeClick={handleLikeClicked}
-              onOpenDetail={setPostDetail}
-              isLiked={x.likes?.includes(currentUser!.nick) || false}
+              onOpenDetail={setPostDetailId}
+              isLiked={isLiked(x, currentUser!.nick)}
             />
           ))}
 

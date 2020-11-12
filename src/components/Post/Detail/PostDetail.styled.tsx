@@ -1,10 +1,13 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
-  background-color: ${({ theme }) => theme.black};
+  height: 100vh;
   display: flex;
+  background-color: ${({ theme }) => theme.black};
 `
 
 export const ImageContainer = styled.div`
@@ -41,35 +44,34 @@ export const DetailContainer = styled.div`
   z-index: 3;
 `
 
-export const Btn = styled.div<{
-  visibility: string
-  top?: string
-  left?: string
-  right?: string
-}>`
+export const BottomButtonsContainer = styled.div`
   position: absolute;
-  top: ${({ top }) => top};
-  left: ${({ left }) => left};
-  right: ${({ right }) => right};
-  visibility: ${({ visibility }) => visibility};
+  bottom: 15px;
+  margin: 0 auto;
 
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   z-index: 4;
-  height: 45px;
-  width: 45px;
-  cursor: pointer;
+  overflow: hidden;
+  border-radius: 100vh;
+`
 
-  border-radius: 50%;
+export const BottomButton = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
-  transition: background-color 0.2s;
-
-  i {
-    color: ${({ theme }) => theme.bg};
-    font-size: 1.1rem;
-  }
+  font-size: 1.3rem;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 
   :hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(100, 100, 100, 0.5);
+  }
+
+  span {
+    font-size: 1rem;
+    color: ${({ theme }) => theme.bg};
+    margin-left: 6px;
   }
 `

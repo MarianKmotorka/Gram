@@ -7,6 +7,7 @@ interface IIconButtonProps {
   left?: string
   right?: string
   bottom?: string
+  position?: string
   icon: React.ReactNode
   onClick: () => void
 }
@@ -17,11 +18,12 @@ interface IStyledProps {
   left?: string
   right?: string
   bottom?: string
+  position?: string
 }
 
 const Container = styled.div<IStyledProps>`
-  position: ${({ top, left, bottom, right }) =>
-    top || left || bottom || right ? 'absolute' : 'static'};
+  position: ${({ top, left, bottom, right, position }) =>
+    position ? position : top || left || bottom || right ? 'absolute' : 'static'};
 
   top: ${({ top }) => top};
   left: ${({ left }) => left};
@@ -41,7 +43,7 @@ const Container = styled.div<IStyledProps>`
   transition: all 0.2s;
 
   :hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(100, 100, 100, 0.5);
   }
 `
 

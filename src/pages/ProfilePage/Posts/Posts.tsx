@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
 
 import { IPost, IUser } from '../../../domain'
 import { useObserver } from '../../../hooks'
-import Post from '../../../components/Post/Post'
 import { propertyOf } from '../../../utils/utils'
 import LoadingRow from '../../../components/Loaders/LoadingRow'
 import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
 import { useApiErrorContext } from '../../../contextProviders/ApiErrorProvider'
+import PostDetail from '../../../components/Post/Detail/PostDetail'
+import { isLiked } from '../../../utils/postUtils'
 import {
   FieldValue,
   projectFirestore,
@@ -23,6 +23,7 @@ interface IPostsProps {
   loading?: boolean
   loadMore: () => void
   refresh: () => void
+  onLike: (post: IPost) => Promise<void>
 }
 
 const Posts: React.FC<IPostsProps> = ({
@@ -32,11 +33,14 @@ const Posts: React.FC<IPostsProps> = ({
   loading,
   loadMore,
   refresh,
+  onLike,
 }) => {
   const [displayGrid, setDisplayGrid] = useState(true)
-  const [selectedPost, setSelectedPost] = useState<IPost>()
+  const [selectedPostId, setSelectedPostId] = useState<string>()
   const observe = useObserver<HTMLDivElement>(loadMore, !loading)
   const { setError } = useApiErrorContext()
+
+  const getPostById = (id: string) => posts.find(x => x.id === id)!
 
   const handlePostDeleted = async (post: IPost) => {
     const { increment } = FieldValue
@@ -49,7 +53,7 @@ const Posts: React.FC<IPostsProps> = ({
         .update({ [propertyOf<IUser>('postCount')]: increment(-1) }),
     ]).catch(setError)
 
-    setSelectedPost(undefined)
+    setSelectedPostId(undefined)
     refresh()
   }
 
@@ -67,16 +71,14 @@ const Posts: React.FC<IPostsProps> = ({
         />
       </LayoutControls>
 
-      <AnimatePresence>
-        {selectedPost && (
-          <Post
-            post={selectedPost}
-            onClose={() => setSelectedPost(undefined)}
-            onDelete={handlePostDeleted}
-            canDelete={areMyPosts}
-          />
-        )}
-      </AnimatePresence>
+      {selectedPostId && (
+        <PostDetail
+          post={getPostById(selectedPostId)}
+          onClose={() => setSelectedPostId(undefined)}
+          isLiked={isLiked(getPostById(selectedPostId), nick)}
+          onLike={async () => await onLike(getPostById(selectedPostId))}
+        />
+      )}
 
       {posts.length === 0 && (
         <p>
@@ -91,7 +93,7 @@ const Posts: React.FC<IPostsProps> = ({
           <Image
             key={x.id}
             src={x.imageUrl}
-            onClick={() => setSelectedPost(x)}
+            onClick={() => setSelectedPostId(x.id)}
             smallScreenGrid={displayGrid}
           />
         ))}
