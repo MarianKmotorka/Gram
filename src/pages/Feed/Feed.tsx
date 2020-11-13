@@ -7,7 +7,6 @@ import LoadingRow from '../../components/Loaders/LoadingRow'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { useNotifyError, useObserver, usePagedQuery, useScroll } from '../../hooks'
 import { ChevronUpIcon } from '../../components/Icons'
-import PostDetail from '../../components/Post/Detail/PostDetail'
 import { isLiked, likePost } from '../../services/postService'
 import noPhoto from '../../images/no-photo.png'
 
@@ -24,6 +23,7 @@ import {
   ScrollUpButton,
   CardMiddle,
 } from './Feed.styled'
+import PostDetailPage from '../PostDetailPage/PostDetailPage'
 
 const Feed: React.FC = () => {
   const [posts, loading, nextPage, hasMore, , error, modifyPost] = usePagedQuery<IPost>(
@@ -54,10 +54,9 @@ const Feed: React.FC = () => {
   return (
     <>
       {selectedPostId && (
-        <PostDetail
-          post={getPostById(selectedPostId)}
+        <PostDetailPage
+          postId={selectedPostId}
           onClose={() => setSelectedPostId(undefined)}
-          isLiked={isLiked(getPostById(selectedPostId), currentUser.nick)}
           onLike={() => handleLikeClicked(getPostById(selectedPostId))}
           canDelete={false}
         />

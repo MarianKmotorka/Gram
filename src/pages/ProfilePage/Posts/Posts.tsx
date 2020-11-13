@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 
 import { IPost, IUser } from '../../../domain'
 import { useObserver } from '../../../hooks'
+import { deletePost } from '../../../services/postService'
 import LoadingRow from '../../../components/Loaders/LoadingRow'
+import PostDetailPage from '../../PostDetailPage/PostDetailPage'
 import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
 import { useApiErrorContext } from '../../../contextProviders/ApiErrorProvider'
-import PostDetail from '../../../components/Post/Detail/PostDetail'
-import { isLiked, deletePost } from '../../../services/postService'
 
 import { BottomDiv, Grid, Image, LayoutControls, VerticalSeparator } from './Posts.styled'
 
@@ -44,6 +44,16 @@ const Posts: React.FC<IPostsProps> = ({
 
   return (
     <>
+      {selectedPostId && (
+        <PostDetailPage
+          postId={selectedPostId}
+          canDelete={postsOwner.id === currentUser.id}
+          onDelete={handlePostDeleted}
+          onClose={() => setSelectedPostId(undefined)}
+          onLike={async () => await onLike(getPostById(selectedPostId))}
+        />
+      )}
+
       <LayoutControls>
         <RoundSquareIcon
           color={displayGrid ? 'primary' : 'accent'}
@@ -55,17 +65,6 @@ const Posts: React.FC<IPostsProps> = ({
           onClick={() => setDisplayGrid(true)}
         />
       </LayoutControls>
-
-      {selectedPostId && (
-        <PostDetail
-          canDelete={postsOwner.id === currentUser.id}
-          onDelete={handlePostDeleted}
-          post={getPostById(selectedPostId)}
-          onClose={() => setSelectedPostId(undefined)}
-          isLiked={isLiked(getPostById(selectedPostId), currentUser.nick)}
-          onLike={async () => await onLike(getPostById(selectedPostId))}
-        />
-      )}
 
       {posts.length === 0 && <p>Nothing here ... :(</p>}
 

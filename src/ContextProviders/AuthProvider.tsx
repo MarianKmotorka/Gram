@@ -32,9 +32,9 @@ const AuthProvider: React.FC = ({ children }) => {
   const [authUser, setAuthUser] = useState<firebase.User>()
   const [showSpinner, setShowSpinner] = useState(true)
 
-  const userResponse = useFirestoreDoc<IUser>(
+  const [userResponse] = useFirestoreDoc<IUser>(
     useCallback(x => x.doc(`users/${authUser!.uid}`), [authUser]),
-    !!authUser
+    { startFetching: !!authUser }
   )
 
   useEffect(() => {

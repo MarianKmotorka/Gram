@@ -1,13 +1,54 @@
 import React, { FC } from 'react'
 
-import { Wrapper } from './PostDetailPage.styled'
+import { useFirestoreDoc } from '../../hooks'
+import PostDetailLoadingSkeleton from '../../components/Post/Detail/PostDetailLoadingSkeleton'
+
+import { IPost } from '../../domain'
+import PostDetail from '../../components/Post/Detail/PostDetail'
+import { useApiErrorContext } from '../../contextProviders/ApiErrorProvider'
+import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 
 interface IPostDetailPageProps {
   postId: string
+  canDelete: boolean
+  onClose: () => void
+  onLike: () => Promise<void>
+  onDelete?: (post: IPost) => Promise<void>
 }
 
-const PostDetailPage: FC<IPostDetailPageProps> = ({ postId }) => {
-  return <Wrapper></Wrapper>
+const PostDetailPage: FC<IPostDetailPageProps> = ({
+  postId,
+  onClose,
+  onLike,
+  ...rest
+}) => {
+  const { setError } = useApiErrorContext()
+  const { currentUser } = useAuthorizedUser()
+  const [response, { refresh }] = useFirestoreDoc<IPost>(`posts/${postId}`, {
+    realTime: false,
+  })
+
+  const handleLiked = async () => {
+    await onLike()
+    refresh()
+  }
+
+  if (response.loading) return <PostDetailLoadingSkeleton />
+  if (response.error) {
+    setError(response.error)
+    onClose()
+    return <></>
+  }
+
+  return (
+    <PostDetail
+      {...rest}
+      isLiked={response.data.likes.includes(currentUser.nick)}
+      onClose={onClose}
+      post={response.data}
+      onLike={handleLiked}
+    />
+  )
 }
 
 export default PostDetailPage

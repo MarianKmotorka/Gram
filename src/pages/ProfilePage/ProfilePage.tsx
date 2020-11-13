@@ -8,13 +8,13 @@ import { IPost, IUser } from '../../domain'
 import { PlusIcon } from '../../components/Icons'
 import Button from '../../components/Button/Button'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
-import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
-import LoadingOverlay from '../../components/Loaders/LoadingOverlay'
 import { isLiked, likePost } from '../../services/postService'
+import LoadingOverlay from '../../components/Loaders/LoadingOverlay'
+import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { useFirestoreDoc, usePagedQuery, useWindowSize } from '../../hooks'
+import ErrorWhileLoadingData from '../../components/Loaders/ErrorWhileLoadingData'
 
 import { DraggableWrapper, Wrapper } from './ProfilePage.styled'
-import ErrorWhileLoadingData from '../../components/Loaders/ErrorWhileLoadingData'
 
 const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   match: { params },
@@ -23,9 +23,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   const { currentUser } = useAuthorizedUser()
   const [showCreatePostForm, setShowCreatePostForm] = useState(false)
 
-  const userResponse = useFirestoreDoc<IUser>(
-    useCallback(x => x.collection('users').doc(params.userId), [params.userId])
-  )
+  const [userResponse] = useFirestoreDoc<IUser>(`users/${params.userId}`)
   const [posts, postsLoading, loadMore, , refresh, postsErr, modifyPost] = usePagedQuery<
     IPost
   >(
