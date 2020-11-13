@@ -12,6 +12,7 @@ import {
   CommentsIcon,
   HeartFilledIcon,
   HeartIcon,
+  LoadingIcon,
   TrashIcon,
 } from '../../Icons'
 
@@ -44,10 +45,17 @@ const PostDetail: FC<IPostDetailProps> = ({
 }) => {
   const [mouseMoving, onMouseMove] = useMouseMoving()
   const { width } = useWindowSize()
+  const [deleting, setDeleting] = useState(false)
   const [expanded, setExpanded] = useState(width > 600)
 
   const visibility = mouseMoving ? 'visible' : 'hidden'
   const showBottomBtns = mouseMoving && (width > 600 || !expanded)
+
+  const handleDeleted = async () => {
+    if (!onDelete || deleting) return
+    setDeleting(true)
+    await onDelete(post)
+  }
 
   const component = (
     <Wrapper onMouseMove={onMouseMove}>
@@ -86,8 +94,12 @@ const PostDetail: FC<IPostDetailProps> = ({
             </BottomButton>
 
             {canDelete && (
-              <BottomButton onClick={() => onDelete && onDelete(post)}>
-                <TrashIcon color='accent' />
+              <BottomButton onClick={handleDeleted}>
+                {deleting ? (
+                  <LoadingIcon color='accent' fontSize='20px' />
+                ) : (
+                  <TrashIcon color='accent' />
+                )}
               </BottomButton>
             )}
           </BottomButtonsContainer>

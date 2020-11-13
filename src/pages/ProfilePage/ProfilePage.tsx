@@ -30,7 +30,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   const [user, userLoading, userError] = useFirestoreDoc<IUser>(
     useCallback(x => x.collection('users').doc(params.userId), [params.userId])
   )
-  const [posts, postsLoading, loadMore, , refresh, , modifyPost] = usePagedQuery<IPost>(
+  const [posts, postsLoading, loadMore, , refresh, error, modifyPost] = usePagedQuery<
+    IPost
+  >(
     useCallback(
       x =>
         x
@@ -41,8 +43,8 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
     ),
     6
   )
-
   useNotifyError(userError)
+  useNotifyError(error)
 
   if (userLoading) return <LoadingOverlay />
   if (userError) return <></>
