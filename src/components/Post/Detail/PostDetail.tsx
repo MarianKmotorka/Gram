@@ -6,6 +6,7 @@ import { IPost } from '../../../domain'
 import { useMouseMoving, useWindowSize } from '../../../hooks'
 import PostInfo from './PostInfo/PostInfo'
 import IconButton from '../../Button/IconButton'
+import Likes from './Likes/Likes'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -119,7 +120,7 @@ const PostDetail: FC<IPostDetailProps> = ({
             </TabView.Item>
 
             <TabView.Item name='Likes'>
-              <h3>LIKES</h3>
+              <Likes likes={post.likes} />
             </TabView.Item>
           </TabView.Container>
         </DetailContainer>

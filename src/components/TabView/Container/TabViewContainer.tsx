@@ -20,7 +20,7 @@ const TabViewContainer: FC = ({ children }) => {
     <Wrapper>
       <TabsWrapper>
         {tabNames.map(x => (
-          <Tab active={x === selectedName} onClick={() => setSelectedName(x)}>
+          <Tab key={x} active={x === selectedName} onClick={() => setSelectedName(x)}>
             {x}
           </Tab>
         ))}
