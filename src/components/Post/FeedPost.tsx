@@ -13,7 +13,6 @@ import {
   Title,
   Wrapper,
   AuthorName,
-  ActionBar,
   StyledIconButton,
   CardButton,
 } from './FeedPost.styled'
@@ -60,12 +59,10 @@ const FeedPost: React.FC<IFeedPostProps> = ({
       <Body>
         <img src={post.imageUrl} alt='post' onClick={() => onOpenDetail(post.id)} />
 
-        <ActionBar>
-          <CardButton onClick={async () => await onLikeClick(post)}>
-            {isLiked ? <HeartFilledIcon color='accent' /> : <HeartIcon />}
-            <span>{post.likes ? post.likes.length : 0}</span>
-          </CardButton>
-        </ActionBar>
+        <CardButton onClick={async () => await onLikeClick(post)}>
+          {isLiked ? <HeartFilledIcon color='accent' /> : <HeartIcon />}
+          <span>{post.likes ? post.likes.length : 0}</span>
+        </CardButton>
       </Body>
     </Wrapper>
   )

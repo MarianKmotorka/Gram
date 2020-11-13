@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { IPost } from '../../domain'
 import FeedPost from '../../components/Post/FeedPost'
 import LoadingRow from '../../components/Loaders/LoadingRow'
-import { useAuthContext } from '../../contextProviders/AuthProvider'
+import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { useNotifyError, useObserver, usePagedQuery, useScroll } from '../../hooks'
 import { ChevronUpIcon } from '../../components/Icons'
 import PostDetail from '../../components/Post/Detail/PostDetail'
@@ -34,13 +34,14 @@ const Feed: React.FC = () => {
   const history = useHistory()
   const [selectedPostId, setSelectedPostId] = useState<string>()
   const [topRef, scrollUp] = useScroll()
-  const { currentUser } = useAuthContext()
+  const { currentUser } = useAuthorizedUser()
   const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !loading)
 
+  // REMOVE GET POST BY ID -> replace selectedPostId with selectedPost
   const getPostById = (id: string) => posts.find(x => x.id === id)!
 
   const handleLikeClicked = async (post: IPost) => {
-    const { nick } = currentUser!
+    const { nick } = currentUser
     await likePost(post, nick)
 
     const newLikes = isLiked(post, nick)
@@ -56,7 +57,7 @@ const Feed: React.FC = () => {
         <PostDetail
           post={getPostById(selectedPostId)}
           onClose={() => setSelectedPostId(undefined)}
-          isLiked={isLiked(getPostById(selectedPostId), currentUser!.nick)}
+          isLiked={isLiked(getPostById(selectedPostId), currentUser.nick)}
           onLike={() => handleLikeClicked(getPostById(selectedPostId))}
           canDelete={false}
         />
@@ -67,10 +68,10 @@ const Feed: React.FC = () => {
           <CardTop />
           <CardMiddle>
             <ProfilePhoto
-              src={currentUser?.photoUrl || noPhoto}
-              onClick={() => history.push(`/profile/${currentUser?.id}`)}
+              src={currentUser.photoUrl || noPhoto}
+              onClick={() => history.push(`/profile/${currentUser.id}`)}
             />
-            <Nick>{currentUser?.nick}</Nick>
+            <Nick>{currentUser.nick}</Nick>
           </CardMiddle>
 
           <CardSeparator />
@@ -83,7 +84,7 @@ const Feed: React.FC = () => {
           </Stat>
           <Stat>
             <b>#posts:</b>
-            {currentUser?.postCount}
+            {currentUser.postCount}
           </Stat>
         </SideCard>
 
@@ -95,7 +96,7 @@ const Feed: React.FC = () => {
               key={x.id}
               onLikeClick={handleLikeClicked}
               onOpenDetail={setSelectedPostId}
-              isLiked={isLiked(x, currentUser!.nick)}
+              isLiked={isLiked(x, currentUser.nick)}
             />
           ))}
 

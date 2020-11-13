@@ -64,17 +64,6 @@ export const Body = styled.div`
   }
 `
 
-export const ActionBar = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  padding: 0 10px;
-  width: 100%;
-`
-
 export const CardButton = styled.button`
   display: flex;
   align-items: center;
@@ -87,6 +76,10 @@ export const CardButton = styled.button`
   margin: 5px 10px 10px;
   width: 100px;
   cursor: pointer;
+
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
 
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   color: ${({ theme }) => theme.primary};

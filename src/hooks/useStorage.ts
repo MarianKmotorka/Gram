@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import imageCompression from 'browser-image-compression'
 
 import { projectStorage } from '../firebase/firebaseConfig'
-import { useAuthContext } from '../contextProviders/AuthProvider'
+import { useAuthorizedUser } from '../contextProviders/AuthProvider'
 
 interface ICompressionOptions {
   maxSizeMB?: number
@@ -22,13 +22,16 @@ const useStorage = (
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState<Error | null>(null)
   const [url, setUrl] = useState<string | null>(null)
-  const { authUser } = useAuthContext()
+  const auth = useAuthorizedUser()
 
   useEffect(() => {
     let unsub: Function = () => {}
 
     const upload = async () => {
-      const storageRef = projectStorage.ref(`${authUser?.uid}${Date.now()}${file!.name}`)
+      const storageRef = projectStorage.ref(
+        `${auth.authUser.uid}${Date.now()}${file!.name}`
+      )
+
       const compressedFile = await imageCompression(
         file!,
         compressionOptions || defaultOptions
@@ -46,7 +49,7 @@ const useStorage = (
 
     return () => unsub()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [file, authUser, startUpload, JSON.stringify(compressionOptions)])
+  }, [file, auth, startUpload, JSON.stringify(compressionOptions)])
 
   return { progress, url, error }
 }

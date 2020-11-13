@@ -1,7 +1,7 @@
 import React from 'react'
 import { PowerOffIcon, IglooIcon, OpenLockIcon, PlusIcon, UserIcon } from '../Icons'
 
-export const getLinksConfig = (userId: string | undefined) => [
+export const getLinksConfig = (userId: string) => [
   {
     text: 'LOGIN',
     icon: <OpenLockIcon />,

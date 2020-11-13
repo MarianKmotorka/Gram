@@ -1,45 +1,65 @@
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react'
-import LoadingOverlay from '../components/Loaders/LoadingOverlay'
-import { projectAuth } from '../firebase/firebaseConfig'
 import { IUser } from '../domain'
 import { useFirestoreDoc } from '../hooks'
+import { projectAuth } from '../firebase/firebaseConfig'
+import LoadingOverlay from '../components/Loaders/LoadingOverlay'
+import ErrorWhileLoadingData from '../components/Loaders/ErrorWhileLoadingData'
 
-interface IAuthContextValue {
-  isLoggedIn: boolean
-  authUser: firebase.User | null
-  currentUser: IUser | undefined
-  projectAuth: firebase.auth.Auth
-}
+type AuthContextValue =
+  | { isLoggedIn: false; projectAuth: firebase.auth.Auth }
+  | {
+      isLoggedIn: true
+      authUser: firebase.User
+      currentUser: IUser
+      projectAuth: firebase.auth.Auth
+    }
 
-const AuthContext = createContext<IAuthContextValue>(undefined!)
+const AuthContext = createContext<AuthContextValue>(undefined!)
+
 export const useAuthContext = () => useContext(AuthContext)
 
+export const useAuthorizedUser = () => {
+  const auth = useAuthContext()
+
+  if (!auth.isLoggedIn)
+    throw new Error('You cannot use this hook where user is not logged in.')
+
+  return auth
+}
+
 const AuthProvider: React.FC = ({ children }) => {
-  const [authUser, setUser] = useState<IAuthContextValue['authUser']>(null)
-  const [loading, setLoading] = useState(true)
-  const [currentUser, currentUserLoading] = useFirestoreDoc<IUser>(
+  const [state, setState] = useState<AuthContextValue>({ isLoggedIn: false, projectAuth })
+  const [authUser, setAuthUser] = useState<firebase.User>()
+  const [showSpinner, setShowSpinner] = useState(true)
+
+  const userResponse = useFirestoreDoc<IUser>(
     useCallback(x => x.doc(`users/${authUser!.uid}`), [authUser]),
     !!authUser
   )
 
   useEffect(() => {
-    const unsub = projectAuth.onAuthStateChanged(async usr => {
-      setUser(usr)
-      setLoading(false)
+    const unsub = projectAuth.onAuthStateChanged(async user => {
+      if (user) setAuthUser(user)
+      else {
+        setState(x => ({ ...x, isLoggedIn: false }))
+        setShowSpinner(false)
+      }
     })
     return () => unsub()
   }, [])
 
-  if (loading || currentUserLoading) return <LoadingOverlay />
+  useEffect(() => {
+    if (userResponse.loading || userResponse.error || !authUser) return
+    setState(x => ({ ...x, authUser, currentUser: userResponse.data, isLoggedIn: true }))
+    setShowSpinner(false)
+  }, [userResponse, authUser])
 
-  const value = {
-    isLoggedIn: !!authUser,
-    authUser,
-    currentUser,
-    projectAuth,
-  }
+  if (!userResponse.loading && userResponse.error)
+    return <ErrorWhileLoadingData error={userResponse.error} />
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  if (showSpinner) return <LoadingOverlay />
+
+  return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>
 }
 
 export default AuthProvider

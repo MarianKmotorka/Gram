@@ -20,12 +20,13 @@ import {
 
 const Navbar = () => {
   const [menuExpanded, setMenuExpanded] = useState(false)
-  const { isLoggedIn, authUser } = useAuthContext()
+  const auth = useAuthContext()
   const history = useHistory()
   const { width } = useWindowSize()
   const navbarRef = useOnClickOutside<HTMLDivElement>(() => setMenuExpanded(false))
 
   const isWideScreen = width > 900
+  const userId = auth.isLoggedIn ? auth.authUser.uid : ''
 
   const rowRenderer = (user: IUser) => (
     <DropdownRow>
@@ -38,7 +39,7 @@ const Navbar = () => {
     <Wrapper ref={navbarRef}>
       <Logo to='/'>@GRAM</Logo>
 
-      {isLoggedIn && (
+      {auth.isLoggedIn && (
         <NavbarSearch
           searchPrefix='@'
           rowRenderer={rowRenderer}
@@ -55,9 +56,9 @@ const Navbar = () => {
             exit={{ right: -400 }}
             transition={{ type: 'spring', mass: 0.1 }}
           >
-            {getLinksConfig(authUser?.uid).map(
+            {getLinksConfig(userId).map(
               x =>
-                x.isLoggedIn === isLoggedIn && (
+                x.isLoggedIn === auth.isLoggedIn && (
                   <StyledLink
                     isDark={x.isDark}
                     onClick={() => setMenuExpanded(false)}

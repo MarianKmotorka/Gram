@@ -8,29 +8,25 @@ import { IPost, IUser } from '../../domain'
 import { PlusIcon } from '../../components/Icons'
 import Button from '../../components/Button/Button'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
-import { useAuthContext } from '../../contextProviders/AuthProvider'
+import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import LoadingOverlay from '../../components/Loaders/LoadingOverlay'
 import { isLiked, likePost } from '../../services/postService'
-import {
-  useFirestoreDoc,
-  useNotifyError,
-  usePagedQuery,
-  useWindowSize,
-} from '../../hooks'
+import { useFirestoreDoc, usePagedQuery, useWindowSize } from '../../hooks'
 
 import { DraggableWrapper, Wrapper } from './ProfilePage.styled'
+import ErrorWhileLoadingData from '../../components/Loaders/ErrorWhileLoadingData'
 
 const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   match: { params },
 }) => {
   const { height } = useWindowSize()
-  const { currentUser } = useAuthContext()
+  const { currentUser } = useAuthorizedUser()
   const [showCreatePostForm, setShowCreatePostForm] = useState(false)
 
-  const [user, userLoading, userError] = useFirestoreDoc<IUser>(
+  const userResponse = useFirestoreDoc<IUser>(
     useCallback(x => x.collection('users').doc(params.userId), [params.userId])
   )
-  const [posts, postsLoading, loadMore, , refresh, error, modifyPost] = usePagedQuery<
+  const [posts, postsLoading, loadMore, , refresh, postsErr, modifyPost] = usePagedQuery<
     IPost
   >(
     useCallback(
@@ -43,21 +39,20 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
     ),
     6
   )
-  useNotifyError(userError)
-  useNotifyError(error)
 
-  if (userLoading) return <LoadingOverlay />
-  if (userError) return <></>
+  if (userResponse.loading) return <LoadingOverlay />
+  if (userResponse.error || postsErr)
+    return <ErrorWhileLoadingData error={userResponse.error || postsErr} />
 
-  const isCurrentUser = currentUser?.id === params.userId
+  const isCurrentUser = currentUser.id === params.userId
 
   const handleLiked = async (post: IPost) => {
-    const { nick } = currentUser!
+    const { nick } = currentUser
     await likePost(post, nick)
 
-    const newLikes = isLiked(post, currentUser!.nick)
-      ? post.likes.filter(x => x !== currentUser!.nick)
-      : [...post.likes, currentUser!.nick]
+    const newLikes = isLiked(post, currentUser.nick)
+      ? post.likes.filter(x => x !== currentUser.nick)
+      : [...post.likes, currentUser.nick]
 
     modifyPost({ ...post, likes: newLikes })
   }
@@ -69,7 +64,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 
   return (
     <Wrapper>
-      <Profile user={user!} isCurrentUser={isCurrentUser} />
+      <Profile user={userResponse.data} isCurrentUser={isCurrentUser} />
 
       {isCurrentUser && (
         <DraggableWrapper
@@ -91,7 +86,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
       <AnimatePresence>
         {showCreatePostForm && (
           <CreatePostForm
-            user={user!}
+            user={userResponse.data}
             onPostCreated={handlePostCreated}
             onClose={() => setShowCreatePostForm(false)}
           />
@@ -100,9 +95,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 
       <Posts
         posts={posts}
-        postsOwner={user!}
+        postsOwner={userResponse.data}
         loading={postsLoading}
-        currentUser={currentUser!}
+        currentUser={currentUser}
         refresh={refresh}
         loadMore={loadMore}
         onLike={handleLiked}
