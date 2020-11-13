@@ -19,7 +19,7 @@ const Likes: FC<ILikesProps> = ({ likes }) => {
   return (
     <Wrapper>
       <Title>
-        {likes.length} {likes.length === 1 ? 'person' : 'people'} liked your post
+        {likes.length} {likes.length === 1 ? 'person' : 'people'} liked this post
       </Title>
 
       <SearchContainer>

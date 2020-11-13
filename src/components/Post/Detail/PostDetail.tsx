@@ -66,8 +66,8 @@ const PostDetail: FC<IPostDetailProps> = ({
           icon={<CloseIcon color='bg' />}
           onClick={onClose}
           visibility={visibility}
-          left='15px'
-          top='15px'
+          left='5px'
+          top='5px'
           position='fixed'
         />
 
@@ -77,8 +77,8 @@ const PostDetail: FC<IPostDetailProps> = ({
           }
           onClick={() => setExpanded(x => !x)}
           visibility={visibility}
-          right='15px'
-          top='15px'
+          right='5px'
+          top='5px'
           position={width < 600 ? 'fixed' : 'absolute'}
         />
         <BlurredBackground src={post.imageUrl} />
