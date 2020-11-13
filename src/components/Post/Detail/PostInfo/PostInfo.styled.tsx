@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { TAB_BAR_HEIGHT_PX } from '../../../TabView/Container/TabViewContainer.styled'
 
 export const Wrapper = styled.div`
   width: 100%;
-  max-height: 100vh;
   padding: 15px 20px;
 
   display: flex;
   flex-direction: column;
+  max-height: calc(100vh - ${TAB_BAR_HEIGHT_PX});
 `
 
 export const AuthorSection = styled.section`
@@ -49,10 +50,13 @@ export const AuthorName = styled(Link)`
 export const Title = styled.h2`
   margin: 20px 0 10px;
   font-weight: 500;
+  font-size: 1.3rem;
+  text-transform: uppercase;
 `
 
 export const Text = styled.p`
   font-weight: 300;
   overflow-y: auto;
   margin-bottom: 40px;
+  font-size: 0.95rem;
 `

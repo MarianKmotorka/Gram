@@ -18,6 +18,7 @@ export const Header = styled.div`
 
 export const Title = styled.h3`
   padding: 20px 0 0 0;
+  text-transform: uppercase;
 `
 
 export const AuthorSection = styled.section`

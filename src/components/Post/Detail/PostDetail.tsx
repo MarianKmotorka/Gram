@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import TabView from '../../TabView'
 import { IPost } from '../../../domain'
 import { useMouseMoving, useWindowSize } from '../../../hooks'
 import PostInfo from './PostInfo/PostInfo'
@@ -108,7 +109,19 @@ const PostDetail: FC<IPostDetailProps> = ({
 
       {expanded && (
         <DetailContainer>
-          <PostInfo post={post} />
+          <TabView.Container>
+            <TabView.Item name='Post'>
+              <PostInfo post={post} />
+            </TabView.Item>
+
+            <TabView.Item name='Comments'>
+              <h3>work in progress...</h3>
+            </TabView.Item>
+
+            <TabView.Item name='Likes'>
+              <h3>LIKES</h3>
+            </TabView.Item>
+          </TabView.Container>
         </DetailContainer>
       )}
     </Wrapper>
