@@ -41,6 +41,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
           nick,
           aboutMe,
           postCount: 0,
+          photoUrl: null,
           createdAt: getTimestamp() as firebase.firestore.Timestamp,
         }
 

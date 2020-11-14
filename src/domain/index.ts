@@ -6,7 +6,7 @@ export interface IComment extends IEntity {
   text: string
   userId: string
   userNick: string
-  userPhotoUrl?: string
+  userPhotoUrl: string | null
   timestamp: firebase.firestore.Timestamp
 }
 
@@ -14,11 +14,11 @@ export interface IPost extends IEntity {
   title: string
   imageUrl: string
   createdAt: firebase.firestore.Timestamp
-  description?: string
+  description: string | null
 
   userId: string
   userNick: string
-  userPhotoUrl?: string
+  userPhotoUrl: string | null
 
   /**
    * Array of user nicks who liked the post
@@ -29,7 +29,7 @@ export interface IPost extends IEntity {
 export interface IUser extends IEntity {
   nick: string
   createdAt: firebase.firestore.Timestamp
-  aboutMe?: string
-  photoUrl?: string
+  aboutMe: string | null
+  photoUrl: string | null
   postCount: number
 }
