@@ -26,7 +26,7 @@ export const Tab = styled.div<{ active: boolean }>`
       ? css`
           background: ${({ theme }) => theme.bg};
           color: ${({ theme }) => theme.primary};
-          font-size: 1rem;
+          font-size: 0.9rem;
         `
       : css`
           background: ${({ theme }) => theme.primary};

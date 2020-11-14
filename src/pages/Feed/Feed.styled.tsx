@@ -20,7 +20,7 @@ export const PostsContainer = styled.div`
   width: 100%;
   max-width: 600px;
   > div + div {
-    margin-top: 15px;
+    margin-top: 10px;
   }
 `
 
@@ -41,7 +41,7 @@ export const SideCard = styled.div<{ visibility?: string }>`
   top: 25px;
   margin-top: 25px;
 
-  border-radius: 20px;
+  border-radius: 15px;
   visibility: ${({ visibility }) => visibility || 'auto'};
   display: flex;
   flex-direction: column;
@@ -101,10 +101,16 @@ export const Stat = styled.p`
   font-weight: 200;
   b {
     font-weight: 500;
-    color: ${({ theme }) => theme.accent};
     margin-right: 10px;
+    color: ${({ theme }) => theme.accent};
   }
-  margin: 8px auto 0 40px;
+  i {
+    color: ${({ theme }) => theme.accent};
+    width: 30px;
+    text-align: center;
+  }
+
+  margin: 8px auto 0 30px;
 `
 
 export const ScrollUpButton = styled(Button)`

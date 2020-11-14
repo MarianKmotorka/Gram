@@ -4,7 +4,7 @@ const smallScreenWidth = '600px'
 
 export const Grid = styled.div<{ smallScreenGrid: boolean }>`
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 15px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   margin-bottom: 15px;
 
@@ -12,8 +12,8 @@ export const Grid = styled.div<{ smallScreenGrid: boolean }>`
     ${({ smallScreenGrid }) =>
       smallScreenGrid &&
       css`
-        grid-gap: 10px;
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        grid-gap: 8px;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
       `}
   }
 `
@@ -23,7 +23,7 @@ export const Image = styled.img<{ smallScreenGrid: boolean }>`
   width: 100%;
   object-fit: cover;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 10px;
   transition: transform 0.15s;
 
   :hover {
@@ -34,7 +34,7 @@ export const Image = styled.img<{ smallScreenGrid: boolean }>`
     ${({ smallScreenGrid }) =>
       smallScreenGrid &&
       css`
-        height: 90px;
+        height: 100px;
       `}
   }
 `

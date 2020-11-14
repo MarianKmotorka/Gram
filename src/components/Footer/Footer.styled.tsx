@@ -18,37 +18,6 @@ export const Centered = styled(CenteredContainer)`
   min-height: 200px;
 `
 
-export const Logo = styled(motion.div)`
-  color: ${({ theme }) => theme.black};
-  font-size: 22px;
-  font-weight: 500;
-  background: ${({ theme }) => theme.bg};
-
-  cursor: pointer;
-  height: 70px;
-  padding: 20px 30px;
-  border-radius: 15px;
-
-  ::first-letter {
-    color: ${({ theme }) => theme.accent};
-  }
-`
-
-export const Copyright = styled(motion.p)`
-  color: ${({ theme }) => theme.bg};
-  font-size: 22px;
-  background: ${({ theme }) => theme.blackLight};
-
-  height: 70px;
-  padding: 20px 30px;
-  border-radius: 15px;
-  cursor: pointer;
-
-  ::first-letter {
-    color: ${({ theme }) => theme.accent};
-  }
-`
-
 export const GithubLink = styled(motion.a)`
   i {
     font-size: 3em;

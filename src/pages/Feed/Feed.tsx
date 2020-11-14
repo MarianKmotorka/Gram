@@ -6,7 +6,12 @@ import FeedPost from '../../components/Post/FeedPost'
 import LoadingRow from '../../components/Loaders/LoadingRow'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { useNotifyError, useObserver, usePagedQuery, useScroll } from '../../hooks'
-import { ChevronUpIcon } from '../../components/Icons'
+import {
+  BlindManIcon,
+  ChevronUpIcon,
+  EnvelopeIcon,
+  UserSecretIcon,
+} from '../../components/Icons'
 import { isLiked, likePost } from '../../services/postService'
 import noPhoto from '../../images/no-photo.png'
 
@@ -74,14 +79,17 @@ const Feed: React.FC = () => {
           <CardSeparator />
 
           <Stat>
-            <b>followed by:</b>0
-          </Stat>
-          <Stat>
-            <b>following:</b>0
-          </Stat>
-          <Stat>
-            <b>#posts:</b>
+            <EnvelopeIcon />
+            <b>Posts:</b>
             {currentUser.postCount}
+          </Stat>
+          <Stat>
+            <BlindManIcon />
+            <b>Following:</b>0
+          </Stat>
+          <Stat>
+            <UserSecretIcon />
+            <b>Followed by:</b>0
           </Stat>
         </SideCard>
 

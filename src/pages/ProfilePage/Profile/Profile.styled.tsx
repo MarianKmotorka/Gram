@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   }
 
   > * {
-    margin-top: 20px;
+    margin-top: 15px;
   }
 `
 
@@ -78,7 +78,8 @@ export const Bold = styled.b`
   color: ${({ theme }) => theme.accent};
 
   i {
-    width: 23px;
+    width: 30px;
+    text-align: center;
   }
 
   span {
@@ -88,7 +89,7 @@ export const Bold = styled.b`
 
 export const Text = styled.p`
   font-weight: 200;
-  line-height: 30px;
+  line-height: 20px;
   color: inherit;
 
   i {
@@ -97,7 +98,7 @@ export const Text = styled.p`
 `
 
 export const InfoCard = styled.div`
-  border-radius: 20px;
+  border-radius: 15px;
   background-color: ${({ theme }) => theme.white};
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
   padding: 25px;

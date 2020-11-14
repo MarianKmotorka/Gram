@@ -7,23 +7,25 @@ export const Wrapper = styled.div`
   width: 100%;
   box-shadow: -5px -5px 30px rgba(0, 0, 0, 0.1), 8px 8px 10px rgba(0, 0, 0, 0.1);
   background-color: ${({ theme }) => theme.white};
-  border-radius: 30px;
+  border-radius: 15px;
   overflow: hidden;
 `
 
 export const Header = styled.div`
-  padding: 20px;
+  padding: 20px 20px 0;
   position: relative;
 `
 
 export const Title = styled.h3`
-  padding: 20px 0 0 0;
+  padding: 10px 0;
   text-transform: uppercase;
 `
 
 export const AuthorSection = styled.section`
   display: flex;
   align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
   img {
     border-radius: 50%;
@@ -48,7 +50,7 @@ export const AuthorInfo = styled.div`
 
 export const AuthorName = styled(Link)`
   font-weight: bolder;
-  font-size: 1.1em;
+  font-size: 1rem;
 
   :first-letter {
     color: ${({ theme }) => theme.green};

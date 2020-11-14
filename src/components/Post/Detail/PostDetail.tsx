@@ -100,7 +100,7 @@ const PostDetail: FC<IPostDetailProps> = ({
               <span>{post.likes.length}</span>
             </BottomButton>
 
-            <BottomButton>
+            <BottomButton onClick={() => setExpanded(true)}>
               <CommentsIcon color='bg' /> <span>{comments.length}</span>
             </BottomButton>
 

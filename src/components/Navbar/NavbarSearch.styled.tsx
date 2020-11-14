@@ -5,6 +5,10 @@ export const Wrapper = styled(motion.div)<{ focused: boolean }>`
   flex: 1;
   padding: 0 15px;
 
+  input {
+    padding: 3px;
+  }
+
   ${({ focused }) =>
     focused &&
     css`

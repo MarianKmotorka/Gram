@@ -1,5 +1,5 @@
 import React from 'react'
-import { Centered, Copyright, GithubLink, Logo, Wrapper } from './Footer.styled'
+import { Centered, GithubLink, Wrapper } from './Footer.styled'
 
 const Footer = () => {
   const commonProps = {
@@ -10,8 +10,6 @@ const Footer = () => {
   return (
     <Wrapper>
       <Centered>
-        <Logo {...commonProps}>@GRAM</Logo>
-
         <GithubLink
           {...commonProps}
           href='https://github.com/MarianKmotorka/Gram'
@@ -19,8 +17,6 @@ const Footer = () => {
         >
           <i className='fab fa-github'></i>
         </GithubLink>
-
-        <Copyright {...commonProps}>©gram 2020</Copyright>
       </Centered>
     </Wrapper>
   )
