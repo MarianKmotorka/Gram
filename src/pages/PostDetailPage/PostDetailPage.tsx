@@ -43,9 +43,9 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
   return (
     <PostDetail
       {...rest}
+      post={response.data}
       isLiked={response.data.likes.includes(currentUser.nick)}
       onClose={onClose}
-      post={response.data}
       onLike={handleLiked}
     />
   )

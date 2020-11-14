@@ -1,28 +1,25 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { projectFirestore } from '../firebase/firebaseConfig'
 
-type FirestoreError = firebase.firestore.FirestoreError
 type Snapshot = firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
+type FirestoreError = firebase.firestore.FirestoreError
 type Actions = { refresh: () => void }
 type Config = { realTime?: boolean; startFetching?: boolean }
 type Data<T> =
   | { loading: true }
   | { loading: false; error: FirestoreError }
-  | { loading: false; error: undefined; data: T; fetching: boolean } // loading is true only once, fetching is true when refreshing
+  | { loading: false; error: undefined; data: T; fetching: boolean } // loading is TRUE only once, fetching is also TRUE when refreshing
 
 /**
- * @param query Function that returns a document query, that will be run against firebase - needs to be wrapped in useCallback
+ * @param query Function that returns a document query - needs to be wrapped in useCallback |OR| string path to the document
  * @param realTime Whether data should be updated in real time
- * @param startFetching Starts fetching only if set to true
+ * @param startFetching Starts fetching only if set to TRUE - default value is TRUE
  */
 const useFirestoreDoc = <T>(
   query: ((db: firebase.firestore.Firestore) => Snapshot) | string,
   config: Config = {}
 ): [Data<T>, Actions] => {
   const [state, setState] = useState<Data<T>>({ loading: true })
-  const [lastDoc, setLastDoc] = useState<T>()
-  const [refreshObject, setRefreshObject] = useState({})
-  const configMemo = JSON.stringify(config)
 
   const onNext = (
     snap: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>
@@ -31,7 +28,6 @@ const useFirestoreDoc = <T>(
 
     if (snap.exists) {
       setState(x => ({ ...x, loading: false, error: undefined, data, fetching: false }))
-      setLastDoc(data)
     } else
       setState(x => ({
         ...x,
@@ -41,7 +37,7 @@ const useFirestoreDoc = <T>(
   }
 
   const onError = (error: FirestoreError) =>
-    setState(x => ({ ...x, loading: false, error }))
+    setState(x => ({ ...x, loading: false, error, fetching: false }))
 
   const getRealTimeData = useCallback(
     () =>
@@ -51,46 +47,31 @@ const useFirestoreDoc = <T>(
     [query]
   )
 
-  const getData = useCallback(
-    () =>
-      typeof query === 'function'
-        ? query(projectFirestore).get().then(onNext).catch(onError)
-        : projectFirestore.doc(query).get().then(onNext).catch(onError),
-    [query]
-  )
+  const getData = useCallback(async () => {
+    setState(x => ({ ...x, fetching: true }))
+
+    typeof query === 'function'
+      ? await query(projectFirestore).get().then(onNext).catch(onError)
+      : await projectFirestore.doc(query).get().then(onNext).catch(onError)
+  }, [query])
 
   useEffect(() => {
     if (config.startFetching === false) return
     let unsub: Function = () => {}
 
-    // to differ between fetching and loading
-    // if lastDoc has value -> refresh actions was called -> fetching = true and loading:false
-    // if lastDoc is undefined -> this is initial load -> fetching:false and laoding:true
-    setState(x =>
-      lastDoc
-        ? {
-            ...x,
-            loading: false,
-            error: undefined,
-            fetching: true,
-            data: lastDoc,
-          }
-        : { ...x, loading: true, error: undefined, fetching: false }
-    )
+    setState(x => ({ ...x, loading: true, error: undefined }))
 
     if (config.realTime === false) getData()
     else unsub = getRealTimeData()
 
     return () => unsub()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getRealTimeData, getData, configMemo, refreshObject]) // DO NOT INCLUDE lastDoc
+  }, [getRealTimeData, getData, config.realTime, config.startFetching])
 
   const actions = useMemo(
     () => ({
-      refresh: config.realTime === false ? () => setRefreshObject({}) : () => {},
+      refresh: config.realTime === false ? getData : () => {},
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [configMemo]
+    [getData, config.realTime]
   )
 
   return [state, actions]
