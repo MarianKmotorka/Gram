@@ -7,19 +7,20 @@ import { IPost } from '../../domain'
 import PostDetail from '../../components/Post/Detail/PostDetail'
 import { useApiErrorContext } from '../../contextProviders/ApiErrorProvider'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
+import { likePost } from '../../services/postService'
 
 interface IPostDetailPageProps {
   postId: string
   canDelete: boolean
   onClose: () => void
-  onLike: () => Promise<void>
+  afterLikedCallback?: () => void
   onDelete?: (post: IPost) => Promise<void>
 }
 
 const PostDetailPage: FC<IPostDetailPageProps> = ({
   postId,
   onClose,
-  onLike,
+  afterLikedCallback,
   ...rest
 }) => {
   const { setError } = useApiErrorContext()
@@ -28,16 +29,17 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
     realTime: false,
   })
 
-  const handleLiked = async () => {
-    await onLike()
-    refresh()
-  }
-
   if (response.loading) return <PostDetailLoadingSkeleton />
   if (response.error) {
     setError(response.error)
     onClose()
     return <></>
+  }
+
+  const handleLiked = async () => {
+    await likePost(response.data, currentUser.nick)
+    refresh()
+    afterLikedCallback && afterLikedCallback()
   }
 
   return (

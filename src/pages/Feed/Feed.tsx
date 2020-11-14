@@ -29,36 +29,34 @@ const Feed: React.FC = () => {
   const [posts, loading, nextPage, hasMore, , error, modifyPost] = usePagedQuery<IPost>(
     useCallback(db => db.collection('posts').orderBy('createdAt', 'desc'), [])
   )
-
   useNotifyError(error)
   const history = useHistory()
-  const [selectedPostId, setSelectedPostId] = useState<string>()
   const [topRef, scrollUp] = useScroll()
   const { currentUser } = useAuthorizedUser()
+  const [selectedPost, setSelectedPost] = useState<IPost>()
   const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !loading)
 
-  // REMOVE GET POST BY ID -> replace selectedPostId with selectedPost
-  const getPostById = (id: string) => posts.find(x => x.id === id)!
-
-  const handleLikeClicked = async (post: IPost) => {
-    const { nick } = currentUser
-    await likePost(post, nick)
-
-    const newLikes = isLiked(post, nick)
-      ? post.likes.filter(x => x !== nick)
-      : [...post.likes, nick]
+  const updateLikeCount = (post: IPost) => {
+    const newLikes = isLiked(post, currentUser.nick)
+      ? post.likes.filter(x => x !== currentUser.nick)
+      : [...post.likes, currentUser.nick]
 
     modifyPost({ ...post, likes: newLikes })
   }
 
+  const handleLikeClicked = async (post: IPost) => {
+    await likePost(post, currentUser.nick)
+    updateLikeCount(post)
+  }
+
   return (
     <>
-      {selectedPostId && (
+      {selectedPost && (
         <PostDetailPage
-          postId={selectedPostId}
-          onClose={() => setSelectedPostId(undefined)}
-          onLike={() => handleLikeClicked(getPostById(selectedPostId))}
+          postId={selectedPost.id}
+          onClose={() => setSelectedPost(undefined)}
           canDelete={false}
+          afterLikedCallback={() => updateLikeCount(selectedPost)}
         />
       )}
 
@@ -94,7 +92,7 @@ const Feed: React.FC = () => {
               post={x}
               key={x.id}
               onLikeClick={handleLikeClicked}
-              onOpenDetail={setSelectedPostId}
+              onOpenDetail={setSelectedPost}
               isLiked={isLiked(x, currentUser.nick)}
             />
           ))}

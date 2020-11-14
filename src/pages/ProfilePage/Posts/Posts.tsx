@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import { IPost, IUser } from '../../../domain'
 import { useObserver } from '../../../hooks'
+import { IPost, IUser } from '../../../domain'
 import { deletePost } from '../../../services/postService'
 import LoadingRow from '../../../components/Loaders/LoadingRow'
 import PostDetailPage from '../../PostDetailPage/PostDetailPage'
@@ -17,7 +17,6 @@ interface IPostsProps {
   currentUser: IUser
   loadMore: () => void
   refresh: () => void
-  onLike: (post: IPost) => Promise<void>
 }
 
 const Posts: React.FC<IPostsProps> = ({
@@ -27,14 +26,11 @@ const Posts: React.FC<IPostsProps> = ({
   currentUser,
   loadMore,
   refresh,
-  onLike,
 }) => {
   const [displayGrid, setDisplayGrid] = useState(true)
   const [selectedPostId, setSelectedPostId] = useState<string>()
   const observe = useObserver<HTMLDivElement>(loadMore, !loading)
   const { setError } = useApiErrorContext()
-
-  const getPostById = (id: string) => posts.find(x => x.id === id)!
 
   const handlePostDeleted = async (post: IPost) => {
     await deletePost(post, setError)
@@ -50,7 +46,6 @@ const Posts: React.FC<IPostsProps> = ({
           canDelete={postsOwner.id === currentUser.id}
           onDelete={handlePostDeleted}
           onClose={() => setSelectedPostId(undefined)}
-          onLike={async () => await onLike(getPostById(selectedPostId))}
         />
       )}
 

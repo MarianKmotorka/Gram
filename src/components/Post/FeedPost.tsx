@@ -21,7 +21,7 @@ interface IFeedPostProps {
   post: IPost
   isLiked: boolean
   onLikeClick: (post: IPost) => Promise<void>
-  onOpenDetail: (postId: string) => void
+  onOpenDetail: (postId: IPost) => void
 }
 
 const FeedPost: React.FC<IFeedPostProps> = ({
@@ -37,7 +37,7 @@ const FeedPost: React.FC<IFeedPostProps> = ({
       <Header>
         <AuthorSection>
           <StyledIconButton
-            onClick={() => onOpenDetail(post.id)}
+            onClick={() => onOpenDetail(post)}
             icon={<ExpandIcon color='black' />}
             top='10px'
             right='10px'
@@ -57,7 +57,7 @@ const FeedPost: React.FC<IFeedPostProps> = ({
       </Header>
 
       <Body>
-        <img src={post.imageUrl} alt='post' onClick={() => onOpenDetail(post.id)} />
+        <img src={post.imageUrl} alt='post' onClick={() => onOpenDetail(post)} />
 
         <CardButton onClick={async () => await onLikeClick(post)}>
           {isLiked ? <HeartFilledIcon color='accent' /> : <HeartIcon />}

@@ -8,7 +8,6 @@ import { IPost, IUser } from '../../domain'
 import { PlusIcon } from '../../components/Icons'
 import Button from '../../components/Button/Button'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
-import { isLiked, likePost } from '../../services/postService'
 import LoadingOverlay from '../../components/Loaders/LoadingOverlay'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { useFirestoreDoc, usePagedQuery, useWindowSize } from '../../hooks'
@@ -24,9 +23,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   const [showCreatePostForm, setShowCreatePostForm] = useState(false)
 
   const [userResponse] = useFirestoreDoc<IUser>(`users/${params.userId}`)
-  const [posts, postsLoading, loadMore, , refresh, postsErr, modifyPost] = usePagedQuery<
-    IPost
-  >(
+  const [posts, postsLoading, loadMore, , refresh, postsErr] = usePagedQuery<IPost>(
     useCallback(
       x =>
         x
@@ -43,17 +40,6 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
     return <ErrorWhileLoadingData error={userResponse.error || postsErr} />
 
   const isCurrentUser = currentUser.id === params.userId
-
-  const handleLiked = async (post: IPost) => {
-    const { nick } = currentUser
-    await likePost(post, nick)
-
-    const newLikes = isLiked(post, currentUser.nick)
-      ? post.likes.filter(x => x !== currentUser.nick)
-      : [...post.likes, currentUser.nick]
-
-    modifyPost({ ...post, likes: newLikes })
-  }
 
   const handlePostCreated = () => {
     setShowCreatePostForm(false)
@@ -93,12 +79,11 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
 
       <Posts
         posts={posts}
-        postsOwner={userResponse.data}
         loading={postsLoading}
         currentUser={currentUser}
+        postsOwner={userResponse.data}
         refresh={refresh}
         loadMore={loadMore}
-        onLike={handleLiked}
       />
     </Wrapper>
   )
