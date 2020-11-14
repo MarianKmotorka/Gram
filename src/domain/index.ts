@@ -2,6 +2,14 @@ export interface IEntity {
   id: string
 }
 
+export interface IComment extends IEntity {
+  text: string
+  userId: string
+  userNick: string
+  userPhotoUrl?: string
+  timestamp: firebase.firestore.Timestamp
+}
+
 export interface IPost extends IEntity {
   title: string
   imageUrl: string

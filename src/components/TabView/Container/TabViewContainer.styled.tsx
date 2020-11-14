@@ -25,12 +25,12 @@ export const Tab = styled.div<{ active: boolean }>`
     active
       ? css`
           background: ${({ theme }) => theme.bg};
-          color: ${({ theme }) => theme.black};
+          color: ${({ theme }) => theme.primary};
           font-size: 1rem;
         `
       : css`
           background: ${({ theme }) => theme.primary};
-          color: ${({ theme }) => theme.bg};
+          color: ${({ theme }) => theme.white};
           font-size: 0.9rem;
 
           :hover {

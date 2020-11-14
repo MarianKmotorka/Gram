@@ -1,3 +1,4 @@
+export { default as useFocus } from './useFocus'
 export { default as useScroll } from './useScroll'
 export { default as useStorage } from './useStorage'
 export { default as useObserver } from './useObserver'

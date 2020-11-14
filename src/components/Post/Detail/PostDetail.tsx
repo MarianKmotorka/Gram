@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import TabView from '../../TabView'
-import { IPost } from '../../../domain'
+import { IPost, IComment, IUser } from '../../../domain'
 import { useMouseMoving, useWindowSize } from '../../../hooks'
 import PostInfo from './PostInfo/PostInfo'
 import IconButton from '../../Button/IconButton'
@@ -27,23 +27,30 @@ import {
   ImageContainer,
   Wrapper,
 } from './PostDetail.styled'
+import Comments from './Comments/Comments'
 
 interface IPostDetailProps {
   post: IPost
   isLiked: boolean
   canDelete: boolean
+  currentUser: IUser
+  comments: IComment[]
   onClose: () => void
   onLike: () => Promise<void>
-  onDelete?: (post: IPost) => Promise<void>
+  onDelete: (post: IPost) => Promise<void>
+  onCommentSubmit: (text: string) => Promise<void>
 }
 
 const PostDetail: FC<IPostDetailProps> = ({
   post,
   isLiked,
+  comments,
   canDelete,
+  currentUser,
   onClose,
   onLike,
   onDelete,
+  onCommentSubmit,
 }) => {
   const { width } = useWindowSize()
   const [deleting, setDeleting] = useState(false)
@@ -54,7 +61,7 @@ const PostDetail: FC<IPostDetailProps> = ({
   const showBottomBtns = mouseMoving && (width > 600 || !expanded)
 
   const handleDeleted = async () => {
-    if (!onDelete || deleting) return
+    if (deleting) return
     setDeleting(true)
     await onDelete(post)
   }
@@ -92,7 +99,7 @@ const PostDetail: FC<IPostDetailProps> = ({
             </BottomButton>
 
             <BottomButton>
-              <CommentsIcon color='bg' /> <span>-</span>
+              <CommentsIcon color='bg' /> <span>{comments.length}</span>
             </BottomButton>
 
             {canDelete && (
@@ -116,7 +123,11 @@ const PostDetail: FC<IPostDetailProps> = ({
             </TabView.Item>
 
             <TabView.Item name='Comments'>
-              <h3>work in progress...</h3>
+              <Comments
+                comments={comments}
+                currentUser={currentUser}
+                onSubmit={onCommentSubmit}
+              />
             </TabView.Item>
 
             <TabView.Item name='Likes'>

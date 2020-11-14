@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 import Button from '../../../components/Button/Button'
-import Input from '../../../components/Input'
+import Input from '../../../components/Inputs/Input'
 
 export const Wrapper = styled(motion.div)`
   box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.6);

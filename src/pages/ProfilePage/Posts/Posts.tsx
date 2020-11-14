@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 
 import { useObserver } from '../../../hooks'
 import { IPost, IUser } from '../../../domain'
-import { deletePost } from '../../../services/postService'
 import LoadingRow from '../../../components/Loaders/LoadingRow'
 import PostDetailPage from '../../PostDetailPage/PostDetailPage'
 import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
-import { useApiError } from '../../../contextProviders/ApiErrorProvider'
 
 import { BottomDiv, Grid, Image, LayoutControls, VerticalSeparator } from './Posts.styled'
 
@@ -30,21 +28,14 @@ const Posts: React.FC<IPostsProps> = ({
   const [displayGrid, setDisplayGrid] = useState(true)
   const [selectedPostId, setSelectedPostId] = useState<string>()
   const observe = useObserver<HTMLDivElement>(loadMore, !loading)
-  const { setError } = useApiError()
-
-  const handlePostDeleted = async (post: IPost) => {
-    await deletePost(post, setError)
-    setSelectedPostId(undefined)
-    refresh()
-  }
 
   return (
     <>
       {selectedPostId && (
         <PostDetailPage
           postId={selectedPostId}
+          afterDeletedCallback={refresh}
           canDelete={postsOwner.id === currentUser.id}
-          onDelete={handlePostDeleted}
           onClose={() => setSelectedPostId(undefined)}
         />
       )}

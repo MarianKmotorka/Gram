@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom'
 
 import { IUser } from '../../domain'
 import { validate } from './validator'
-import Input from '../../components/Input'
+import Input from '../../components/Inputs/Input'
 import Footer from '../../components/Footer/Footer'
 import MessageStripe from '../../components/MessageStripe'
 import { useAuth } from '../../contextProviders/AuthProvider'

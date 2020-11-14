@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import Footer from '../../components/Footer/Footer'
 
-import Input from '../../components/Input'
+import Input from '../../components/Inputs/Input'
 import MessageStripe from '../../components/MessageStripe'
 import { useAuth } from '../../contextProviders/AuthProvider'
 

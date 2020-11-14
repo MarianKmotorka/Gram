@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { IUser } from '../../domain'
-import SearchInput, { ISearchInputProps } from '../SearchInput/SearchInput'
+import SearchInput, { ISearchInputProps } from '../Inputs/SearchInput/SearchInput'
 
 import { Backdrop, Wrapper } from './NavbarSearch.styled'
 

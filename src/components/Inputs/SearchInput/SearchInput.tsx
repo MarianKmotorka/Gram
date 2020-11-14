@@ -1,16 +1,16 @@
 import React, { useCallback, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 
-import { IEntity } from '../../domain'
-import MessageStripe from '../MessageStripe'
-import { propertyOf } from '../../utils/utils'
-import { LoadingIcon, SearchIcon } from '../Icons'
+import { IEntity } from '../../../domain'
+import MessageStripe from '../../MessageStripe'
+import { propertyOf } from '../../../utils/utils'
+import { LoadingIcon, SearchIcon } from '../../Icons'
 import {
   useDebounce,
   useNotifyError,
   useOnClickOutside,
   useFirestoreQuery,
-} from '../../hooks'
+} from '../../../hooks'
 
 import { Wrapper, StyledInput, RowsContainer, Row } from './SearchInput.styled'
 
