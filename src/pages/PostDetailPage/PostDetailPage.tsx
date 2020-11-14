@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 
-import { useFirestoreDoc } from '../../hooks'
+import { useFirestoreDoc, useFirestoreQuery } from '../../hooks'
 import PostDetailLoadingSkeleton from '../../components/Post/Detail/PostDetailLoadingSkeleton'
 
+import { propertyOf } from '../../utils/utils'
 import { IComment, IPost } from '../../domain'
 import PostDetail from '../../components/Post/Detail/PostDetail'
 import { commentOnPost, deletePost, likePost } from '../../services/postService'
@@ -30,9 +31,19 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
     realTime: false,
   })
 
-  if (response.loading) return <PostDetailLoadingSkeleton />
-  if (response.error) {
-    setError(response.error)
+  const [comments, commentsLoading, commentsError] = useFirestoreQuery<IComment>(
+    useCallback(
+      x =>
+        x
+          .collection(`posts/${postId}/comments`)
+          .orderBy(propertyOf<IComment>('timestamp'), 'desc'),
+      [postId]
+    )
+  )
+
+  if (response.loading || commentsLoading) return <PostDetailLoadingSkeleton />
+  if (response.error || commentsError) {
+    setError(response.error || commentsError)
     onClose()
     return <></>
   }
@@ -66,7 +77,7 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
     <PostDetail
       post={response.data}
       canDelete={canDelete}
-      comments={[]}
+      comments={comments}
       currentUser={currentUser}
       isLiked={post.likes.includes(currentUser.nick)}
       onClose={onClose}

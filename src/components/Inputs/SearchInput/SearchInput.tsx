@@ -60,7 +60,7 @@ const SearchInput = <T extends IEntity>({
 
   const [values, loading, error] = useFirestoreQuery<T>(
     useCallback(db => getQuery(debouncedText, db), [getQuery, debouncedText]),
-    expanded
+    { startFetching: expanded }
   )
 
   useNotifyError(error)

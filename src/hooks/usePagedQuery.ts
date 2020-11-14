@@ -29,7 +29,7 @@ const usePagedQuery = <T extends IEntity>(
 
   const [docsPage, loading, error, firebaseDocsPage] = useFirestoreQuery<T>(
     getQueryPaged,
-    !!getQueryPaged
+    { startFetching: !!getQueryPaged, realTime: false }
   )
 
   const nextPage = () => {

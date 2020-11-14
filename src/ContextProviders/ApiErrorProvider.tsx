@@ -7,7 +7,7 @@ export interface IError {
 
 export interface IApiErrorContextValue {
   error?: IError
-  setError: (error: IError) => void
+  setError: (error?: IError) => void
   removeError: () => void
 }
 
@@ -19,7 +19,7 @@ const ApiErrorProvider: React.FC = ({ children }) => {
 
   const value = {
     error,
-    setError,
+    setError: useCallback((error?: IError) => error && setError(error), []),
     removeError: useCallback(() => setError(undefined), []),
   }
 

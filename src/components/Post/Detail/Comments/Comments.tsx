@@ -37,19 +37,23 @@ const Comments: FC<ICommentsProps> = ({ comments, currentUser, onSubmit }) => {
     userPhotoUrl,
     text,
     timestamp,
-  }: IComment) => (
-    <CommentContainer key={id}>
-      <Metadata onClick={() => history.push(`profile/${userId}`)}>
-        <span>
-          <img src={userPhotoUrl || noPhoto} alt='user' />
-          <h6>{userNick}</h6>
-        </span>
-        <p>{moment(timestamp.toDate()).format('MMMM Do YYYY, H:mm')}</p>
-      </Metadata>
+  }: IComment) => {
+    const sentAt = timestamp ? timestamp.toDate() : new Date() // firebase sends null from snapshot listener
 
-      <Text>{text}</Text>
-    </CommentContainer>
-  )
+    return (
+      <CommentContainer key={id}>
+        <Metadata onClick={() => history.push(`profile/${userId}`)}>
+          <span>
+            <img src={userPhotoUrl || noPhoto} alt='user' />
+            <h6>{userNick}</h6>
+          </span>
+          <p>{moment(sentAt).format('MMMM Do YYYY, H:mm')}</p>
+        </Metadata>
+
+        <Text>{text}</Text>
+      </CommentContainer>
+    )
+  }
 
   const newComment = (
     <CommentContainer>
