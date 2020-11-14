@@ -49,7 +49,7 @@ const useStorage = (
 
     return () => unsub()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [file, auth, startUpload, JSON.stringify(compressionOptions)])
+  }, [file, auth.authUser.uid, startUpload, JSON.stringify(compressionOptions)])
 
   return { progress, url, error }
 }

@@ -35,7 +35,6 @@ export const deletePost = async (post: IPost, setError: SetError) => {
 
 export const commentOnPost = async (
   comment: Omit<IComment, 'id' | 'timestamp'>,
-  postId: string,
   setError: SetError
 ) => {
   const data: Omit<IComment, 'id'> = {
@@ -43,5 +42,5 @@ export const commentOnPost = async (
     timestamp: getTimestamp(),
   }
 
-  await projectFirestore.collection(`posts/${postId}/comments`).add(data).catch(setError)
+  await projectFirestore.collection('comments').add(data).catch(setError)
 }

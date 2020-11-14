@@ -42,7 +42,7 @@ const Comments: FC<ICommentsProps> = ({ comments, currentUser, onSubmit }) => {
 
     return (
       <CommentContainer key={id}>
-        <Metadata onClick={() => history.push(`profile/${userId}`)}>
+        <Metadata onClick={() => history.push(`/profile/${userId}`)}>
           <span>
             <img src={userPhotoUrl || noPhoto} alt='user' />
             <h6>{userNick}</h6>

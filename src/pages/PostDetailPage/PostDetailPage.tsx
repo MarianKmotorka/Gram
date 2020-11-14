@@ -35,7 +35,8 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
     useCallback(
       x =>
         x
-          .collection(`posts/${postId}/comments`)
+          .collection('comments')
+          .where(propertyOf<IComment>('postId'), '==', postId)
           .orderBy(propertyOf<IComment>('timestamp'), 'desc'),
       [postId]
     )
@@ -65,12 +66,13 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
   const handleCommentSubmitted = async (text: string) => {
     const comment = {
       text,
+      postId: post.id,
       userId: currentUser.id,
       userNick: currentUser.nick,
       userPhotoUrl: currentUser.photoUrl,
     }
 
-    await commentOnPost(comment, post.id, setError)
+    await commentOnPost(comment, setError)
   }
 
   return (

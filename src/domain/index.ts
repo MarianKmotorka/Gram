@@ -5,6 +5,7 @@ export interface IEntity {
 export interface IComment extends IEntity {
   text: string
   userId: string
+  postId: string
   userNick: string
   userPhotoUrl: string | null
   timestamp: firebase.firestore.Timestamp

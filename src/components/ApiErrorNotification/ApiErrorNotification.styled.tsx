@@ -7,6 +7,7 @@ export const Wrapper = styled(motion.div)`
   left: 50%;
   transform: translateX(-50%);
   z-index: 99999999999999999;
+  word-break: break-all;
 
   display: flex;
   flex-direction: column;

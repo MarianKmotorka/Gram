@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { IPost, IUser } from '../../../domain'
+import { IComment, IPost, IUser } from '../../../domain'
 import { propertyOf } from '../../../utils/utils'
 import { useNotifyError, useStorage } from '../../../hooks'
 import { projectFirestore, projectStorage } from '../../../firebase/firebaseConfig'
@@ -32,6 +32,22 @@ const useUploadNewPhoto = (
     )
   }, [userId, newPhotoUrl])
 
+  const updateExistingComments = useCallback(async () => {
+    const comments = await projectFirestore
+      .collection('comments')
+      .where(propertyOf<IComment>('userId'), '==', userId)
+      .get()
+
+    await Promise.all(
+      comments.docs.map(x =>
+        x.ref.set(
+          { [propertyOf<IComment>('userPhotoUrl')]: newPhotoUrl },
+          { merge: true }
+        )
+      )
+    )
+  }, [userId, newPhotoUrl])
+
   useEffect(() => {
     const deleteOldPhotoAndUpdateUser = async () => {
       if (oldPhotoUrl) {
@@ -46,11 +62,20 @@ const useUploadNewPhoto = (
         .set({ [propertyOf<IUser>('photoUrl')]: newPhotoUrl }, { merge: true })
 
       await updateExistingPosts()
+      await updateExistingComments()
       setUploading(false)
     }
 
     if (newPhotoUrl && newPhotoUrl !== oldPhotoUrl) deleteOldPhotoAndUpdateUser()
-  }, [newPhotoUrl, oldPhotoUrl, file, userId, updateExistingPosts, setError])
+  }, [
+    newPhotoUrl,
+    oldPhotoUrl,
+    file,
+    userId,
+    updateExistingPosts,
+    updateExistingComments,
+    setError,
+  ])
 
   return { uploading, progress, startUploading: () => setUploading(true) }
 }
