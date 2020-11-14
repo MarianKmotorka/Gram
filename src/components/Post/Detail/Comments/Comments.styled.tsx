@@ -79,10 +79,10 @@ export const TextInput = styled(AutoTextArea)`
   font-size: 0.95rem;
 `
 
-export const SubmitBtn = styled.button`
+export const Btn = styled.button<{ bg: string }>`
   border: none;
   outline: none;
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme, bg }) => theme[bg]};
   color: ${({ theme }) => theme.white};
   border-radius: 4px;
   padding: 3px 10px;
@@ -95,6 +95,6 @@ export const SubmitBtn = styled.button`
   right: 0px;
 
   :hover {
-    background: ${({ theme }) => lightenColor(theme.primary, 0.9)};
+    background: ${({ theme, bg }) => lightenColor(theme[bg], 0.9)};
   }
 `

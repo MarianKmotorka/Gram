@@ -8,7 +8,7 @@ import {
   CommentContainer,
   CommentsContainer,
   Metadata,
-  SubmitBtn,
+  Btn,
   Text,
   TextInput,
   Wrapper,
@@ -18,9 +18,10 @@ interface ICommentsProps {
   comments: IComment[]
   currentUser: IUser
   onSubmit: (text: string) => Promise<void>
+  onDelete: (commentId: string) => Promise<void>
 }
 
-const Comments: FC<ICommentsProps> = ({ comments, currentUser, onSubmit }) => {
+const Comments: FC<ICommentsProps> = ({ comments, currentUser, onSubmit, onDelete }) => {
   const history = useHistory()
   const [text, setText] = useState('')
 
@@ -47,7 +48,14 @@ const Comments: FC<ICommentsProps> = ({ comments, currentUser, onSubmit }) => {
             <img src={userPhotoUrl || noPhoto} alt='user' />
             <h6>{userNick}</h6>
           </span>
+
           <p>{moment(sentAt).format('MMMM Do YYYY, H:mm')}</p>
+
+          {userId === currentUser.id && (
+            <Btn onClick={() => onDelete(id)} bg='accent'>
+              Delete
+            </Btn>
+          )}
         </Metadata>
 
         <Text>{text}</Text>
@@ -63,7 +71,9 @@ const Comments: FC<ICommentsProps> = ({ comments, currentUser, onSubmit }) => {
           <h6>{currentUser.nick}</h6>
         </span>
         <p>Now</p>
-        <SubmitBtn onClick={handleSubmitted}>Send</SubmitBtn>
+        <Btn onClick={handleSubmitted} bg='primary'>
+          Send
+        </Btn>
       </Metadata>
 
       <TextInput

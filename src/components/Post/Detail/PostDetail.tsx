@@ -39,6 +39,7 @@ interface IPostDetailProps {
   onLike: () => Promise<void>
   onDelete: (post: IPost) => Promise<void>
   onCommentSubmit: (text: string) => Promise<void>
+  onDeleteComment: (id: string) => Promise<void>
 }
 
 const PostDetail: FC<IPostDetailProps> = ({
@@ -51,6 +52,7 @@ const PostDetail: FC<IPostDetailProps> = ({
   onLike,
   onDelete,
   onCommentSubmit,
+  onDeleteComment,
 }) => {
   const { width } = useWindowSize()
   const [deleting, setDeleting] = useState(false)
@@ -127,6 +129,7 @@ const PostDetail: FC<IPostDetailProps> = ({
                 comments={comments}
                 currentUser={currentUser}
                 onSubmit={onCommentSubmit}
+                onDelete={onDeleteComment}
               />
             </TabView.Item>
 

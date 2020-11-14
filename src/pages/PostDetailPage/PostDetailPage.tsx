@@ -6,7 +6,12 @@ import PostDetailLoadingSkeleton from '../../components/Post/Detail/PostDetailLo
 import { propertyOf } from '../../utils/utils'
 import { IComment, IPost } from '../../domain'
 import PostDetail from '../../components/Post/Detail/PostDetail'
-import { commentOnPost, deletePost, likePost } from '../../services/postService'
+import {
+  commentOnPost,
+  deleteComment,
+  deletePost,
+  likePost,
+} from '../../services/postService'
 import { useApiError } from '../../contextProviders/ApiErrorProvider'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 
@@ -63,6 +68,10 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
     afterDeletedCallback && afterDeletedCallback()
   }
 
+  const handleCommentDeleted = async (id: string) => {
+    deleteComment(id, setError)
+  }
+
   const handleCommentSubmitted = async (text: string) => {
     const comment = {
       text,
@@ -86,6 +95,7 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
       onLike={handleLiked}
       onDelete={handleDeleted}
       onCommentSubmit={handleCommentSubmitted}
+      onDeleteComment={handleCommentDeleted}
     />
   )
 }

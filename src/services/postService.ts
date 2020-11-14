@@ -44,3 +44,7 @@ export const commentOnPost = async (
 
   await projectFirestore.collection('comments').add(data).catch(setError)
 }
+
+export const deleteComment = async (id: string, setError: SetError) => {
+  await projectFirestore.doc(`comments/${id}`).delete().catch(setError)
+}
