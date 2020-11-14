@@ -4,7 +4,7 @@ import { IPost, IUser } from '../../../domain'
 import { propertyOf } from '../../../utils/utils'
 import { useNotifyError, useStorage } from '../../../hooks'
 import { projectFirestore, projectStorage } from '../../../firebase/firebaseConfig'
-import { useApiErrorContext } from '../../../contextProviders/ApiErrorProvider'
+import { useApiError } from '../../../contextProviders/ApiErrorProvider'
 
 const useUploadNewPhoto = (
   file: File | null,
@@ -16,7 +16,7 @@ const useUploadNewPhoto = (
     maxWidthOrHeight: 500,
   })
 
-  const { setError } = useApiErrorContext()
+  const { setError } = useApiError()
   useNotifyError(uploadError && { code: uploadError.name, message: uploadError.message })
 
   const updateExistingPosts = useCallback(async () => {

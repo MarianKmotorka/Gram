@@ -7,7 +7,7 @@ import { getLinksConfig } from './utils'
 import NavbarSearch from './NavbarSearch'
 import { useOnClickOutside, useWindowSize } from '../../hooks'
 import noPhotoPng from '../../images/no-photo.png'
-import { useAuthContext } from '../../contextProviders/AuthProvider'
+import { useAuth } from '../../contextProviders/AuthProvider'
 
 import {
   Logo,
@@ -20,7 +20,7 @@ import {
 
 const Navbar = () => {
   const [menuExpanded, setMenuExpanded] = useState(false)
-  const auth = useAuthContext()
+  const auth = useAuth()
   const history = useHistory()
   const { width } = useWindowSize()
   const navbarRef = useOnClickOutside<HTMLDivElement>(() => setMenuExpanded(false))

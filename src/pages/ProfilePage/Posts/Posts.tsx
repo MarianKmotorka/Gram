@@ -6,7 +6,7 @@ import { deletePost } from '../../../services/postService'
 import LoadingRow from '../../../components/Loaders/LoadingRow'
 import PostDetailPage from '../../PostDetailPage/PostDetailPage'
 import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
-import { useApiErrorContext } from '../../../contextProviders/ApiErrorProvider'
+import { useApiError } from '../../../contextProviders/ApiErrorProvider'
 
 import { BottomDiv, Grid, Image, LayoutControls, VerticalSeparator } from './Posts.styled'
 
@@ -30,7 +30,7 @@ const Posts: React.FC<IPostsProps> = ({
   const [displayGrid, setDisplayGrid] = useState(true)
   const [selectedPostId, setSelectedPostId] = useState<string>()
   const observe = useObserver<HTMLDivElement>(loadMore, !loading)
-  const { setError } = useApiErrorContext()
+  const { setError } = useApiError()
 
   const handlePostDeleted = async (post: IPost) => {
     await deletePost(post, setError)

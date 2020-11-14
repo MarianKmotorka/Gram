@@ -45,10 +45,10 @@ const PostDetail: FC<IPostDetailProps> = ({
   onLike,
   onDelete,
 }) => {
-  const [mouseMoving, onMouseMove] = useMouseMoving()
   const { width } = useWindowSize()
   const [deleting, setDeleting] = useState(false)
   const [expanded, setExpanded] = useState(width > 600)
+  const [mouseMoving, onMouseMove] = useMouseMoving()
 
   const visibility = mouseMoving ? 'visible' : 'hidden'
   const showBottomBtns = mouseMoving && (width > 600 || !expanded)

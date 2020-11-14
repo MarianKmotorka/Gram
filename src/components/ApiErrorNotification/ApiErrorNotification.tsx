@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 
 import { CloseIcon } from '../Icons'
-import { useApiErrorContext } from '../../contextProviders/ApiErrorProvider'
+import { useApiError } from '../../contextProviders/ApiErrorProvider'
 
 import { NAVBAR_HEIGHT_NUMBER } from '../Navbar/Navbar.styled'
 import { Bold, Title, Wrapper } from './ApiErrorNotification.styled'
 
 const ApiErrorNotification: React.FC = () => {
-  const { error, removeError } = useApiErrorContext()
+  const { error, removeError } = useApiError()
 
   useEffect(() => {
     const timeoutId = setTimeout(removeError, 8000)

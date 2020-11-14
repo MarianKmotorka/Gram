@@ -12,7 +12,7 @@ export interface IApiErrorContextValue {
 }
 
 const ApiErrorContext = createContext<IApiErrorContextValue>(undefined!)
-export const useApiErrorContext = () => useContext(ApiErrorContext)
+export const useApiError = () => useContext(ApiErrorContext)
 
 const ApiErrorProvider: React.FC = ({ children }) => {
   const [error, setError] = useState<IError>()

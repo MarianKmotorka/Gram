@@ -4,7 +4,7 @@ import Footer from '../../components/Footer/Footer'
 
 import Input from '../../components/Input'
 import MessageStripe from '../../components/MessageStripe'
-import { useAuthContext } from '../../contextProviders/AuthProvider'
+import { useAuth } from '../../contextProviders/AuthProvider'
 
 import { StyledCard, StyledButton, Title, Wrapper } from './LoginPage.styled'
 
@@ -13,7 +13,7 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { projectAuth } = useAuthContext()
+  const { projectAuth } = useAuth()
 
   const handleLogin = async () => {
     setIsLoading(true)

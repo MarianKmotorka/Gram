@@ -16,10 +16,10 @@ type AuthContextValue =
 
 const AuthContext = createContext<AuthContextValue>(undefined!)
 
-export const useAuthContext = () => useContext(AuthContext)
+export const useAuth = () => useContext(AuthContext)
 
 export const useAuthorizedUser = () => {
-  const auth = useAuthContext()
+  const auth = useAuth()
 
   if (!auth.isLoggedIn)
     throw new Error('You cannot use this hook where user is not logged in.')

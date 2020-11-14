@@ -6,7 +6,7 @@ import { validate } from './validator'
 import Input from '../../components/Input'
 import Footer from '../../components/Footer/Footer'
 import MessageStripe from '../../components/MessageStripe'
-import { useAuthContext } from '../../contextProviders/AuthProvider'
+import { useAuth } from '../../contextProviders/AuthProvider'
 import { getTimestamp, projectFirestore } from '../../firebase/firebaseConfig'
 
 import { StyledCard, StyledButton, Title, Wrapper } from './RegisterPage.styled'
@@ -18,7 +18,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [aboutMe, setAboutMe] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { projectAuth } = useAuthContext()
+  const { projectAuth } = useAuth()
 
   function prependNickWithAt(value: string) {
     const lowerCaseValue = value.toLowerCase()

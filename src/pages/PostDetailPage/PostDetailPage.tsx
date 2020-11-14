@@ -5,7 +5,7 @@ import PostDetailLoadingSkeleton from '../../components/Post/Detail/PostDetailLo
 
 import { IPost } from '../../domain'
 import PostDetail from '../../components/Post/Detail/PostDetail'
-import { useApiErrorContext } from '../../contextProviders/ApiErrorProvider'
+import { useApiError } from '../../contextProviders/ApiErrorProvider'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { likePost } from '../../services/postService'
 
@@ -23,7 +23,7 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
   afterLikedCallback,
   ...rest
 }) => {
-  const { setError } = useApiErrorContext()
+  const { setError } = useApiError()
   const { currentUser } = useAuthorizedUser()
   const [response, { refresh }] = useFirestoreDoc<IPost>(`posts/${postId}`, {
     realTime: false,

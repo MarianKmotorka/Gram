@@ -6,7 +6,7 @@ import {
   getTimestamp,
   projectFirestore,
 } from '../../../firebase/firebaseConfig'
-import { useApiErrorContext } from '../../../contextProviders/ApiErrorProvider'
+import { useApiError } from '../../../contextProviders/ApiErrorProvider'
 import { propertyOf } from '../../../utils/utils'
 
 const useUplaodPost = (
@@ -17,7 +17,7 @@ const useUplaodPost = (
   const [uploading, setUploading] = useState(false)
   const { progress, error, url } = useStorage(image, uploading)
   useNotifyError(error && { code: error.name, message: error.message })
-  const { setError } = useApiErrorContext()
+  const { setError } = useApiError()
 
   useEffect(() => {
     const createPost = async () => {

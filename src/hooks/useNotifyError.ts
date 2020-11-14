@@ -1,11 +1,8 @@
 import { useEffect } from 'react'
-import {
-  IApiErrorContextValue,
-  useApiErrorContext,
-} from '../contextProviders/ApiErrorProvider'
+import { IApiErrorContextValue, useApiError } from '../contextProviders/ApiErrorProvider'
 
 const useNotifyError = (error: IApiErrorContextValue['error'] | null) => {
-  const { setError } = useApiErrorContext()
+  const { setError } = useApiError()
 
   useEffect(() => {
     error && setError(error)
