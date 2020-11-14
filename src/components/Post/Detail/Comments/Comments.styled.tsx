@@ -26,7 +26,6 @@ export const Metadata = styled.div`
   flex-direction: column;
   border-bottom: 1px solid rgba(40, 62, 74, 0.4);
   margin-bottom: 6px;
-  cursor: pointer;
   position: relative;
 
   img {
@@ -52,6 +51,8 @@ export const Metadata = styled.div`
   span {
     display: flex;
     align-items: center;
+    max-width: 70%;
+    cursor: pointer;
   }
 `
 
