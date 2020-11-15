@@ -7,6 +7,12 @@ interface IValidationResult {
 }
 
 export const validate = async (model: IRegisterUserModel): Promise<IValidationResult> => {
+  if (process.env.REACT_APP_REGISTRATION_ENABLED === 'FALSE')
+    return Promise.resolve({
+      success: false,
+      error: 'New user registration is temporarily stopped. Try again later.',
+    })
+
   if (model.nick.length < 4 || model.nick.length > 20)
     return Promise.resolve({
       success: false,
