@@ -5,7 +5,7 @@ import useUplaodPost from './useUploadPost'
 import { CloseIcon } from '../../../components/Icons'
 import { IBackdropProps } from '../../../components/Backdrop'
 import { Padding } from '../../../components/UtilityComponents'
-import { MessageStripe, Button, Backdrop, IconButton } from '../../../components'
+import { MessageStripe, Backdrop } from '../../../components'
 
 import {
   FileInput,
