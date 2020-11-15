@@ -21,7 +21,7 @@ interface IStyledProps {
   position?: string
 }
 
-const Container = styled.div<IStyledProps>`
+const Container = styled.button<IStyledProps>`
   position: ${({ top, left, bottom, right, position }) =>
     position ? position : top || left || bottom || right ? 'absolute' : 'static'};
 
@@ -41,6 +41,10 @@ const Container = styled.div<IStyledProps>`
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.3);
   transition: all 0.2s;
+
+  font-size: inherit;
+  border: none;
+  outline: none;
 
   :hover {
     background-color: rgba(100, 100, 100, 0.5);

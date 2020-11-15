@@ -20,31 +20,31 @@ const Wrapper = styled.div<{ width?: string }>`
 `
 
 const Label = styled.label`
-  margin: 0 0 3px 8px;
+  margin: 0 0 3px 3px;
 `
 
 const StyledTextArea = styled.textarea`
   line-height: 30px;
   padding: 3px 10px;
-  font-size: 18px;
+  font-size: 1rem;
   width: 100%;
 
-  border: 3px solid transparent;
-  border-radius: 16px;
+  border-radius: 6px;
+  border: none;
   outline: none;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 2px 2px 3px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
 `
 
 const StyledInput = styled.input`
   line-height: 30px;
   padding: 3px 10px;
-  font-size: 18px;
+  font-size: 1rem;
   width: 100%;
 
-  border: 3px solid transparent;
-  border-radius: 100rem;
+  border-radius: 6px;
+  border: none;
   outline: none;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 2px 2px 3px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
 `
 
 const Input = ({

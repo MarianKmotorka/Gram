@@ -18,7 +18,7 @@ export const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  border-radius: 30px;
+  border-radius: 15px;
   background: ${({ theme }) => theme.white};
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 2px 2px 3px rgba(0, 0, 0, 0.1) inset,
     5px 5px 50px rgba(0, 0, 0, 0.1);

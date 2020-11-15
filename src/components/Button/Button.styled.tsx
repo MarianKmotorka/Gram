@@ -14,13 +14,13 @@ export const StyledPrimaryButton = styled.button<IButtonProps>`
     return css`
       outline: none;
       border: none;
-      border-radius: 100rem;
+      border-radius: 6px;
 
-      font-size: 18px;
+      font-size: 1rem;
       cursor: ${disabled ? 'auto' : 'pointer'};
       transition: background-color 0.2s, color 0.2s;
 
-      padding: 8px 20px;
+      padding: 8px 18px;
       background: ${color1};
       color: ${color2};
 

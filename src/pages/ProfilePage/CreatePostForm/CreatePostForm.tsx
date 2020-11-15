@@ -5,7 +5,7 @@ import useUplaodPost from './useUploadPost'
 import { CloseIcon } from '../../../components/Icons'
 import { IBackdropProps } from '../../../components/Backdrop'
 import { Padding } from '../../../components/UtilityComponents'
-import { MessageStripe, Button, Backdrop } from '../../../components'
+import { MessageStripe, Button, Backdrop, IconButton } from '../../../components'
 
 import {
   FileInput,
@@ -62,7 +62,7 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
       <Wrapper initial={{ y: '-50vh' }} animate={{ y: 0 }} exit={{ y: '-50vh' }}>
         <Header>
           <h2>New post</h2>
-          <Button buttonType='action' icon={<CloseIcon />} onClick={handleClosed} />
+          <CloseIcon onClick={handleClosed} />
         </Header>
 
         <Padding value='0 25px'>
@@ -95,7 +95,8 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
           />
 
           <StyledButton
-            primaryColor='green'
+            primaryColor='primary'
+            reversed
             disabled={uploading}
             onClick={handleSelectFile}
           >

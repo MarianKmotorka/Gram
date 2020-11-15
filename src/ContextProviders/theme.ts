@@ -5,6 +5,7 @@ declare module 'styled-components' {
     primaryText: string
     secondaryText: string
     bg: string
+    bg2: string
 
     red: string
     accent: string
@@ -27,6 +28,7 @@ export const lightTheme: DefaultTheme = {
   primary: '#283e4a',
   accent: '#fc5e49',
   bg: '#fafafa',
+  bg2: '#e6e5e5',
 
   primaryText: '#000000',
   secondaryText: '#777777',
@@ -38,7 +40,7 @@ export const lightTheme: DefaultTheme = {
   white: '#ffffff',
   black: '#000000',
   blackLight: '#494949',
-  lightPink: '#ffebebc7',
+  lightPink: '#ffaeae',
 
   blueGreenGradient: 'linear-gradient(60deg, #283e4a 60%, #59ce8f)',
 }

@@ -12,23 +12,24 @@ const Wrapper = styled.div<{ color: string; bg: string }>`
   margin: 10px 0;
   padding: 10px 20px;
   background: ${({ theme, bg }) => theme[bg]};
-  border-radius: 10px;
+  border-radius: 7px;
   width: 100%;
+  color: ${({ theme, color }) => theme[color]};
 
   i {
-    color: ${({ theme, color }) => theme[color]};
+    color: inherit;
     margin-right: 5px;
   }
 `
 
 const MessageStripe: React.FC<IProps> = ({ textType = 'info', text }) => {
-  let bg = 'lightBlue'
+  let bg = 'bg2'
   let color = 'black'
   let icon = 'fas fa-info-circle'
 
   if (textType === 'error') {
-    bg = 'lightPink'
-    color = 'red'
+    bg = 'accent'
+    color = 'bg'
     icon = 'fas fa-exclamation-circle'
   }
 

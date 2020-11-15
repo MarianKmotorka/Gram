@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
 export const StyledCard = styled(Card)`
   width: 100%;
   max-width: 600px;
-  border-radius: 30px;
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
