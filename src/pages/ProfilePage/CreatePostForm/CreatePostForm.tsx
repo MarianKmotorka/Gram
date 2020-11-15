@@ -3,10 +3,9 @@ import React, { useState } from 'react'
 import { IUser } from '../../../domain'
 import useUplaodPost from './useUploadPost'
 import { CloseIcon } from '../../../components/Icons'
-import Button from '../../../components/Button/Button'
-import MessageStripe from '../../../components/MessageStripe'
+import { IBackdropProps } from '../../../components/Backdrop'
 import { Padding } from '../../../components/UtilityComponents'
-import Backdrop, { IBackdropProps } from '../../../components/Backdrop'
+import { MessageStripe, Button, Backdrop } from '../../../components'
 
 import {
   FileInput,

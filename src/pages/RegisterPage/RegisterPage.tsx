@@ -3,10 +3,8 @@ import { RouteComponentProps } from 'react-router-dom'
 
 import { IUser } from '../../domain'
 import { validate } from './validator'
-import Input from '../../components/Inputs/Input'
-import Footer from '../../components/Footer/Footer'
-import MessageStripe from '../../components/MessageStripe'
 import { useAuth } from '../../contextProviders/AuthProvider'
+import { MessageStripe, Footer, Input } from '../../components'
 import { getTimestamp, projectFirestore } from '../../firebase/firebaseConfig'
 
 import { StyledCard, StyledButton, Title, Wrapper } from './RegisterPage.styled'

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { useObserver } from '../../../hooks'
 import { IPost, IUser } from '../../../domain'
-import LoadingRow from '../../../components/Loaders/LoadingRow'
+import { LoadingRow } from '../../../components'
 import PostDetailPage from '../../PostDetailPage/PostDetailPage'
 import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
 

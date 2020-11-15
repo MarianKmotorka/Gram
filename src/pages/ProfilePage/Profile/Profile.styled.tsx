@@ -89,7 +89,7 @@ export const Bold = styled.b`
 
 export const Text = styled.p`
   font-weight: 200;
-  line-height: 20px;
+  line-height: 25px;
   color: inherit;
 
   i {

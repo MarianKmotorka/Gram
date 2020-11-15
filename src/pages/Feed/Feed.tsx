@@ -2,8 +2,10 @@ import React, { useCallback, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { IPost } from '../../domain'
-import FeedPost from '../../components/Post/FeedPost'
-import LoadingRow from '../../components/Loaders/LoadingRow'
+import noPhoto from '../../images/no-photo.png'
+import { LoadingRow, FeedPost } from '../../components'
+import PostDetailPage from '../PostDetailPage/PostDetailPage'
+import { isLiked, likePost } from '../../services/postService'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { useNotifyError, useObserver, usePagedQuery, useScroll } from '../../hooks'
 import {
@@ -12,8 +14,6 @@ import {
   EnvelopeIcon,
   UserSecretIcon,
 } from '../../components/Icons'
-import { isLiked, likePost } from '../../services/postService'
-import noPhoto from '../../images/no-photo.png'
 
 import {
   Stat,
@@ -28,7 +28,6 @@ import {
   ScrollUpButton,
   CardMiddle,
 } from './Feed.styled'
-import PostDetailPage from '../PostDetailPage/PostDetailPage'
 
 const Feed: React.FC = () => {
   const [posts, loading, nextPage, hasMore, , error, modifyPost] = usePagedQuery<IPost>(

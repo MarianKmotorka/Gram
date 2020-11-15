@@ -6,12 +6,10 @@ import Posts from './Posts/Posts'
 import Profile from './Profile/Profile'
 import { IPost, IUser } from '../../domain'
 import { PlusIcon } from '../../components/Icons'
-import Button from '../../components/Button/Button'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
-import LoadingOverlay from '../../components/Loaders/LoadingOverlay'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { useFirestoreDoc, usePagedQuery, useWindowSize } from '../../hooks'
-import ErrorWhileLoadingData from '../../components/Loaders/ErrorWhileLoadingData'
+import { Button, ErrorWhileLoadingData, LoadingOverlay } from '../../components'
 
 import { DraggableWrapper, Wrapper } from './ProfilePage.styled'
 
