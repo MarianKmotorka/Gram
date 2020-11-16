@@ -29,8 +29,9 @@ export interface IPost extends IEntity {
 
 export interface IUser extends IEntity {
   nick: string
-  createdAt: firebase.firestore.Timestamp
   aboutMe: string | null
   photoUrl: string | null
   postCount: number
+  createdAt: firebase.firestore.Timestamp
+  lastLogin: firebase.firestore.Timestamp
 }

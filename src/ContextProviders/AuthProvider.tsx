@@ -1,9 +1,10 @@
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react'
+
 import { IUser } from '../domain'
 import { useFirestoreDoc } from '../hooks'
-import { projectAuth } from '../firebase/firebaseConfig'
-import LoadingOverlay from '../components/Loaders/LoadingOverlay'
-import ErrorWhileLoadingData from '../components/Loaders/ErrorWhileLoadingData'
+import { propertyOf } from '../utils/utils'
+import { ErrorWhileLoadingData, LoadingOverlay } from '../components'
+import { getTimestamp, projectAuth, projectFirestore } from '../firebase/firebaseConfig'
 
 type AuthContextValue =
   | { isLoggedIn: false; projectAuth: firebase.auth.Auth }
@@ -39,8 +40,13 @@ const AuthProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     const unsub = projectAuth.onAuthStateChanged(async user => {
-      if (user) setAuthUser(user)
-      else {
+      if (user) {
+        await projectFirestore
+          .doc(`users/${user.uid}`)
+          .set({ [propertyOf<IUser>('lastLogin')]: getTimestamp() }, { merge: true })
+
+        setAuthUser(user) // Note: this line needs to be bellow updating lastLogin
+      } else {
         setState(x => ({ ...x, isLoggedIn: false }))
         setShowSpinner(false)
       }

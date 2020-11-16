@@ -78,7 +78,7 @@ export const Bold = styled.b`
   color: ${({ theme }) => theme.accent};
 
   i {
-    width: 30px;
+    width: 35px;
     text-align: center;
   }
 

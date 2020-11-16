@@ -35,7 +35,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
     await projectAuth
       .createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
-        const newUser: Omit<IUser, 'id'> = {
+        const newUser: Omit<IUser, 'id' | 'lastLogin'> = {
           nick,
           aboutMe,
           postCount: 0,

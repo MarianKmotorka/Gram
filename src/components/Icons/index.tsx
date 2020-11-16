@@ -67,12 +67,16 @@ export const UserIcon: React.FC<IIconProps> = props => (
   <Icon name='fas fa-user' {...props} />
 )
 
-export const OpenLockIcon: React.FC<IIconProps> = props => (
-  <Icon name='fas fa-lock-open' {...props} />
+export const UserShieldIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-user-shield' {...props} />
 )
 
 export const PlusIcon: React.FC<IIconProps> = props => (
   <Icon name='fas fa-plus' {...props} />
+)
+
+export const UserPlusIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-user-plus' {...props} />
 )
 
 export const EnvelopeIcon: React.FC<IIconProps> = props => (

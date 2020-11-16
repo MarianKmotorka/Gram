@@ -9,6 +9,7 @@ import {
   UserSecretIcon,
   BlindManIcon,
   EnvelopeIcon,
+  PlusIcon,
 } from '../../../components/Icons'
 
 import {
@@ -108,11 +109,20 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
           </Text>
           <Text>
             <Bold>
-              <ClockIcon />
-              <span>Account created:</span>
+              <PlusIcon />
+              <span>Registered:</span>
             </Bold>
-            {moment(user.createdAt.toDate()).format('MMMM Do YYYY')}
+            {moment(user.createdAt.toDate()).format('DD. MM. YYYY')}
           </Text>
+          {user.lastLogin && (
+            <Text>
+              <Bold>
+                <ClockIcon />
+                <span>Last login:</span>
+              </Bold>
+              {moment(user.lastLogin.toDate()).format('DD. MM. YYYY, HH:mm')}
+            </Text>
+          )}
         </InfoCard>
       </AboutSection>
     </Wrapper>
