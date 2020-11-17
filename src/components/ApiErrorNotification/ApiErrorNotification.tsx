@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 import { CloseIcon } from '../Icons'
 import { useApiError } from '../../contextProviders/ApiErrorProvider'
 
-import { NAVBAR_HEIGHT_NUMBER } from '../Navbar/Navbar.styled'
+import { NAVBAR_HEIGHT } from '../Navbar/Navbar.styled'
 import { Bold, Title, Wrapper } from './ApiErrorNotification.styled'
 
 const ApiErrorNotification: React.FC = () => {
@@ -20,7 +20,7 @@ const ApiErrorNotification: React.FC = () => {
       {error && (
         <Wrapper
           initial={{ top: -100 }}
-          animate={{ top: NAVBAR_HEIGHT_NUMBER + 20 }}
+          animate={{ top: NAVBAR_HEIGHT + 20 }}
           exit={{ top: -400 }}
         >
           <Title>Error</Title>

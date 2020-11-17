@@ -16,6 +16,7 @@ import {
   DropdownRow,
   LinksContainer,
   StyledMenuIcon,
+  NAVBAR_BREAKPOINT,
 } from './Navbar.styled'
 
 const Navbar = () => {
@@ -25,7 +26,7 @@ const Navbar = () => {
   const { width } = useWindowSize()
   const navbarRef = useOnClickOutside<HTMLDivElement>(() => setMenuExpanded(false))
 
-  const isWideScreen = width > 900
+  const isWideScreen = width > NAVBAR_BREAKPOINT
   const userId = auth.isLoggedIn ? auth.authUser.uid : ''
 
   const rowRenderer = (user: IUser) => (
@@ -51,20 +52,15 @@ const Navbar = () => {
       <AnimatePresence>
         {(isWideScreen || menuExpanded) && (
           <LinksContainer
-            initial={{ right: -400 }}
+            initial={{ right: -500 }}
             animate={{ right: 0 }}
-            exit={{ right: -400 }}
+            exit={{ right: -500 }}
             transition={{ type: 'spring', mass: 0.1 }}
           >
             {getLinksConfig(userId).map(
               x =>
                 x.isLoggedIn === auth.isLoggedIn && (
-                  <StyledLink
-                    isDark={x.isDark}
-                    onClick={() => setMenuExpanded(false)}
-                    to={x.to}
-                    key={x.to}
-                  >
+                  <StyledLink onClick={() => setMenuExpanded(false)} to={x.to} key={x.to}>
                     {x.icon}
                     <span>{x.text}</span>
                   </StyledLink>

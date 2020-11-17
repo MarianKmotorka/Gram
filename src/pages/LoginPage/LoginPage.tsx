@@ -34,7 +34,13 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
 
           {error && <MessageStripe textType='error' text={error} />}
 
-          <Input value={email} onChange={setEmail} width='100%' label='Email' />
+          <Input
+            value={email}
+            onChange={setEmail}
+            width='100%'
+            label='Email'
+            placeholder='my@email'
+          />
 
           <Input
             value={password}
@@ -42,6 +48,7 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
             type='password'
             width='100%'
             label='Password'
+            placeholder='•••••••••••'
           />
 
           <StyledButton isLoading={isLoading} onClick={handleLogin} reversed>

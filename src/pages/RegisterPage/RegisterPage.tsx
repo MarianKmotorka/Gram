@@ -11,7 +11,7 @@ import { StyledCard, StyledButton, Title, Wrapper } from './RegisterPage.styled'
 
 const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [email, setEmail] = useState('')
-  const [nick, setNick] = useState('@')
+  const [nick, setNick] = useState('')
   const [password, setPassword] = useState('')
   const [aboutMe, setAboutMe] = useState('')
   const [error, setError] = useState('')
@@ -60,14 +60,27 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
 
           {error && <MessageStripe textType='error' text={error} />}
 
-          <Input value={nick} onChange={prependNickWithAt} width='100%' label='Nick' />
-          <Input value={email} onChange={setEmail} width='100%' label='Email' />
+          <Input
+            value={nick}
+            onChange={prependNickWithAt}
+            width='100%'
+            label='Nick'
+            placeholder='@nick'
+          />
+          <Input
+            value={email}
+            onChange={setEmail}
+            width='100%'
+            label='Email'
+            placeholder='my@email'
+          />
           <Input
             value={password}
             onChange={setPassword}
             type='password'
             width='100%'
             label='Password'
+            placeholder='••••••••••••'
           />
           <Input
             value={aboutMe}
@@ -75,6 +88,7 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
             width='100%'
             label='About me'
             rows={4}
+            placeholder="I'm kind of person that ...."
           />
 
           <StyledButton isLoading={isLoading} onClick={handleRegister} reversed>

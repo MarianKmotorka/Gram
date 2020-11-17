@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 
 import Feed from '../../pages/Feed/Feed'
 import Signout from '../../pages/Signout'
@@ -15,7 +15,8 @@ const Routes = () => (
     <NoAuthRoute path='/register' component={RegisterPage} />
     <Route path='/signout' component={Signout} />
     <ProtectedRoute path='/profile/:userId' component={ProfilePage} />
-    <ProtectedRoute path='/' component={Feed} />
+    <ProtectedRoute path='/feed' exact component={Feed} />
+    <Redirect to='/feed' />
   </Switch>
 )
 

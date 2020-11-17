@@ -1,8 +1,8 @@
 import styled, { createGlobalStyle } from 'styled-components'
-import { NAVBAR_HEIGHT } from './components/Navbar/Navbar.styled'
+import { NAVBAR_HEIGHT_PX } from './components/Navbar/Navbar.styled'
 
 export const AppContent = styled.div`
-  height: calc(100% - ${NAVBAR_HEIGHT});
+  height: calc(100% - ${NAVBAR_HEIGHT_PX});
   overflow: auto;
 `
 

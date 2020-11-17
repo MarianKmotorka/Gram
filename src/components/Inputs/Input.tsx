@@ -11,6 +11,7 @@ interface IInputProps {
   multiLine?: boolean
   rows?: number
   disabled?: boolean
+  placeholder?: string
 }
 
 const Wrapper = styled.div<{ width?: string }>`
@@ -55,6 +56,7 @@ const Input = ({
   className,
   disabled,
   rows,
+  placeholder,
   onChange,
 }: IInputProps) => {
   return (
@@ -66,6 +68,7 @@ const Input = ({
           onChange={e => !disabled && onChange(e.target.value)}
           value={value}
           type={type}
+          placeholder={placeholder}
         />
       )}
 
@@ -74,6 +77,7 @@ const Input = ({
           onChange={e => !disabled && onChange(e.target.value)}
           value={value}
           rows={rows}
+          placeholder={placeholder}
         />
       )}
     </Wrapper>

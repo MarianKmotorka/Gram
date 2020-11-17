@@ -3,11 +3,11 @@ import styled from 'styled-components'
 
 import { LoadingIcon } from '../Icons'
 
-import { NAVBAR_HEIGHT } from '../Navbar/Navbar.styled'
+import { NAVBAR_HEIGHT_PX } from '../Navbar/Navbar.styled'
 
 const Overlay = styled.div`
   position: absolute;
-  top: ${NAVBAR_HEIGHT};
+  top: ${NAVBAR_HEIGHT_PX};
   bottom: 0;
   left: 0;
   right: 0;
