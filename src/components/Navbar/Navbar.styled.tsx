@@ -175,13 +175,7 @@ export const StyledMenuIcon = styled(BurgerMenuIcon)`
   font-size: 1.6rem;
   margin-left: auto;
   padding: 0 20px;
-  transition: color 0.2s;
-
-  color: ${({ theme }) => theme.white};
-
-  :hover {
-    color: ${({ theme }) => theme.accent};
-  }
+  color: ${({ theme }) => theme.accent};
 
   @media only screen and (max-width: ${NAVBAR_BREAKPOINT_PX}) {
     display: flex;
