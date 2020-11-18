@@ -19,8 +19,14 @@ export const Wrapper = styled(CenteredContainer)`
 export const PostsContainer = styled.div`
   width: 100%;
   max-width: 600px;
+  min-height: 100vh;
+
   > div + div {
     margin-top: 10px;
+  }
+
+  @media only screen and (max-width: 400px) {
+    background-color: ${({ theme }) => theme.bg2};
   }
 `
 
@@ -31,7 +37,7 @@ export const DummymSpan = styled.span`
 
 export const SideCard = styled.div<{ visibility?: string }>`
   background-color: ${({ theme }) => theme.white};
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
   height: 370px;
   min-width: 250px;
   width: 300px;

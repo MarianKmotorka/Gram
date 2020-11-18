@@ -35,7 +35,7 @@ export const Wrapper = styled(motion.div)<{ focused: boolean }>`
               margin-left: auto;
               background: inherit;
               border: none;
-              margin-right: -20px;
+              margin-right: -10px;
 
               i {
                 color: ${({ theme }) => theme.white};

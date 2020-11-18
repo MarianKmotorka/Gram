@@ -5,10 +5,15 @@ import IconButton from '../Button/IconButton'
 
 export const Wrapper = styled.div`
   width: 100%;
-  box-shadow: -5px -5px 30px rgba(0, 0, 0, 0.1), 8px 8px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
   background-color: ${({ theme }) => theme.white};
   border-radius: 15px;
   overflow: hidden;
+
+  @media only screen and (max-width: 400px) {
+    border-radius: 0;
+    box-shadow: none;
+  }
 `
 
 export const Header = styled.div`
@@ -18,7 +23,6 @@ export const Header = styled.div`
 
 export const Title = styled.h3`
   padding: 10px 0;
-  text-transform: uppercase;
 `
 
 export const AuthorSection = styled.section`

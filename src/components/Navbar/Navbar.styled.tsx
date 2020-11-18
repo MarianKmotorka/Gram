@@ -110,6 +110,7 @@ export const StyledLink = styled(NavLink)`
   @media only screen and (min-width: ${NAVBAR_BREAKPOINT + 1}px) {
     flex-direction: column;
     align-items: center;
+    padding-top: 5px;
 
     span {
       font-size: 0.9rem;
@@ -153,17 +154,13 @@ export const DropdownRow = styled.div`
 
 export const StyledMenuIcon = styled(BurgerMenuIcon)`
   display: none;
-  height: 100%;
-  width: 60px;
   cursor: pointer;
   font-size: 1.6rem;
   margin-left: auto;
-  padding: 0 20px;
+  padding: 0 5px;
   color: ${({ theme }) => theme.accent};
 
   @media only screen and (max-width: ${NAVBAR_BREAKPOINT_PX}) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
   }
 `
