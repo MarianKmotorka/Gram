@@ -5,19 +5,18 @@ interface IStyledProps {
   margin?: string
   fontSize?: string
   color?: string
+  cursorPointer?: boolean
 }
 
 const I = styled.i<IStyledProps>`
   margin: ${({ margin }) => margin || '0'};
   font-size: ${({ fontSize }) => fontSize || '1em'};
   color: ${({ color, theme }) => (color ? theme[color] : theme.black)};
+  cursor: ${({ cursorPointer }) => (cursorPointer ? 'pointer' : 'auto')};
 `
 
-export interface IIconBaseProps {
+export interface IIconBaseProps extends IStyledProps {
   name: string
-  margin?: string
-  color?: string
-  fontSize?: string
   className?: string
   onClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }

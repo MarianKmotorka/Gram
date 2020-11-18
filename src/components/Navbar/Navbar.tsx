@@ -52,9 +52,9 @@ const Navbar = () => {
       <AnimatePresence>
         {(isWideScreen || menuExpanded) && (
           <LinksContainer
-            initial={{ right: -500 }}
+            initial={{ right: -400 }}
             animate={{ right: 0 }}
-            exit={{ right: -500 }}
+            exit={{ right: -400 }}
             transition={{ type: 'spring', mass: 0.1 }}
           >
             {getLinksConfig(userId).map(

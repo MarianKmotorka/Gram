@@ -10,24 +10,43 @@ export const Wrapper = styled(motion.div)<{ focused: boolean }>`
   }
 
   ${({ focused }) =>
-    focused &&
-    css`
-      @media only screen and (max-width: 600px) {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        right: 10px;
-        padding: 0;
+    focused
+      ? css`
+          @media only screen and (max-width: 600px) {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            padding: 0;
 
-        > div {
-          max-width: 100vw;
-        }
-      }
+            > div {
+              max-width: 100vw;
+            }
+          }
 
-      input {
-        font-size: 1.2em;
-      }
-    `}
+          input {
+            font-size: 1.2em;
+          }
+        `
+      : css`
+          @media only screen and (max-width: 600px) {
+            > div {
+              width: 40px;
+              margin-left: auto;
+              background: inherit;
+              border: none;
+              margin-right: -20px;
+
+              i {
+                color: ${({ theme }) => theme.white};
+              }
+
+              input {
+                background: inherit;
+              }
+            }
+          }
+        `}
 `
 
 export const Backdrop = styled.div`

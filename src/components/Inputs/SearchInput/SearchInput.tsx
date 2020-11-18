@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 
 import { IEntity } from '../../../domain'
@@ -16,6 +16,7 @@ import { Wrapper, StyledInput, RowsContainer, Row } from './SearchInput.styled'
 
 export interface ISearchInputProps<T extends IEntity> {
   searchPrefix?: string
+  exitAnimation?: boolean
   onFocus?: () => void
   onBlur?: () => void
   onSelected: (value: T) => void
@@ -30,6 +31,7 @@ export interface ISearchInputProps<T extends IEntity> {
 
 const SearchInput = <T extends IEntity>({
   searchPrefix,
+  exitAnimation = true,
   onBlur,
   onFocus,
   onSelected,
@@ -39,6 +41,7 @@ const SearchInput = <T extends IEntity>({
   const [expanded, setExpanded] = useState(false)
   const [text, setTextInternal] = useState('')
   const debouncedText = useDebounce<string>(text, 400)
+  const inputRef = useRef<HTMLInputElement>(null!)
 
   const wrapperRef = useOnClickOutside<HTMLDivElement>(() => {
     setExpanded(false)
@@ -90,9 +93,10 @@ const SearchInput = <T extends IEntity>({
 
   return (
     <Wrapper ref={wrapperRef}>
-      <SearchIcon />
+      <SearchIcon cursorPointer onClick={() => inputRef?.current?.focus()} />
 
       <StyledInput
+        ref={inputRef}
         value={text}
         placeholder='Search...'
         onFocus={handleFocused}
@@ -104,7 +108,7 @@ const SearchInput = <T extends IEntity>({
           <RowsContainer
             initial={{ height: 0 }}
             animate={{ height: 'auto' }}
-            exit={{ height: 0, transition: { type: 'tween' } }}
+            exit={exitAnimation ? { height: 0, transition: { type: 'tween' } } : {}}
           >
             {loading && (
               <Row>

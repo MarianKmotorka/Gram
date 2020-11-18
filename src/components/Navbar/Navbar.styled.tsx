@@ -47,16 +47,16 @@ export const LinksContainer = styled(motion.div)`
 
   @media only screen and (max-width: ${NAVBAR_BREAKPOINT_PX}) {
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     padding: 60px 0;
     position: absolute;
     top: 100%;
     right: 0;
     width: 100vw;
-    max-width: 500px;
+    max-width: 400px;
     height: calc(100vh - ${NAVBAR_HEIGHT_PX});
 
-    background: ${({ theme }) => theme.bg};
+    background: ${({ theme }) => theme.white};
     box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 10;
   }
@@ -69,72 +69,56 @@ export const StyledLink = styled(NavLink)`
   height: 100%;
   width: 120px;
   padding: 0 20px;
-  letter-spacing: 2px;
   transition: background-color 0.2s, color 0.2s;
   position: relative;
   color: ${({ theme }) => theme.white};
   background-color: ${({ theme }) => theme.primary};
 
   &.active {
-    color: ${({ theme }) => theme.accent};
-    border-bottom: 4px solid ${({ theme }) => theme.accent};
-    border-top: 4px solid ${({ theme }) => theme.accent};
+    i {
+      color: ${({ theme }) => theme.accent};
+    }
   }
 
   > * {
     color: inherit;
-    font-size: 20px;
-  }
-
-  > * + * {
-    margin-left: 7px;
+    transition: inherit;
+    font-size: 1.15rem;
   }
 
   @media only screen and (max-width: ${NAVBAR_BREAKPOINT_PX}) {
-    width: 100%;
-    height: 70px;
-    text-align: center;
-    flex-direction: column;
-    background-color: ${({ theme }) => theme.bg};
+    width: 200px;
+    height: 90px;
+    justify-content: flex-start;
+    background-color: inherit;
     color: ${({ theme }) => theme.primary};
 
-    &.active {
-      border: none;
+    i {
+      min-width: 50px;
+      display: inline-block;
+      text-align: center;
     }
 
     span {
-      font-size: 0.95rem;
-      border-top: solid 1px;
-      margin-top: 15px;
-      padding-top: 10px;
-      width: 75%;
-      letter-spacing: 8px;
+      font-size: 0.9rem;
+      border-left: solid 1px;
+      padding-left: 10px;
+      letter-spacing: 2px;
     }
   }
 
   @media only screen and (min-width: ${NAVBAR_BREAKPOINT + 1}px) {
+    flex-direction: column;
+    align-items: center;
+
     span {
-      display: none;
+      font-size: 0.9rem;
+      font-weight: 300;
+      margin-top: 3px;
     }
 
-    :hover {
-      background-color: ${({ theme }) => theme.primary};
-
-      span {
-        display: block;
-        position: absolute;
-        margin: 0;
-        padding: 10px;
-        width: 100%;
-        font-size: 18px;
-        text-align: center;
-        background: ${({ theme }) => theme.primary};
-        border-radius: 5px;
-
-        top: calc(100% + 10px);
-        left: 0;
-        z-index: 10;
-      }
+    :hover i {
+      color: ${({ theme }) => theme.accent};
     }
   }
 `

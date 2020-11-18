@@ -3,31 +3,31 @@ import { PowerOffIcon, IglooIcon, UserShieldIcon, UserIcon, UserPlusIcon } from 
 
 export const getLinksConfig = (userId: string) => [
   {
-    text: 'LOGIN',
+    text: 'Login',
     icon: <UserShieldIcon />,
     to: '/login',
     isLoggedIn: false,
   },
   {
-    text: 'REGISTER',
+    text: 'Register',
     icon: <UserPlusIcon />,
     to: '/register',
     isLoggedIn: false,
   },
   {
-    text: 'FEED',
+    text: 'Home',
     icon: <IglooIcon />,
     to: '/feed',
     isLoggedIn: true,
   },
   {
-    text: 'PROFILE',
+    text: 'Profile',
     icon: <UserIcon />,
     to: `/profile/${userId}`,
     isLoggedIn: true,
   },
   {
-    text: 'SIGN OUT',
+    text: 'Sign out',
     to: '/signout',
     icon: <PowerOffIcon />,
     isLoggedIn: true,
