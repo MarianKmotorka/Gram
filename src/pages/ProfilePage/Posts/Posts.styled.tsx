@@ -25,6 +25,7 @@ export const Image = styled.img<{ smallScreenGrid: boolean }>`
   cursor: pointer;
   border-radius: 10px;
   transition: transform 0.15s;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 
   :hover {
     transform: scale(0.95);

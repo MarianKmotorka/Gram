@@ -7,9 +7,9 @@ export interface IButtonProps {
 }
 
 export const StyledPrimaryButton = styled.button<IButtonProps>`
-  ${({ primaryColor = 'accent', reversed, disabled, theme }) => {
-    const color1 = reversed ? theme[primaryColor] : theme.bg
-    const color2 = reversed ? theme.bg : theme[primaryColor]
+  ${({ primaryColor = 'primary', reversed, disabled, theme }) => {
+    const color1 = reversed ? theme[primaryColor] : theme.white
+    const color2 = reversed ? theme.white : theme[primaryColor]
 
     return css`
       outline: none;
@@ -52,10 +52,11 @@ export const StyledActionButton = styled.button<IButtonProps>`
 
   i {
     ${({ primaryColor, theme }) => primaryColor && `color:${theme[primaryColor]}`}
+    cursor:inherit;
   }
 
   :hover {
-    background: ${({ theme }) => lightenColor(theme.green, 0.3)};
+    background: ${({ theme }) => lightenColor(theme.bg2, 0.3)};
   }
 `
 

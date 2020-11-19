@@ -36,7 +36,7 @@ export const DetailContainer = styled.div`
   height: 100%;
   flex: 3;
   min-width: 340px;
-  background-color: ${({ theme }) => theme.bg};
+  background-color: ${({ theme }) => theme.bg2};
   z-index: 3;
 
   @media only screen and (max-width: 600px) {
@@ -73,5 +73,9 @@ export const BottomButton = styled.div`
     font-size: 1rem;
     color: ${({ theme }) => theme.bg};
     margin-left: 6px;
+  }
+
+  i {
+    cursor: inherit;
   }
 `

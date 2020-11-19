@@ -20,17 +20,16 @@ export const Tab = styled.div<{ active: boolean }>`
   align-items: center;
   cursor: pointer;
   transition: 0.3s;
+  color: ${({ theme }) => theme.white};
 
   ${({ active }) =>
     active
       ? css`
-          background: ${({ theme }) => theme.bg};
-          color: ${({ theme }) => theme.primary};
+          background: inherit;
           font-size: 0.9rem;
         `
       : css`
           background: ${({ theme }) => theme.primary};
-          color: ${({ theme }) => theme.white};
           font-size: 0.9rem;
 
           :hover {

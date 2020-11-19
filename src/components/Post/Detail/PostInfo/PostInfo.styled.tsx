@@ -32,14 +32,18 @@ export const AuthorInfo = styled.div`
 
   p {
     font-size: 0.7em;
-    i {
-      margin-right: 5px;
-    }
+    color: ${({ theme }) => theme.accent};
+  }
+  i {
+    margin-right: 5px;
+    margin-left: 2px;
+    color: inherit;
   }
 `
 
 export const AuthorName = styled(Link)`
   font-size: 1em;
+  color: ${({ theme }) => theme.white};
 
   :first-letter {
     color: ${({ theme }) => theme.green};
@@ -50,6 +54,7 @@ export const Title = styled.h2`
   margin: 20px 0 10px;
   font-size: 1.2rem;
   text-transform: uppercase;
+  color: ${({ theme }) => theme.white};
 `
 
 export const Text = styled.p`
@@ -57,4 +62,9 @@ export const Text = styled.p`
   overflow-y: auto;
   margin-bottom: 40px;
   font-size: 0.95rem;
+  color: ${({ theme }) => theme.white};
+
+  ::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.accent};
+  }
 `

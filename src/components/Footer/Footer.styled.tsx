@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { CenteredContainer } from '../CenteredContainer'
 
 export const Wrapper = styled.div`
-  background: #222222;
+  background: ${({ theme }) => theme.primary};
   width: 100%;
 `
 

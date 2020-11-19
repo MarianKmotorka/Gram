@@ -6,7 +6,7 @@ import Input from '../../../components/Inputs/Input'
 export const Wrapper = styled(motion.div)`
   box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.6);
   border-radius: 15px;
-  background-color: ${({ theme }) => theme.bg};
+  background-color: ${({ theme }) => theme.white};
   max-width: 900px;
   width: 90%;
   padding-bottom: 20px;
@@ -21,19 +21,20 @@ export const Wrapper = styled(motion.div)`
 
     header {
       margin-bottom: 10%;
+      border-radius: 0;
     }
   }
 `
 
 export const Header = styled.header`
   border-radius: 15px 15px 0 0;
-  background: ${({ theme }) => theme.white};
+  background: ${({ theme }) => theme.primary};
   padding: 10px 20px;
   position: relative;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
   h2 {
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.white};
     font-size: 1.5rem;
   }
 
@@ -44,7 +45,7 @@ export const Header = styled.header`
     cursor: pointer;
     padding: 15px 17px;
     border-radius: 50%;
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.white};
     transition: background-color 0.3s;
 
     :hover {

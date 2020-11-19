@@ -41,6 +41,6 @@ export const StyledButton = styled(Button)`
 `
 
 export const Title = styled.h2`
-  color: ${({ theme }) => theme.accent};
+  color: ${({ theme }) => theme.primary};
   margin-right: auto;
 `

@@ -12,7 +12,6 @@ export const GlobalStyles = createGlobalStyle`
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
-  font-weight: 400;
   color:${({ theme }) => theme.primaryText};
 
   ::-webkit-scrollbar {
@@ -20,7 +19,10 @@ export const GlobalStyles = createGlobalStyle`
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #999;
+   background: ${({ theme }) => theme.bg2};
+    }
+  ::-webkit-scrollbar-track {
+   background: transparent;
     border-radius: 5px;
   }
 

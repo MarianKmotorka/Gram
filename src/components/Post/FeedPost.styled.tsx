@@ -5,8 +5,8 @@ import IconButton from '../Button/IconButton'
 
 export const Wrapper = styled.div`
   width: 100%;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
-  background-color: ${({ theme }) => theme.white};
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.3);
+  background-color: ${({ theme }) => theme.bg2};
   border-radius: 15px;
   overflow: hidden;
 
@@ -23,6 +23,7 @@ export const Header = styled.div`
 
 export const Title = styled.h3`
   padding: 10px 0;
+  color: ${({ theme }) => theme.white};
 `
 
 export const AuthorSection = styled.section`
@@ -45,16 +46,20 @@ export const AuthorInfo = styled.div`
   flex-direction: column;
 
   p {
-    font-size: 0.8em;
-    i {
-      margin-right: 5px;
-    }
+    font-size: 0.7em;
+    color: ${({ theme }) => theme.accent};
+    margin-top: 2px;
+  }
+  i {
+    margin-right: 5px;
+    margin-left: 2px;
+    color: ${({ theme }) => theme.accent};
   }
 `
 
 export const AuthorName = styled(Link)`
-  font-weight: bolder;
   font-size: 1rem;
+  color: ${({ theme }) => theme.white};
 
   :first-letter {
     color: ${({ theme }) => theme.green};
@@ -91,6 +96,10 @@ export const CardButton = styled.button`
   color: ${({ theme }) => theme.primary};
   background: ${({ theme }) => lightenColor(theme.white, 0.7)};
 
+  i {
+    cursor: inherit;
+  }
+
   :hover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) inset;
     background: ${({ theme }) => theme.white};
@@ -106,9 +115,13 @@ export const CardButton = styled.button`
 `
 
 export const StyledIconButton = styled(IconButton)`
-  background: ${({ theme }) => theme.white};
+  background: transparent;
   font-size: 1.1rem;
   z-index: 0;
+  i {
+    color: ${({ theme }) => theme.accent};
+  }
+
   :hover {
     background: rgba(0, 0, 0, 0.1);
   }

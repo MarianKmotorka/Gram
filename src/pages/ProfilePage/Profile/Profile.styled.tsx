@@ -23,8 +23,7 @@ export const PhotoWrapper = styled.div`
   border-radius: 50%;
   position: relative;
   margin: 0 auto;
-  background: ${({ theme }) =>
-    `linear-gradient(180deg, ${theme.green} , ${theme.primary})`};
+  background: ${({ theme }) => theme.primary};
 `
 
 export const ProfilePhoto = styled.img`
@@ -43,7 +42,9 @@ export const EditPhotoButton = styled(Button)`
 export const Nick = styled.p`
   font-size: 2em;
   text-align: center;
-  font-weight: bolder;
+  font-weight: 500;
+  color: ${({ theme }) => theme.primary};
+
   :first-letter {
     color: ${({ theme }) => theme.green};
   }
@@ -75,7 +76,6 @@ export const AboutSection = styled.section`
 export const Bold = styled.b`
   font-weight: 400;
   margin-right: 10px;
-  color: ${({ theme }) => theme.accent};
 
   i {
     width: 35px;

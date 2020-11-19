@@ -96,7 +96,7 @@ const PostDetail: FC<IPostDetailProps> = ({
         {showBottomBtns && (
           <BottomButtonsContainer>
             <BottomButton onClick={onLike}>
-              {isLiked ? <HeartFilledIcon color='accent' /> : <HeartIcon color='bg' />}
+              {isLiked ? <HeartFilledIcon color='red' /> : <HeartIcon color='bg' />}
               <span>{post.likes.length}</span>
             </BottomButton>
 

@@ -60,7 +60,7 @@ const FeedPost: React.FC<IFeedPostProps> = ({
         <img src={post.imageUrl} alt='post' onClick={() => onOpenDetail(post)} />
 
         <CardButton onClick={async () => await onLikeClick(post)}>
-          {isLiked ? <HeartFilledIcon color='accent' /> : <HeartIcon />}
+          {isLiked ? <HeartFilledIcon color='red' /> : <HeartIcon />}
           <span>{post.likes ? post.likes.length : 0}</span>
         </CardButton>
       </Body>

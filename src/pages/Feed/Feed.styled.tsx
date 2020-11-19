@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import Button from '../../components/Button/Button'
 import { CenteredContainer } from '../../components/CenteredContainer'
-import pattern from '../../images/patternpad.svg'
 
 export const Wrapper = styled(CenteredContainer)`
   display: flex;
@@ -22,11 +21,15 @@ export const PostsContainer = styled.div`
   min-height: 100vh;
 
   > div + div {
-    margin-top: 10px;
+    margin-top: 15px;
   }
 
   @media only screen and (max-width: 400px) {
-    background-color: ${({ theme }) => theme.bg2};
+    > div + div {
+      margin-top: 10px;
+    }
+
+    background-color: ${({ theme }) => theme.white};
   }
 `
 
@@ -36,7 +39,7 @@ export const DummymSpan = styled.span`
 `
 
 export const SideCard = styled.div<{ visibility?: string }>`
-  background-color: ${({ theme }) => theme.white};
+  background-color: ${({ theme }) => theme.bg2};
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
   height: 370px;
   min-width: 250px;
@@ -76,7 +79,6 @@ export const CardTop = styled.div`
 `
 
 export const CardMiddle = styled.div`
-  background-image: url(${pattern});
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -86,6 +88,7 @@ export const CardMiddle = styled.div`
 `
 
 export const Nick = styled.h3`
+  color: white;
   ::first-letter {
     color: ${({ theme }) => theme.green};
   }
@@ -105,6 +108,7 @@ export const CardSeparator = styled.div`
 
 export const Stat = styled.p`
   font-weight: 200;
+  color: ${({ theme }) => theme.white};
   b {
     font-weight: 500;
     margin-right: 10px;
@@ -130,4 +134,8 @@ export const ScrollUpButton = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  i {
+    cursor: inherit;
+  }
 `

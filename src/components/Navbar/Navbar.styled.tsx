@@ -34,7 +34,7 @@ export const Logo = styled(Link)`
   font-weight: 500;
 
   ::first-letter {
-    color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.green};
   }
 `
 
@@ -56,7 +56,7 @@ export const LinksContainer = styled(motion.div)`
     max-width: 400px;
     height: calc(100vh - ${NAVBAR_HEIGHT_PX});
 
-    background: ${({ theme }) => theme.white};
+    background: ${({ theme }) => theme.primary};
     box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 10;
   }
@@ -74,9 +74,13 @@ export const StyledLink = styled(NavLink)`
   color: ${({ theme }) => theme.white};
   background-color: ${({ theme }) => theme.primary};
 
+  i {
+    cursor: pointer;
+  }
+
   &.active {
     i {
-      color: ${({ theme }) => theme.accent};
+      color: ${({ theme }) => theme.green};
     }
   }
 
@@ -91,7 +95,6 @@ export const StyledLink = styled(NavLink)`
     height: 90px;
     justify-content: flex-start;
     background-color: inherit;
-    color: ${({ theme }) => theme.primary};
 
     i {
       min-width: 50px;
@@ -119,7 +122,7 @@ export const StyledLink = styled(NavLink)`
     }
 
     :hover i {
-      color: ${({ theme }) => theme.accent};
+      color: ${({ theme }) => theme.green};
     }
   }
 `

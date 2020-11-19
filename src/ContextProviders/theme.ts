@@ -25,15 +25,15 @@ declare module 'styled-components' {
 }
 
 export const lightTheme: DefaultTheme = {
-  primary: '#283e4a',
-  accent: '#fc5e49',
-  bg: '#fafafa',
-  bg2: '#e6e5e5',
+  primary: '#14274e',
+  accent: '#9ba4b4',
+  bg: '#f1f6f9',
+  bg2: '#394867',
 
   primaryText: '#000000',
   secondaryText: '#777777',
 
-  red: '#ff1e00',
+  red: '#fc5e49',
   lightBlue: '#e8f9fd',
   green: '#59ce8f',
   accent2: '#ccefdc',

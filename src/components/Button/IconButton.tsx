@@ -46,6 +46,10 @@ const Container = styled.button<IStyledProps>`
   border: none;
   outline: none;
 
+  i {
+    cursor: inherit;
+  }
+
   :hover {
     background-color: rgba(100, 100, 100, 0.5);
   }

@@ -52,7 +52,7 @@ const Comments: FC<ICommentsProps> = ({ comments, currentUser, onSubmit, onDelet
           <p>{moment(sentAt).format('MMMM Do YYYY, H:mm')}</p>
 
           {userId === currentUser.id && (
-            <Btn onClick={() => onDelete(id)} bg='accent'>
+            <Btn onClick={() => onDelete(id)} bg='red'>
               Delete
             </Btn>
           )}

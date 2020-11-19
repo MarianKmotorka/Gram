@@ -13,6 +13,7 @@ export const Title = styled.h1`
   padding: 15px 0 5px;
   margin-bottom: 15px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  color: ${({ theme }) => theme.white};
 `
 
 export const SearchContainer = styled.div`
@@ -46,6 +47,7 @@ export const Row = styled.p`
   font-weight: 500;
   letter-spacing: 1px;
   padding: 5px 10px;
+  color: ${({ theme }) => theme.white};
 
   ::first-letter {
     color: ${({ theme }) => theme.green};
