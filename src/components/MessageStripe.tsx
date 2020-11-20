@@ -23,13 +23,13 @@ const Wrapper = styled.div<{ color: string; bg: string }>`
 `
 
 const MessageStripe: React.FC<IProps> = ({ textType = 'info', text }) => {
-  let bg = 'accent'
+  let bg = 'bg2'
   let color = 'white'
   let icon = 'fas fa-info-circle'
 
   if (textType === 'error') {
     bg = 'red'
-    color = 'bg'
+    color = 'white'
     icon = 'fas fa-exclamation-circle'
   }
 

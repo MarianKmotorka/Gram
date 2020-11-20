@@ -1,15 +1,16 @@
 import styled, { css } from 'styled-components'
 import { lightenColor } from '../../utils/utils'
 
-export interface IButtonProps {
-  primaryColor?: string
+export interface IStyledButtonProps {
+  bg?: string
+  color?: string
   reversed?: boolean
 }
 
-export const StyledPrimaryButton = styled.button<IButtonProps>`
-  ${({ primaryColor = 'primary', reversed, disabled, theme }) => {
-    const color1 = reversed ? theme[primaryColor] : theme.white
-    const color2 = reversed ? theme.white : theme[primaryColor]
+export const StyledPrimaryButton = styled.button<IStyledButtonProps>`
+  ${({ bg = 'primary', color = 'white', reversed, disabled, theme }) => {
+    const colorHex = reversed ? theme[bg] : theme[color]
+    const bgHex = reversed ? theme[color] : theme[bg]
 
     return css`
       outline: none;
@@ -21,25 +22,25 @@ export const StyledPrimaryButton = styled.button<IButtonProps>`
       transition: background-color 0.2s, color 0.2s;
 
       padding: 8px 18px;
-      background: ${color1};
-      color: ${color2};
+      background: ${bgHex};
+      color: ${colorHex};
 
       :hover {
-        color: ${color1};
-        background: ${color2};
+        color: ${bgHex};
+        background: ${colorHex};
         * {
-          color: ${color1};
+          color: inherit;
         }
       }
 
       * {
-        color: ${color2};
+        color: inherit;
       }
     `
   }}
 `
 
-export const StyledActionButton = styled.button<IButtonProps>`
+export const StyledActionButton = styled.button<IStyledButtonProps>`
   font-size: 20px;
   width: 50px;
   height: 50px;
@@ -51,7 +52,7 @@ export const StyledActionButton = styled.button<IButtonProps>`
   cursor: ${({ disabled }) => (disabled ? 'auto' : 'pointer')};
 
   i {
-    ${({ primaryColor, theme }) => primaryColor && `color:${theme[primaryColor]}`}
+    ${({ bg: primaryColor, theme }) => primaryColor && `color:${theme[primaryColor]}`}
     cursor:inherit;
   }
 

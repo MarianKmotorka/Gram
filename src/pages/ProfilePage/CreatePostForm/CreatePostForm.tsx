@@ -94,16 +94,15 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
             disabled={progress !== 0}
           />
 
-          <StyledButton disabled={uploading} reversed onClick={handleSelectFile}>
+          <StyledButton bg='accent2' disabled={uploading} onClick={handleSelectFile}>
             Pick an image
           </StyledButton>
 
           <StyledButton
             marginLeft='auto'
-            primaryColor='accent'
             loadingProgress={progress}
             isLoading={uploading}
-            reversed={!uploading}
+            reversed={uploading}
             onClick={handleSubmit}
           >
             Submit

@@ -51,12 +51,7 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
             placeholder='•••••••••••'
           />
 
-          <StyledButton
-            isLoading={isLoading}
-            onClick={handleLogin}
-            reversed
-            primaryColor='accent2'
-          >
+          <StyledButton isLoading={isLoading} onClick={handleLogin}>
             Login
           </StyledButton>
         </StyledCard>

@@ -1,14 +1,17 @@
 import React, { ButtonHTMLAttributes } from 'react'
 import { LoadingIcon } from '../Icons'
-import { LoadingProgress, StyledActionButton, StyledPrimaryButton } from './Button.styled'
+import {
+  LoadingProgress,
+  StyledActionButton,
+  StyledPrimaryButton,
+  IStyledButtonProps,
+} from './Button.styled'
 
-interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface IProps extends ButtonHTMLAttributes<HTMLButtonElement>, IStyledButtonProps {
   icon?: JSX.Element
-  primaryColor?: string
   buttonType?: ButtonType
   disabled?: boolean
   isLoading?: boolean
-  reversed?: boolean
   loadingProgress?: number
   className?: string
 }

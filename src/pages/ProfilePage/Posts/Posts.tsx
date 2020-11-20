@@ -42,12 +42,12 @@ const Posts: React.FC<IPostsProps> = ({
 
       <LayoutControls>
         <RoundSquareIcon
-          color={displayGrid ? 'accent' : 'primary'}
+          color={displayGrid ? 'bg2' : 'accent2'}
           onClick={() => setDisplayGrid(false)}
         />
         <VerticalSeparator />
         <GridIcon
-          color={displayGrid ? 'primary' : 'accent'}
+          color={displayGrid ? 'accent2' : 'bg2'}
           onClick={() => setDisplayGrid(true)}
         />
       </LayoutControls>

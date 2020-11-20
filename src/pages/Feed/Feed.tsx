@@ -106,7 +106,7 @@ const Feed: React.FC = () => {
 
           {loading && <LoadingRow />}
 
-          <ScrollUpButton reversed onClick={scrollUp}>
+          <ScrollUpButton color='accent' onClick={scrollUp}>
             <ChevronUpIcon />
           </ScrollUpButton>
 
