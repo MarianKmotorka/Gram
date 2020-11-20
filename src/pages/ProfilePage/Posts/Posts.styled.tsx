@@ -15,6 +15,10 @@ export const Grid = styled.div<{ smallScreenGrid: boolean }>`
         grid-gap: 8px;
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
       `}
+
+    @media only screen and (max-width: 400px) {
+      padding: 0 5px;
+    }
   }
 `
 

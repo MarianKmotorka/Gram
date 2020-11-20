@@ -9,6 +9,9 @@ export const Wrapper = styled.div`
 
   > div:first-of-type {
     background-image: url(${pattern});
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   > * {
@@ -40,10 +43,18 @@ export const EditPhotoButton = styled(Button)`
 `
 
 export const Nick = styled.p`
-  font-size: 2em;
+  display: inline-block;
   text-align: center;
+
+  font-size: 2em;
   font-weight: 500;
+
+  padding: 5px 12px;
+  margin-top: -7px;
+  border-radius: 5px;
+
   color: ${({ theme }) => theme.primary};
+  background-color: ${({ theme }) => theme.white};
 
   :first-letter {
     color: ${({ theme }) => theme.accent2};
@@ -114,5 +125,6 @@ export const InfoCard = styled.div`
 
   @media only screen and (max-width: 400px) {
     min-width: 200px;
+    border-radius: 5px;
   }
 `

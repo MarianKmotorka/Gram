@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Button from '../../components/Button/Button'
 import Card from '../../components/Card'
-import pattern from '../../images/patternpad.svg'
+import pattern from '../../images/patternpad2.svg'
 
 export const Wrapper = styled.div`
   position: relative;
