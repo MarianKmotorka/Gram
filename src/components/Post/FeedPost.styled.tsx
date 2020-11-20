@@ -38,7 +38,7 @@ export const AuthorSection = styled.section`
     height: 45px;
     margin-right: 7px;
     object-fit: cover;
-    border: solid 2px ${({ theme }) => theme.green};
+    border: solid 2px ${({ theme }) => theme.accent2};
   }
 `
 export const AuthorInfo = styled.div`
@@ -62,7 +62,7 @@ export const AuthorName = styled(Link)`
   color: ${({ theme }) => theme.white};
 
   :first-letter {
-    color: ${({ theme }) => theme.green};
+    color: ${({ theme }) => theme.accent2};
   }
 `
 

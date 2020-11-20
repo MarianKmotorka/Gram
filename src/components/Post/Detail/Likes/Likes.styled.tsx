@@ -50,7 +50,7 @@ export const Row = styled.p`
   color: ${({ theme }) => theme.white};
 
   ::first-letter {
-    color: ${({ theme }) => theme.green};
+    color: ${({ theme }) => theme.accent2};
   }
 `
 

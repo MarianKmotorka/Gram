@@ -46,7 +46,7 @@ export const Nick = styled.p`
   color: ${({ theme }) => theme.primary};
 
   :first-letter {
-    color: ${({ theme }) => theme.green};
+    color: ${({ theme }) => theme.accent2};
   }
 `
 
@@ -94,6 +94,7 @@ export const Text = styled.p`
 
   i {
     color: inherit;
+    color: ${({ theme }) => theme.accent};
   }
 `
 

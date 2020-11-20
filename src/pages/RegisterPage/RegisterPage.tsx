@@ -91,7 +91,12 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
             placeholder="I'm kind of person that ...."
           />
 
-          <StyledButton isLoading={isLoading} onClick={handleRegister} reversed>
+          <StyledButton
+            isLoading={isLoading}
+            onClick={handleRegister}
+            reversed
+            primaryColor='accent2'
+          >
             Register
           </StyledButton>
         </StyledCard>

@@ -100,7 +100,7 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
 
           <StyledButton
             marginLeft='auto'
-            primaryColor='red'
+            primaryColor='accent'
             loadingProgress={progress}
             isLoading={uploading}
             reversed={!uploading}

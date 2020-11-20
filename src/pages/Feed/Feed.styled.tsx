@@ -28,8 +28,6 @@ export const PostsContainer = styled.div`
     > div + div {
       margin-top: 10px;
     }
-
-    background-color: ${({ theme }) => theme.white};
   }
 `
 
@@ -90,7 +88,7 @@ export const CardMiddle = styled.div`
 export const Nick = styled.h3`
   color: white;
   ::first-letter {
-    color: ${({ theme }) => theme.green};
+    color: ${({ theme }) => theme.accent2};
   }
 
   font-size: 1.6em;

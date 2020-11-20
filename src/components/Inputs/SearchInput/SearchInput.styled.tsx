@@ -51,11 +51,11 @@ export const Row = styled.div<{ fontSize?: number }>`
   ${({ fontSize }) => fontSize && `font-size: ${fontSize}px`};
 
   :hover {
-    background-color: ${({ theme }) => lightenColor(theme.green, 0.1)};
+    background-color: ${({ theme }) => lightenColor(theme.accent2, 0.1)};
   }
 
   > i {
-    color: ${({ theme }) => theme.green};
+    color: ${({ theme }) => theme.accent2};
     font-size: 20px;
     margin: 0 auto;
   }

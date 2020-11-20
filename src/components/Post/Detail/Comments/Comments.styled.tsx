@@ -39,13 +39,13 @@ export const Metadata = styled.div`
   h6 {
     font-size: 0.9rem;
     ::first-letter {
-      color: ${({ theme }) => theme.green};
+      color: ${({ theme }) => theme.accent2};
     }
   }
 
   p {
     font-size: 0.7rem;
-    color: ${({ theme }) => theme.blackLight};
+    color: ${({ theme }) => theme.gray};
   }
 
   span {

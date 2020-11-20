@@ -34,7 +34,7 @@ export const Logo = styled(Link)`
   font-weight: 500;
 
   ::first-letter {
-    color: ${({ theme }) => theme.green};
+    color: ${({ theme }) => theme.accent2};
   }
 `
 
@@ -80,7 +80,7 @@ export const StyledLink = styled(NavLink)`
 
   &.active {
     i {
-      color: ${({ theme }) => theme.green};
+      color: ${({ theme }) => theme.accent2};
     }
   }
 
@@ -122,7 +122,7 @@ export const StyledLink = styled(NavLink)`
     }
 
     :hover i {
-      color: ${({ theme }) => theme.green};
+      color: ${({ theme }) => theme.accent2};
     }
   }
 `
@@ -143,7 +143,7 @@ export const DropdownRow = styled.div`
     object-fit: cover;
     margin-right: 8px;
     border-radius: 50%;
-    border: 2px solid ${({ theme }) => theme.green};
+    border: 2px solid ${({ theme }) => theme.accent2};
   }
 
   p {
@@ -151,7 +151,7 @@ export const DropdownRow = styled.div`
   }
 
   p::first-letter {
-    color: ${({ theme }) => theme.green};
+    color: ${({ theme }) => theme.accent2};
   }
 `
 
