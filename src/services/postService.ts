@@ -24,9 +24,18 @@ export const likePost = async (post: IPost, nick: IUser['nick']) => {
 export const deletePost = async (post: IPost, setError: SetError) => {
   const { increment } = FieldValue
 
+  const deletePostComments = async () => {
+    const comments = await projectFirestore
+      .collection('comments')
+      .where(propertyOf<IComment>('postId'), '==', post.id)
+      .get()
+    comments.forEach(async x => await x.ref.delete())
+  }
+
   await Promise.all([
     projectStorage.refFromURL(post.imageUrl).delete(),
     projectFirestore.collection('posts').doc(post.id).delete(),
+    deletePostComments(),
     projectFirestore
       .doc(`users/${post.userId}`)
       .update({ [propertyOf<IUser>('postCount')]: increment(-1) }),
