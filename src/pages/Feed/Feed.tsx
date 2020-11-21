@@ -20,6 +20,7 @@ const Feed: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<IPost>()
   const {
     followings,
+    followedByCount,
     loading: followingsLoading,
     isFollowedByMe,
     handleFollowed,
@@ -74,7 +75,11 @@ const Feed: React.FC = () => {
       )}
 
       <Wrapper>
-        <SideCard currentUser={currentUser} followingCount={followings.length} />
+        <SideCard
+          currentUser={currentUser}
+          followingCount={followings.length}
+          followedByCount={followedByCount}
+        />
 
         <PostsContainer>
           <TopMenu feedType={feedType} forwardRef={topRef} onChange={setFeedType} />

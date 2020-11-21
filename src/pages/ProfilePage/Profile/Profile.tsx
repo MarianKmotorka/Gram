@@ -40,7 +40,12 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
     user.photoUrl
   )
 
-  const { followingsCount, handleFollowed, isFollowedByMe } = useFollowers()
+  const {
+    followedByCount,
+    followingsCount,
+    handleFollowed,
+    isFollowedByMe,
+  } = useFollowers()
 
   const handleEditPhotoClicked = () => {
     document.getElementById('upload-profile-photo-file-input')?.click()
@@ -120,7 +125,7 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
               <UserSecretIcon />
               <span>Followed by:</span>
             </Bold>
-            -
+            {followedByCount}
           </Text>
           <Text>
             <Bold>

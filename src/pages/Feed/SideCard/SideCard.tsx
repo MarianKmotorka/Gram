@@ -16,11 +16,16 @@ import {
 interface ISideCardProps {
   currentUser: IUser
   followingCount: number
+  followedByCount: number
 }
 
 export const SideCardPlaceHolder = () => <Wrapper visibility='hidden' />
 
-const SideCard: FC<ISideCardProps> = ({ currentUser, followingCount }) => {
+const SideCard: FC<ISideCardProps> = ({
+  currentUser,
+  followingCount,
+  followedByCount,
+}) => {
   const history = useHistory()
   return (
     <Wrapper>
@@ -47,7 +52,8 @@ const SideCard: FC<ISideCardProps> = ({ currentUser, followingCount }) => {
       </Stat>
       <Stat>
         <UserSecretIcon />
-        <b>Followed by:</b>0
+        <b>Followed by:</b>
+        {followedByCount}
       </Stat>
     </Wrapper>
   )
