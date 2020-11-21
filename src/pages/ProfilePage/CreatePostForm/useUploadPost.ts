@@ -7,7 +7,7 @@ import {
   projectFirestore,
 } from '../../../firebase/firebaseConfig'
 import { useApiError } from '../../../contextProviders/ApiErrorProvider'
-import { propertyOf } from '../../../utils/utils'
+import { propertyOf } from '../../../utils'
 
 const useUplaodPost = (
   image: File | null,

@@ -1,6 +1,10 @@
 import React, { FC } from 'react'
+import invert from 'lodash/invert'
+import keys from 'lodash/keys'
+
 import { Button } from '../../../components'
 import { FeedType } from '../utils'
+
 import { Wrapper } from './TopMenu.styled'
 
 interface ITopMenuProps {
@@ -10,20 +14,26 @@ interface ITopMenuProps {
 }
 
 const TopMenu: FC<ITopMenuProps> = ({ feedType, forwardRef, onChange }) => {
-  const feedTypeMap: Record<FeedType, string> = {
-    followedOnly: 'FOLLOWED',
-    all: 'ALL',
+  const feedTypeToNumber: Record<FeedType, number> = {
+    followed: 0,
+    all: 1,
+    mine: 2,
   }
 
-  const hanldeChanged = () =>
-    feedType === 'all' ? onChange('followedOnly') : onChange('all')
+  const hanldeChanged = () => {
+    const newNumber = (feedTypeToNumber[feedType] + 1) % keys(feedTypeToNumber).length
+    const newFeedType = invert(feedTypeToNumber)[newNumber] as FeedType
+    onChange(newFeedType)
+  }
 
   return (
     <Wrapper ref={forwardRef}>
       <p>Now showing</p>
+
       <Button hover={false} scale={0.8} onClick={hanldeChanged}>
-        {feedTypeMap[feedType]}
+        {feedType.toUpperCase()}
       </Button>
+
       <p>posts.</p>
     </Wrapper>
   )

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { IComment, IPost, IUser } from '../../../domain'
-import { propertyOf } from '../../../utils/utils'
+import { propertyOf } from '../../../utils'
 import { useNotifyError, useStorage } from '../../../hooks'
 import { projectFirestore, projectStorage } from '../../../firebase/firebaseConfig'
 import { useApiError } from '../../../contextProviders/ApiErrorProvider'

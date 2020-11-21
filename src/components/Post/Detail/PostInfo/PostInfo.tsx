@@ -2,8 +2,9 @@ import React, { FC } from 'react'
 import moment from 'moment'
 
 import { IPost } from '../../../../domain'
-import noPhoto from '../../../../images/no-photo.png'
+import Button from '../../../Button/Button'
 import { ClockIcon } from '../../../Icons'
+import noPhoto from '../../../../images/no-photo.png'
 
 import {
   AuthorInfo,
@@ -13,15 +14,15 @@ import {
   Title,
   Wrapper,
 } from './PostInfo.styled'
-import Button from '../../../Button/Button'
 
 interface IPostInfoProps {
   post: IPost
-  isFollowed?: boolean
-  onFollow?: () => Promise<void>
+  isFollowed: boolean
+  canFollow: boolean
+  onFollow: () => Promise<void>
 }
 
-const PostInfo: FC<IPostInfoProps> = ({ post, isFollowed, onFollow }) => {
+const PostInfo: FC<IPostInfoProps> = ({ post, isFollowed, canFollow, onFollow }) => {
   const createdAt = moment(post.createdAt.toDate()).fromNow()
 
   return (
@@ -37,7 +38,7 @@ const PostInfo: FC<IPostInfoProps> = ({ post, isFollowed, onFollow }) => {
           </p>
         </AuthorInfo>
 
-        {onFollow && (
+        {canFollow && (
           <Button
             color='accent'
             scale={0.8}

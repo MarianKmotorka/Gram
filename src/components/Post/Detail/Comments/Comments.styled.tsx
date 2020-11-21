@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { lightenColor } from '../../../../utils/utils'
+import { lightenColor } from '../../../../utils'
 import AutoTextArea from '../../../Inputs/AutoTextArea'
 import { TAB_BAR_HEIGHT_PX } from '../../../TabView/Container/TabViewContainer.styled'
 

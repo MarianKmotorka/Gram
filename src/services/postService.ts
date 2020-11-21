@@ -1,14 +1,12 @@
-import { propertyOf } from '../utils/utils'
-import { IComment, IFollow, IPost, IUser } from '../domain'
-import { IError } from '../contextProviders/ApiErrorProvider'
+import { propertyOf } from '../utils'
+import { IComment, IPost, IUser } from '../domain'
+import { SetError } from '../contextProviders/ApiErrorProvider'
 import {
   FieldValue,
   getTimestamp,
   projectFirestore,
   projectStorage,
 } from '../firebase/firebaseConfig'
-
-type SetError = (err: IError) => void
 
 export const isLiked = (post: IPost, nick: IUser['nick']) =>
   (!!nick && post.likes.includes(nick)) || false
@@ -57,20 +55,3 @@ export const commentOnPost = async (
 export const deleteComment = async (id: string, setError: SetError) => {
   await projectFirestore.doc(`comments/${id}`).delete().catch(setError)
 }
-
-export const follow = async (followerId: string, followee: IFollow, setError: SetError) =>
-  await projectFirestore
-    .collection(`users/${followerId}/followings`)
-    .doc(followee.userId)
-    .set(followee)
-    .catch(setError)
-
-export const unfollow = async (
-  followerId: string,
-  followeeId: string,
-  setError: SetError
-) =>
-  await projectFirestore
-    .doc(`users/${followerId}/followings/${followeeId}`)
-    .delete()
-    .catch(setError)

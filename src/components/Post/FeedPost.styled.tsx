@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { lightenColor } from '../../utils/utils'
+import { lightenColor } from '../../utils'
 import Button from '../Button/Button'
 import IconButton from '../Button/IconButton'
 

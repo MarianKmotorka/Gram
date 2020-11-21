@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import moment from 'moment'
+
 import { IUser } from '../../../domain'
 import useUploadNewPhoto from './useUploadNewPhoto'
 import noPhotoPng from '../../../images/no-photo.png'
+import { useFollowers } from '../../../contextProviders/FollowersProvider'
+import { Button } from '../../../components'
 import {
   ClockIcon,
   EditIcon,
@@ -36,6 +39,8 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
     user.id,
     user.photoUrl
   )
+
+  const { followingsCount, handleFollowed, isFollowedByMe } = useFollowers()
 
   const handleEditPhotoClicked = () => {
     document.getElementById('upload-profile-photo-file-input')?.click()
@@ -72,6 +77,16 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
         </PhotoWrapper>
 
         <Nick>{user.nick}</Nick>
+
+        {!isCurrentUser && (
+          <Button
+            reversed={isFollowedByMe(user.id)}
+            color='accent'
+            onClick={async () => await handleFollowed(user.id, user.nick)}
+          >
+            {isFollowedByMe(user.id) ? 'Followed' : 'Follow'}
+          </Button>
+        )}
       </InfoCard>
 
       <AboutSection>
@@ -98,14 +113,14 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
               <BlindManIcon />
               <span>Following:</span>
             </Bold>
-            {0}
+            {followingsCount}
           </Text>
           <Text>
             <Bold>
               <UserSecretIcon />
               <span>Followed by:</span>
             </Bold>
-            {0}
+            -
           </Text>
           <Text>
             <Bold>

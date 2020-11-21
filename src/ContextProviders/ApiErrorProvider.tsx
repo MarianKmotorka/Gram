@@ -1,5 +1,7 @@
 import React, { createContext, useCallback, useContext, useState } from 'react'
 
+export type SetError = (err?: IError) => void
+
 export interface IError {
   code?: string
   message: string
@@ -7,7 +9,7 @@ export interface IError {
 
 export interface IApiErrorContextValue {
   error?: IError
-  setError: (error?: IError) => void
+  setError: SetError
   removeError: () => void
 }
 

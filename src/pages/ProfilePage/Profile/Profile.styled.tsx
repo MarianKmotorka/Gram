@@ -110,6 +110,7 @@ export const Text = styled.p`
 `
 
 export const InfoCard = styled.div`
+  position: relative;
   border-radius: 15px;
   background-color: ${({ theme }) => theme.white};
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);

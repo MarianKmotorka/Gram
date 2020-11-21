@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion'
 
 import { IEntity } from '../../../domain'
 import MessageStripe from '../../MessageStripe'
-import { propertyOf } from '../../../utils/utils'
+import { propertyOf } from '../../../utils'
 import { LoadingIcon, SearchIcon } from '../../Icons'
 import {
   useDebounce,

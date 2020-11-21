@@ -12,6 +12,7 @@ import { useFirestoreDoc, usePagedQuery, useWindowSize } from '../../hooks'
 import { Button, ErrorWhileLoadingData, LoadingOverlay } from '../../components'
 
 import { DraggableWrapper, Wrapper } from './ProfilePage.styled'
+import FollowersProvider from '../../contextProviders/FollowersProvider'
 
 const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   match: { params },
@@ -45,41 +46,43 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   }
 
   return (
-    <Wrapper>
-      <Profile user={userResponse.data} isCurrentUser={isCurrentUser} />
+    <FollowersProvider userId={params.userId}>
+      <Wrapper>
+        <Profile user={userResponse.data} isCurrentUser={isCurrentUser} />
 
-      {isCurrentUser && (
-        <DraggableWrapper
-          drag='y'
-          dragMomentum={false}
-          dragConstraints={{ bottom: 0, top: 200 - height }}
-        >
-          <Button onClick={() => setShowCreatePostForm(true)}>
-            <PlusIcon />
-            <span>New</span>
-          </Button>
-        </DraggableWrapper>
-      )}
-
-      <AnimatePresence>
-        {showCreatePostForm && (
-          <CreatePostForm
-            user={userResponse.data}
-            onPostCreated={handlePostCreated}
-            onClose={() => setShowCreatePostForm(false)}
-          />
+        {isCurrentUser && (
+          <DraggableWrapper
+            drag='y'
+            dragMomentum={false}
+            dragConstraints={{ bottom: 0, top: 200 - height }}
+          >
+            <Button onClick={() => setShowCreatePostForm(true)}>
+              <PlusIcon />
+              <span>New</span>
+            </Button>
+          </DraggableWrapper>
         )}
-      </AnimatePresence>
 
-      <Posts
-        posts={posts}
-        loading={postsLoading}
-        currentUser={currentUser}
-        postsOwner={userResponse.data}
-        refresh={refresh}
-        loadMore={loadMore}
-      />
-    </Wrapper>
+        <AnimatePresence>
+          {showCreatePostForm && (
+            <CreatePostForm
+              user={userResponse.data}
+              onPostCreated={handlePostCreated}
+              onClose={() => setShowCreatePostForm(false)}
+            />
+          )}
+        </AnimatePresence>
+
+        <Posts
+          posts={posts}
+          loading={postsLoading}
+          currentUser={currentUser}
+          postsOwner={userResponse.data}
+          refresh={refresh}
+          loadMore={loadMore}
+        />
+      </Wrapper>
+    </FollowersProvider>
   )
 }
 

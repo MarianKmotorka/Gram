@@ -7,6 +7,7 @@ import PostDetailPage from '../../PostDetailPage/PostDetailPage'
 import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
 
 import { BottomDiv, Grid, Image, LayoutControls, VerticalSeparator } from './Posts.styled'
+import { useFollowers } from '../../../contextProviders/FollowersProvider'
 
 interface IPostsProps {
   posts: IPost[]
@@ -26,17 +27,23 @@ const Posts: React.FC<IPostsProps> = ({
   refresh,
 }) => {
   const [displayGrid, setDisplayGrid] = useState(true)
-  const [selectedPostId, setSelectedPostId] = useState<string>()
+  const [selectedPost, setSelectedPost] = useState<IPost>()
   const observe = useObserver<HTMLDivElement>(loadMore, !loading)
+  const { handleFollowed, isFollowedByMe: isFollowed } = useFollowers()
 
   return (
     <>
-      {selectedPostId && (
+      {selectedPost && (
         <PostDetailPage
-          postId={selectedPostId}
+          postId={selectedPost.id}
           afterDeletedCallback={refresh}
           canDelete={postsOwner.id === currentUser.id}
-          onClose={() => setSelectedPostId(undefined)}
+          canFollow={currentUser.id !== postsOwner.id}
+          onClose={() => setSelectedPost(undefined)}
+          isFollowed={isFollowed(selectedPost.userId)}
+          onFollow={async () =>
+            await handleFollowed(selectedPost.userId, selectedPost.userNick)
+          }
         />
       )}
 
@@ -59,7 +66,7 @@ const Posts: React.FC<IPostsProps> = ({
           <Image
             key={x.id}
             src={x.imageUrl}
-            onClick={() => setSelectedPostId(x.id)}
+            onClick={() => setSelectedPost(x)}
             smallScreenGrid={displayGrid}
           />
         ))}

@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useContext, useCallback } fr
 
 import { IUser } from '../domain'
 import { useFirestoreDoc } from '../hooks'
-import { propertyOf } from '../utils/utils'
+import { propertyOf } from '../utils'
 import { ErrorWhileLoadingData, LoadingOverlay } from '../components'
 import { getTimestamp, projectAuth, projectFirestore } from '../firebase/firebaseConfig'
 

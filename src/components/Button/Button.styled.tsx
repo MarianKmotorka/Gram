@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { lightenColor } from '../../utils/utils'
+import { lightenColor } from '../../utils'
 
 export interface IStyledButtonProps {
   bg?: string

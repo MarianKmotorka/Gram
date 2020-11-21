@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from 'react'
 
-import { propertyOf } from '../../utils/utils'
+import { propertyOf } from '../../utils'
 import { IComment, IPost } from '../../domain'
 import { useFirestoreDoc, useFirestoreQuery } from '../../hooks'
 import { useApiError } from '../../contextProviders/ApiErrorProvider'
@@ -16,16 +16,18 @@ import {
 interface IPostDetailPageProps {
   postId: string
   canDelete: boolean
-  isFollowed?: boolean
+  canFollow: boolean
+  isFollowed: boolean
   onClose: () => void
   afterLikedCallback?: () => void
   afterDeletedCallback?: () => void
-  onFollow?: () => Promise<void>
+  onFollow: () => Promise<void>
 }
 
 const PostDetailPage: FC<IPostDetailPageProps> = ({
   postId,
   canDelete,
+  canFollow,
   isFollowed,
   onClose,
   onFollow,
@@ -90,6 +92,7 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
     <PostDetail
       post={response.data}
       canDelete={canDelete}
+      canFollow={canFollow}
       comments={comments}
       isFollowed={isFollowed}
       currentUser={currentUser}

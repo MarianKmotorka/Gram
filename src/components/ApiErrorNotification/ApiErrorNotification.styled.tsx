@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
-import { lightenColor } from '../../utils/utils'
+import { lightenColor } from '../../utils'
 
 export const Wrapper = styled(motion.div)`
   position: fixed;

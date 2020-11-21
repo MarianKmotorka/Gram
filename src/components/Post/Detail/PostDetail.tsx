@@ -32,13 +32,14 @@ import Comments from './Comments/Comments'
 interface IPostDetailProps {
   post: IPost
   isLiked: boolean
-  isFollowed?: boolean
+  isFollowed: boolean
   canDelete: boolean
+  canFollow: boolean
   currentUser: IUser
   comments: IComment[]
   onClose: () => void
   onLike: () => Promise<void>
-  onFollow?: () => Promise<void>
+  onFollow: () => Promise<void>
   onDelete: (post: IPost) => Promise<void>
   onCommentSubmit: (text: string) => Promise<void>
   onDeleteComment: (id: string) => Promise<void>
@@ -49,6 +50,7 @@ const PostDetail: FC<IPostDetailProps> = ({
   isLiked,
   comments,
   canDelete,
+  canFollow,
   isFollowed,
   currentUser,
   onClose,
@@ -125,7 +127,12 @@ const PostDetail: FC<IPostDetailProps> = ({
         <DetailContainer>
           <TabView.Container>
             <TabView.Item name='Post'>
-              <PostInfo post={post} onFollow={onFollow} isFollowed={isFollowed} />
+              <PostInfo
+                post={post}
+                onFollow={onFollow}
+                isFollowed={isFollowed}
+                canFollow={canFollow}
+              />
             </TabView.Item>
 
             <TabView.Item name='Comments'>
