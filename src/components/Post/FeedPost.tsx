@@ -21,6 +21,7 @@ interface IFeedPostProps {
   post: IPost
   isLiked: boolean
   isFollowed: boolean
+  isMyPost: boolean
   onLikeClick: (post: IPost) => Promise<void>
   onOpenDetail: (postId: IPost) => void
   onFollowClick: () => Promise<void>
@@ -29,6 +30,7 @@ interface IFeedPostProps {
 const FeedPost: React.FC<IFeedPostProps> = ({
   post,
   isLiked,
+  isMyPost,
   isFollowed,
   onLikeClick,
   onOpenDetail,
@@ -40,14 +42,16 @@ const FeedPost: React.FC<IFeedPostProps> = ({
     <Wrapper>
       <Header>
         <AuthorSection>
-          <StyledButton
-            color='accent'
-            reversed={isFollowed}
-            onClick={onFollowClick}
-            hover={false}
-          >
-            {isFollowed ? 'Unfollow' : 'Follow'}
-          </StyledButton>
+          {!isMyPost && (
+            <StyledButton
+              color='accent'
+              reversed={isFollowed}
+              onClick={onFollowClick}
+              hover={false}
+            >
+              {isFollowed ? 'Followed' : 'Follow'}
+            </StyledButton>
+          )}
 
           <img src={post.userPhotoUrl || noPhotoPng} alt='author' />
 

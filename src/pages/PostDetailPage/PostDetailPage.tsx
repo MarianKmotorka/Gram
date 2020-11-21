@@ -16,15 +16,19 @@ import {
 interface IPostDetailPageProps {
   postId: string
   canDelete: boolean
+  isFollowed?: boolean
   onClose: () => void
   afterLikedCallback?: () => void
   afterDeletedCallback?: () => void
+  onFollow?: () => Promise<void>
 }
 
 const PostDetailPage: FC<IPostDetailPageProps> = ({
   postId,
   canDelete,
+  isFollowed,
   onClose,
+  onFollow,
   afterLikedCallback,
   afterDeletedCallback,
 }) => {
@@ -87,9 +91,11 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
       post={response.data}
       canDelete={canDelete}
       comments={comments}
+      isFollowed={isFollowed}
       currentUser={currentUser}
       isLiked={post.likes.includes(currentUser.nick)}
       onClose={onClose}
+      onFollow={onFollow}
       onLike={handleLiked}
       onDelete={handleDeleted}
       onCommentSubmit={handleCommentSubmitted}

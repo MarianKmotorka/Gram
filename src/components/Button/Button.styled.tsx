@@ -7,9 +7,22 @@ export interface IStyledButtonProps {
   hover?: boolean
   reversed?: boolean
   scale?: number
+  top?: string
+  left?: string
+  right?: string
+  bottom?: string
+  position?: string
 }
 
 export const StyledPrimaryButton = styled.button<IStyledButtonProps>`
+  position: ${({ top, left, bottom, right, position }) =>
+    position ? position : top || left || bottom || right ? 'absolute' : 'static'};
+
+  top: ${({ top }) => top};
+  left: ${({ left }) => left};
+  right: ${({ right }) => right};
+  bottom: ${({ bottom }) => bottom};
+
   ${({
     bg = 'primary',
     color = 'white',

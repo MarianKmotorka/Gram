@@ -13,12 +13,15 @@ import {
   Title,
   Wrapper,
 } from './PostInfo.styled'
+import Button from '../../../Button/Button'
 
 interface IPostInfoProps {
   post: IPost
+  isFollowed?: boolean
+  onFollow?: () => Promise<void>
 }
 
-const PostInfo: FC<IPostInfoProps> = ({ post }) => {
+const PostInfo: FC<IPostInfoProps> = ({ post, isFollowed, onFollow }) => {
   const createdAt = moment(post.createdAt.toDate()).fromNow()
 
   return (
@@ -33,6 +36,19 @@ const PostInfo: FC<IPostInfoProps> = ({ post }) => {
             {createdAt}
           </p>
         </AuthorInfo>
+
+        {onFollow && (
+          <Button
+            color='accent'
+            scale={0.8}
+            hover={false}
+            reversed={isFollowed}
+            right='0'
+            onClick={onFollow}
+          >
+            {isFollowed ? 'Followed' : 'Follow'}
+          </Button>
+        )}
       </AuthorSection>
 
       <Title>{post.title}</Title>

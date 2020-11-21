@@ -24,6 +24,7 @@ import { DummymSpan, PostsContainer, Wrapper, ScrollUpButton } from './Feed.styl
 const Feed: React.FC = () => {
   const { currentUser } = useAuthorizedUser()
   const [feedType, setFeedType] = useLocalStorage<FeedType>('feedTopMenu.feedType', 'all')
+  const [selectedPost, setSelectedPost] = useState<IPost>()
 
   const [followings, followingsLoading, followingsError] = useFirestoreQuery<IFollow>(
     useCallback(x => x.collection(`users/${currentUser.id}/followings`), [currentUser.id])
@@ -45,8 +46,8 @@ const Feed: React.FC = () => {
   useNotifyError(postsErr)
   useNotifyError(followingsError)
   const { setError } = useApiError()
+
   const [topRef, scrollUp] = useScroll<HTMLDivElement>()
-  const [selectedPost, setSelectedPost] = useState<IPost>()
   const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !postsLoading)
 
   const updateLikeCount = (post: IPost) => {
@@ -72,10 +73,16 @@ const Feed: React.FC = () => {
     <>
       {selectedPost && (
         <PostDetailPage
+          canDelete={false}
           postId={selectedPost.id}
           onClose={() => setSelectedPost(undefined)}
-          canDelete={false}
+          isFollowed={isFollowed(followings, selectedPost.userId)}
           afterLikedCallback={() => updateLikeCount(selectedPost)}
+          onFollow={
+            currentUser.id === selectedPost.userId
+              ? undefined
+              : async () => await handleFollowClicked(selectedPost)
+          }
         />
       )}
 
@@ -91,6 +98,7 @@ const Feed: React.FC = () => {
               key={x.id}
               onLikeClick={handleLikeClicked}
               onOpenDetail={setSelectedPost}
+              isMyPost={x.userId === currentUser.id}
               isLiked={isLiked(x, currentUser.nick)}
               isFollowed={isFollowed(followings, x.userId)}
               onFollowClick={async () => await handleFollowClicked(x)}

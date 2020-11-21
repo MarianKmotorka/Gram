@@ -16,6 +16,7 @@ export const AuthorSection = styled.section`
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   padding-bottom: 10px;
+  position: relative;
 
   img {
     border-radius: 50%;
