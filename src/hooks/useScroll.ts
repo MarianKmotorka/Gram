@@ -8,7 +8,7 @@ const useScroll = <TRef extends HTMLElement>(): [RefObject<TRef>, () => void] =>
   const [refreshObject, setRefreshObject] = useState({})
 
   useEffect(() => {
-    ref?.current?.scrollIntoView({ behavior: 'smooth' })
+    ref?.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }, [ref, refreshObject])
 
   const scroll = () => setRefreshObject({})

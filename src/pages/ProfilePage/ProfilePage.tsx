@@ -30,7 +30,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
           .orderBy('createdAt', 'desc'),
       [params.userId]
     ),
-    6
+    { pageSize: 6 }
   )
 
   if (userResponse.loading) return <LoadingOverlay />

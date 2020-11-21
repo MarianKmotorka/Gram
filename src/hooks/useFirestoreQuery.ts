@@ -5,8 +5,8 @@ type Config = { realTime?: boolean; startFetching?: boolean }
 
 /**
  * @param getQuery Function that returns a query, that will be run against firebase - needs to be wrapped in useCallback
- * @param startFetching Starts fetching only if set to true
- * @param realTime Whether data should be updated in real time
+ * @param startFetching Starts fetching only if set to true - default TRUE
+ * @param realTime Whether data should be updated in real time - default TRUE
  */
 const useFirestoreQuery = <T>(
   getQuery: (

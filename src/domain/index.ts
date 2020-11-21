@@ -35,3 +35,11 @@ export interface IUser extends IEntity {
   createdAt: firebase.firestore.Timestamp
   lastLogin: firebase.firestore.Timestamp
 }
+
+export interface IFollow {
+  /**
+   * Document Id
+   */
+  userId: string
+  userNick: string
+}

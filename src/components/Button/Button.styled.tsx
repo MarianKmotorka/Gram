@@ -4,11 +4,21 @@ import { lightenColor } from '../../utils/utils'
 export interface IStyledButtonProps {
   bg?: string
   color?: string
+  hover?: boolean
   reversed?: boolean
+  scale?: number
 }
 
 export const StyledPrimaryButton = styled.button<IStyledButtonProps>`
-  ${({ bg = 'primary', color = 'white', reversed, disabled, theme }) => {
+  ${({
+    bg = 'primary',
+    color = 'white',
+    hover = true,
+    scale = 1,
+    reversed,
+    disabled,
+    theme,
+  }) => {
     const colorHex = reversed ? theme[bg] : theme[color]
     const bgHex = reversed ? theme[color] : theme[bg]
 
@@ -19,19 +29,23 @@ export const StyledPrimaryButton = styled.button<IStyledButtonProps>`
 
       font-size: 1rem;
       cursor: ${disabled ? 'auto' : 'pointer'};
+      transform: scale(${scale});
       transition: background-color 0.2s, color 0.2s;
 
       padding: 8px 18px;
       background: ${bgHex};
       color: ${colorHex};
 
-      :hover {
-        color: ${bgHex};
-        background: ${colorHex};
-        * {
-          color: inherit;
+      ${hover &&
+      css`
+        :hover {
+          color: ${bgHex};
+          background: ${colorHex};
+          * {
+            color: inherit;
+          }
         }
-      }
+      `}
 
       * {
         color: inherit;

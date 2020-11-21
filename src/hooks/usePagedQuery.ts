@@ -3,6 +3,11 @@ import { useCallback, useEffect, useState } from 'react'
 import { IEntity } from '../domain'
 import useFirestoreQuery from './useFirestoreQuery'
 
+type Config = {
+  pageSize?: number
+  startFetching?: boolean
+}
+
 type Result<T> = [
   T[],
   boolean,
@@ -21,16 +26,21 @@ const usePagedQuery = <T extends IEntity>(
   getQuery: (
     query: firebase.firestore.Firestore
   ) => firebase.firestore.Query<firebase.firestore.DocumentData>,
-  pageSize: number = 5
+  config: Config = {}
 ): Result<T> => {
   const [hasMore, setHasMore] = useState(false)
   const [docs, setDocs] = useState<Array<T>>([])
   const [getQueryPaged, setGetQueryPaged] = useState<typeof getQuery>(undefined!)
 
+  const startFetching =
+    (config.startFetching === undefined ? true : config.startFetching) && !!getQueryPaged
+
   const [docsPage, loading, error, firebaseDocsPage] = useFirestoreQuery<T>(
     getQueryPaged,
-    { startFetching: !!getQueryPaged, realTime: false }
+    { startFetching, realTime: false }
   )
+
+  const pageSize = config.pageSize || 5
 
   const nextPage = () => {
     if (!hasMore) return

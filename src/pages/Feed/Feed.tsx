@@ -1,44 +1,53 @@
 import React, { useCallback, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 
-import { IPost } from '../../domain'
-import noPhoto from '../../images/no-photo.png'
+import { FeedType, getPostsQuery, isFollowed } from './utils'
+import TopMenu from './TopMenu/TopMenu'
+import { IFollow, IPost } from '../../domain'
+import { ChevronUpIcon } from '../../components/Icons'
 import { LoadingRow, FeedPost } from '../../components'
 import PostDetailPage from '../PostDetailPage/PostDetailPage'
-import { isLiked, likePost } from '../../services/postService'
+import SideCard, { SideCardPlaceHolder } from './SideCard/SideCard'
+import { useApiError } from '../../contextProviders/ApiErrorProvider'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
-import { useNotifyError, useObserver, usePagedQuery, useScroll } from '../../hooks'
+import { follow, isLiked, likePost, unfollow } from '../../services/postService'
 import {
-  BlindManIcon,
-  ChevronUpIcon,
-  EnvelopeIcon,
-  UserSecretIcon,
-} from '../../components/Icons'
+  useFirestoreQuery,
+  useLocalStorage,
+  useNotifyError,
+  useObserver,
+  usePagedQuery,
+  useScroll,
+} from '../../hooks'
 
-import {
-  Stat,
-  DummymSpan,
-  CardSeparator,
-  CardTop,
-  Nick,
-  PostsContainer,
-  ProfilePhoto,
-  SideCard,
-  Wrapper,
-  ScrollUpButton,
-  CardMiddle,
-} from './Feed.styled'
+import { DummymSpan, PostsContainer, Wrapper, ScrollUpButton } from './Feed.styled'
 
 const Feed: React.FC = () => {
-  const [posts, loading, nextPage, hasMore, , error, modifyPost] = usePagedQuery<IPost>(
-    useCallback(db => db.collection('posts').orderBy('createdAt', 'desc'), [])
-  )
-  useNotifyError(error)
-  const history = useHistory()
-  const [topRef, scrollUp] = useScroll()
   const { currentUser } = useAuthorizedUser()
+  const [feedType, setFeedType] = useLocalStorage<FeedType>('feedTopMenu.feedType', 'all')
+
+  const [followings, followingsLoading, followingsError] = useFirestoreQuery<IFollow>(
+    useCallback(x => x.collection(`users/${currentUser.id}/followings`), [currentUser.id])
+  )
+
+  const [posts, postsLoading, nextPage, hasMore, , postsErr, modifyPost] = usePagedQuery<
+    IPost
+  >(
+    useCallback(
+      getPostsQuery(
+        feedType === 'all',
+        followings.map(x => x.userId)
+      ),
+      [feedType]
+    ),
+    { startFetching: !followingsLoading }
+  )
+
+  useNotifyError(postsErr)
+  useNotifyError(followingsError)
+  const { setError } = useApiError()
+  const [topRef, scrollUp] = useScroll<HTMLDivElement>()
   const [selectedPost, setSelectedPost] = useState<IPost>()
-  const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !loading)
+  const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !postsLoading)
 
   const updateLikeCount = (post: IPost) => {
     const newLikes = isLiked(post, currentUser.nick)
@@ -53,6 +62,12 @@ const Feed: React.FC = () => {
     updateLikeCount(post)
   }
 
+  const handleFollowClicked = async (post: IPost) => {
+    const { id } = currentUser
+    if (isFollowed(followings, post.userId)) await unfollow(id, post.userId, setError)
+    else await follow(id, { userId: post.userId, userNick: post.userNick }, setError)
+  }
+
   return (
     <>
       {selectedPost && (
@@ -65,35 +80,11 @@ const Feed: React.FC = () => {
       )}
 
       <Wrapper>
-        <SideCard>
-          <CardTop />
-          <CardMiddle>
-            <ProfilePhoto
-              src={currentUser.photoUrl || noPhoto}
-              onClick={() => history.push(`/profile/${currentUser.id}`)}
-            />
-            <Nick>{currentUser.nick}</Nick>
-          </CardMiddle>
-
-          <CardSeparator />
-
-          <Stat>
-            <EnvelopeIcon />
-            <b>Posts:</b>
-            {currentUser.postCount}
-          </Stat>
-          <Stat>
-            <BlindManIcon />
-            <b>Following:</b>0
-          </Stat>
-          <Stat>
-            <UserSecretIcon />
-            <b>Followed by:</b>0
-          </Stat>
-        </SideCard>
+        <SideCard currentUser={currentUser} followingCount={followings.length} />
 
         <PostsContainer>
-          <DummymSpan ref={topRef} />
+          <TopMenu feedType={feedType} forwardRef={topRef} onChange={setFeedType} />
+
           {posts.map(x => (
             <FeedPost
               post={x}
@@ -101,10 +92,12 @@ const Feed: React.FC = () => {
               onLikeClick={handleLikeClicked}
               onOpenDetail={setSelectedPost}
               isLiked={isLiked(x, currentUser.nick)}
+              isFollowed={isFollowed(followings, x.userId)}
+              onFollowClick={async () => await handleFollowClicked(x)}
             />
           ))}
 
-          {loading && <LoadingRow />}
+          {(postsLoading || followingsLoading) && <LoadingRow />}
 
           <ScrollUpButton color='accent' onClick={scrollUp}>
             <ChevronUpIcon />
@@ -113,7 +106,7 @@ const Feed: React.FC = () => {
           <DummymSpan ref={observe} />
         </PostsContainer>
 
-        <SideCard visibility='hidden'></SideCard>
+        <SideCardPlaceHolder />
       </Wrapper>
     </>
   )

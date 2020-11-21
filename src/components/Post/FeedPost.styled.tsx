@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { lightenColor } from '../../utils/utils'
+import Button from '../Button/Button'
 import IconButton from '../Button/IconButton'
 
 export const Wrapper = styled.div`
@@ -125,4 +126,11 @@ export const StyledIconButton = styled(IconButton)`
   :hover {
     background: rgba(0, 0, 0, 0.1);
   }
+`
+
+export const StyledButton = styled(Button)`
+  transform: scale(0.8);
+  position: absolute;
+  right: 15px;
+  top: 15px;
 `

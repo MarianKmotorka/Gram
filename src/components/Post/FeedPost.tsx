@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import { IPost } from '../../domain'
 import noPhotoPng from '../../images/no-photo.png'
-import { ClockIcon, HeartFilledIcon, HeartIcon, ExpandIcon } from '../Icons'
+import { ClockIcon, HeartFilledIcon, HeartIcon } from '../Icons'
 
 import {
   AuthorInfo,
@@ -13,22 +13,26 @@ import {
   Title,
   Wrapper,
   AuthorName,
-  StyledIconButton,
   CardButton,
+  StyledButton,
 } from './FeedPost.styled'
 
 interface IFeedPostProps {
   post: IPost
   isLiked: boolean
+  isFollowed: boolean
   onLikeClick: (post: IPost) => Promise<void>
   onOpenDetail: (postId: IPost) => void
+  onFollowClick: () => Promise<void>
 }
 
 const FeedPost: React.FC<IFeedPostProps> = ({
   post,
   isLiked,
+  isFollowed,
   onLikeClick,
   onOpenDetail,
+  onFollowClick,
 }) => {
   const createdAt = moment(post.createdAt.toDate()).fromNow()
 
@@ -36,12 +40,15 @@ const FeedPost: React.FC<IFeedPostProps> = ({
     <Wrapper>
       <Header>
         <AuthorSection>
-          <StyledIconButton
-            onClick={() => onOpenDetail(post)}
-            icon={<ExpandIcon color='black' />}
-            top='10px'
-            right='10px'
-          />
+          <StyledButton
+            color='accent'
+            reversed={isFollowed}
+            onClick={onFollowClick}
+            hover={false}
+          >
+            {isFollowed ? 'Unfollow' : 'Follow'}
+          </StyledButton>
+
           <img src={post.userPhotoUrl || noPhotoPng} alt='author' />
 
           <AuthorInfo>

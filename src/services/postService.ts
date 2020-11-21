@@ -1,5 +1,5 @@
 import { propertyOf } from '../utils/utils'
-import { IComment, IPost, IUser } from '../domain'
+import { IComment, IFollow, IPost, IUser } from '../domain'
 import { IError } from '../contextProviders/ApiErrorProvider'
 import {
   FieldValue,
@@ -57,3 +57,20 @@ export const commentOnPost = async (
 export const deleteComment = async (id: string, setError: SetError) => {
   await projectFirestore.doc(`comments/${id}`).delete().catch(setError)
 }
+
+export const follow = async (followerId: string, followee: IFollow, setError: SetError) =>
+  await projectFirestore
+    .collection(`users/${followerId}/followings`)
+    .doc(followee.userId)
+    .set(followee)
+    .catch(setError)
+
+export const unfollow = async (
+  followerId: string,
+  followeeId: string,
+  setError: SetError
+) =>
+  await projectFirestore
+    .doc(`users/${followerId}/followings/${followeeId}`)
+    .delete()
+    .catch(setError)
