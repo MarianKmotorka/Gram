@@ -56,8 +56,8 @@ export const Metadata = styled.div`
   }
 `
 
-export const CommentContainer = styled.div<{ bg?: string }>`
-  background: ${({ theme, bg }) => (bg && theme[bg]) || theme.white};
+export const CommentContainer = styled.div`
+  background: ${({ theme }) => theme.white};
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
   padding: 10px;

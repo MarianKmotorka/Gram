@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 
-import { TabView } from '../../../../components'
+import { Button, TabView } from '../../../../components'
 import { SearchIcon } from '../../../../components/Icons'
 import { getFollowedByText, getFollowingText } from './utils'
 import { useFollowers } from '../../../../contextProviders/FollowersProvider'
@@ -12,6 +12,7 @@ import {
   SearchContainer,
   Wrapper,
   Title,
+  NickLink,
 } from './FollowersDetail.styled'
 
 interface IFollowersDetailProps {
@@ -30,7 +31,7 @@ const FollowersDetail: FC<IFollowersDetailProps> = ({
   userNick,
   defaultTabName,
 }) => {
-  const { followings, followedBy } = useFollowers()
+  const { followings, followedBy, handleFollowed, isFollowedByMe } = useFollowers()
   const [followingFilter, setFollowingFilter] = useState('')
   const [followedByFilter, setFollowedByFilter] = useState('')
 
@@ -46,7 +47,9 @@ const FollowersDetail: FC<IFollowersDetailProps> = ({
           <SearchContainer>
             <SearchIcon />
             <Search
-              placeholder='who am I following'
+              placeholder={
+                isCurrentUser ? 'who am I following' : `who is ${userNick} following`
+              }
               value={followingFilter}
               onChange={e => setFollowingFilter(e.target.value)}
             />
@@ -54,8 +57,16 @@ const FollowersDetail: FC<IFollowersDetailProps> = ({
 
           <RowsContainer>
             {filteredFollowings.map(x => (
-              <Row key={x.userId} to={`/profile/${x.userId}`}>
-                {x.userNick}
+              <Row key={x.userId}>
+                <NickLink to={`/profile/${x.userId}`}>{x.userNick}</NickLink>
+                {isCurrentUser && (
+                  <Button
+                    scale={0.8}
+                    onClick={async () => handleFollowed(x.userId, x.userNick)}
+                  >
+                    Unfollow
+                  </Button>
+                )}
               </Row>
             ))}
           </RowsContainer>
@@ -67,7 +78,7 @@ const FollowersDetail: FC<IFollowersDetailProps> = ({
           <SearchContainer>
             <SearchIcon />
             <Search
-              placeholder='who follows me'
+              placeholder={isCurrentUser ? 'who follows me' : `who follows ${userNick}`}
               value={followedByFilter}
               onChange={e => setFollowedByFilter(e.target.value)}
             />
@@ -75,8 +86,16 @@ const FollowersDetail: FC<IFollowersDetailProps> = ({
 
           <RowsContainer>
             {filteredFollowedBy.map(x => (
-              <Row key={x.userId} to={`/profile/${x.userId}`}>
-                {x.userNick}
+              <Row key={x.userId}>
+                <NickLink to={`/profile/${x.userId}`}>{x.userNick}</NickLink>
+                {isCurrentUser && (
+                  <Button
+                    scale={0.8}
+                    onClick={async () => handleFollowed(x.userId, x.userNick)}
+                  >
+                    {isFollowedByMe(x.userId) ? 'Unfollow' : 'Follow'}
+                  </Button>
+                )}
               </Row>
             ))}
           </RowsContainer>

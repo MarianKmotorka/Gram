@@ -17,12 +17,18 @@ export const RowsContainer = styled.div`
   }
 `
 
-export const Row = styled(Link)`
-  margin: 0 30px;
+export const Row = styled.div`
+  margin: 0 13px 0 30px;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+`
+
+export const NickLink = styled(Link)`
   color: ${({ theme }) => theme.white};
   display: block;
-  padding: 7px;
-
+  margin-right: auto;
+  font-size: 1.1rem;
   ::first-letter {
     color: ${({ theme }) => theme.accent2};
   }

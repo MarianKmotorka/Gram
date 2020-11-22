@@ -18,7 +18,7 @@ interface IContextValue {
   followingsCount: number
   followedByCount: number
   isFollowedByMe: (userId: string) => boolean
-  handleFollowed: (userId: string, userNick: string) => Promise<void>
+  handleFollowed: (userToFollowId: string, usertoFollowNick: string) => Promise<void>
 }
 
 const FollowersContext = createContext<IContextValue>(undefined!)
@@ -44,10 +44,11 @@ const FollowersProvider: FC<IProps> = ({ children, userId }) => {
   const isFollowedByMe = (userId: string) =>
     myFollowings.find(x => x.userId === userId) !== undefined
 
-  const handleFollowed = async (userId: string, userNick: string) => {
+  const handleFollowed = async (userToFollowId: string, usertoFollowNick: string) => {
     const { id } = currentUser
-    if (isFollowedByMe(userId)) await unfollow(id, userId, setError)
-    else await follow(id, { userId: userId, userNick: userNick }, setError)
+    if (isFollowedByMe(userToFollowId)) await unfollow(id, userToFollowId, setError)
+    else
+      await follow(id, { userId: userToFollowId, userNick: usertoFollowNick }, setError)
   }
 
   const { followedBy, followedByLoading } = useFollowedBy(_userId)

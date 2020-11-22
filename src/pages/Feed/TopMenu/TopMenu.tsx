@@ -16,7 +16,7 @@ const TopMenu: FC<ITopMenuProps> = ({ feedType, forwardRef, onChange }) => {
     <Wrapper ref={forwardRef}>
       <Button
         hover={false}
-        color={feedType === 'all' ? 'accent2' : 'bg'}
+        bg={feedType === 'all' ? 'accent2' : 'primary'}
         scale={0.8}
         onClick={() => onChange('all')}
       >
@@ -25,7 +25,7 @@ const TopMenu: FC<ITopMenuProps> = ({ feedType, forwardRef, onChange }) => {
 
       <Button
         hover={false}
-        color={feedType === 'followed' ? 'accent2' : 'bg'}
+        bg={feedType === 'followed' ? 'accent2' : 'primary'}
         scale={0.8}
         onClick={() => onChange('followed')}
       >
@@ -34,7 +34,7 @@ const TopMenu: FC<ITopMenuProps> = ({ feedType, forwardRef, onChange }) => {
 
       <Button
         hover={false}
-        color={feedType === 'mine' ? 'accent2' : 'bg'}
+        bg={feedType === 'mine' ? 'accent2' : 'primary'}
         scale={0.8}
         onClick={() => onChange('mine')}
       >
