@@ -1,6 +1,4 @@
 import React, { FC } from 'react'
-import invert from 'lodash/invert'
-import keys from 'lodash/keys'
 
 import { Button } from '../../../components'
 import { FeedFilter } from '../utils'
@@ -14,27 +12,34 @@ interface ITopMenuProps {
 }
 
 const TopMenu: FC<ITopMenuProps> = ({ feedType, forwardRef, onChange }) => {
-  const feedTypeToNumber: Record<FeedFilter, number> = {
-    followed: 0,
-    all: 1,
-    mine: 2,
-  }
-
-  const hanldeChanged = () => {
-    const newNumber = (feedTypeToNumber[feedType] + 1) % keys(feedTypeToNumber).length
-    const newFeedType = invert(feedTypeToNumber)[newNumber] as FeedFilter
-    onChange(newFeedType)
-  }
-
   return (
     <Wrapper ref={forwardRef}>
-      <p>Now showing</p>
-
-      <Button hover={false} scale={0.8} onClick={hanldeChanged}>
-        {feedType.toUpperCase()}
+      <Button
+        hover={false}
+        color={feedType === 'all' ? 'accent2' : 'bg'}
+        scale={0.8}
+        onClick={() => onChange('all')}
+      >
+        ALL
       </Button>
 
-      <p>posts.</p>
+      <Button
+        hover={false}
+        color={feedType === 'followed' ? 'accent2' : 'bg'}
+        scale={0.8}
+        onClick={() => onChange('followed')}
+      >
+        FOLLOWED
+      </Button>
+
+      <Button
+        hover={false}
+        color={feedType === 'mine' ? 'accent2' : 'bg'}
+        scale={0.8}
+        onClick={() => onChange('mine')}
+      >
+        MINE
+      </Button>
     </Wrapper>
   )
 }

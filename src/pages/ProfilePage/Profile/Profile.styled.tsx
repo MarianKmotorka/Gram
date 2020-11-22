@@ -99,13 +99,15 @@ export const Bold = styled.b`
   }
 `
 
-export const Text = styled.p`
+export const Text = styled.p<{ clickable?: boolean }>`
   font-weight: 200;
   line-height: 25px;
   color: inherit;
+  ${({ clickable }) => clickable && 'cursor: pointer;'}
 
   i {
     color: inherit;
+    cursor: inherit;
     color: ${({ theme }) => theme.accent};
   }
 `

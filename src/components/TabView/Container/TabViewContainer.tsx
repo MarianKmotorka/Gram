@@ -1,6 +1,10 @@
 import React, { FC, ReactNode, Children, isValidElement, useState } from 'react'
 import { Tab, TabsWrapper, Wrapper } from './TabViewContainer.styled'
 
+interface IProps {
+  defaultTabName?: string
+}
+
 const getNameItemMap = (children: ReactNode) => {
   let map: { [key: string]: ReactNode } = {}
 
@@ -11,9 +15,9 @@ const getNameItemMap = (children: ReactNode) => {
   return map
 }
 
-const TabViewContainer: FC = ({ children }) => {
+const TabViewContainer: FC<IProps> = ({ defaultTabName, children }) => {
   const tabNames = Object.keys(getNameItemMap(children))
-  const [selectedName, setSelectedName] = useState(tabNames[0])
+  const [selectedName, setSelectedName] = useState(defaultTabName || tabNames[0])
   const selectedItem = getNameItemMap(children)[selectedName]
 
   return (

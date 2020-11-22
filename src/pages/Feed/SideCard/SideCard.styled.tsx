@@ -67,9 +67,11 @@ export const CardSeparator = styled.div`
   margin-bottom: 30px;
 `
 
-export const Stat = styled.p`
+export const Stat = styled.p<{ clickable?: boolean }>`
   font-weight: 200;
   color: ${({ theme }) => theme.white};
+  cursor: ${({ clickable }) => clickable && 'pointer'};
+
   b {
     font-weight: 500;
     margin-right: 10px;
@@ -79,6 +81,7 @@ export const Stat = styled.p`
     color: ${({ theme }) => theme.accent};
     width: 30px;
     text-align: center;
+    cursor: inherit;
   }
 
   margin: 8px auto 0 30px;

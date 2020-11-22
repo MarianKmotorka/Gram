@@ -7,7 +7,7 @@ import { Button } from '../../../components'
 import useUploadNewPhoto from './useUploadNewPhoto'
 import noPhotoPng from '../../../images/no-photo.png'
 import SideBlade from '../../../components/SideBlade/SideBlade'
-import FollowersDetail from './FollowersDetail/FollowersDetail'
+import FollowersDetail, { tabNames } from './FollowersDetail/FollowersDetail'
 import { useFollowers } from '../../../contextProviders/FollowersProvider'
 import {
   ClockIcon,
@@ -39,7 +39,7 @@ interface IProfileProps {
 }
 
 const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
-  const [sideBladeOpened, setSideBladeOpened] = useState(false)
+  const [bladeDefaultTabName, setBladeDefaultTabName] = useState<string>()
   const [file, setFile] = useState<File | null>(null)
   const { uploading, progress, startUploading } = useUploadNewPhoto(
     file,
@@ -68,12 +68,16 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
   return (
     <>
       <AnimatePresence>
-        {sideBladeOpened && (
+        {bladeDefaultTabName && (
           <SideBlade
-            onClose={() => setSideBladeOpened(false)}
+            onClose={() => setBladeDefaultTabName(undefined)}
             closeIcon={<CloseIcon color='bg' />}
           >
-            <FollowersDetail isCurrentUser={isCurrentUser} userNick={user.nick} />
+            <FollowersDetail
+              isCurrentUser={isCurrentUser}
+              userNick={user.nick}
+              defaultTabName={bladeDefaultTabName}
+            />
           </SideBlade>
         )}
       </AnimatePresence>
@@ -132,14 +136,14 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
               </Bold>
               {user.postCount}
             </Text>
-            <Text>
+            <Text clickable onClick={() => setBladeDefaultTabName(tabNames.following)}>
               <Bold>
                 <BlindManIcon />
                 <span>Following:</span>
               </Bold>
               {followingsCount}
             </Text>
-            <Text>
+            <Text clickable onClick={() => setBladeDefaultTabName(tabNames.followedBy)}>
               <Bold>
                 <UserSecretIcon />
                 <span>Followed by:</span>
@@ -164,7 +168,7 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
             )}
 
             <StyledIconButton
-              onClick={() => setSideBladeOpened(true)}
+              onClick={() => setBladeDefaultTabName(tabNames.following)}
               top='-7px'
               right='7px'
               icon={<ExpandIcon />}

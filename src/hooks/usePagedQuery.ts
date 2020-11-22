@@ -30,13 +30,13 @@ const usePagedQuery = <T extends IEntity>(
 ): Result<T> => {
   const [hasMore, setHasMore] = useState(false)
   const [docs, setDocs] = useState<Array<T>>([])
-  const [getQueryPaged, setGetQueryPaged] = useState<typeof getQuery>(undefined!)
+  const [getQueryPaged, setGetQueryPaged] = useState<typeof getQuery>()
 
   const startFetching =
     (config.startFetching === undefined ? true : config.startFetching) && !!getQueryPaged
 
   const [docsPage, loading, error, firebaseDocsPage] = useFirestoreQuery<T>(
-    getQueryPaged,
+    getQueryPaged!,
     { startFetching, realTime: false }
   )
 
@@ -61,8 +61,11 @@ const usePagedQuery = <T extends IEntity>(
   }, [getQuery, pageSize])
 
   useEffect(() => {
+    if (docsPage[0] && docsPage[0].id === docs[0]?.id) return // TODO: temp fix for duplicates when using startFetching prop
+
     setDocs(prev => [...prev, ...docsPage])
     setHasMore(docsPage.length === pageSize)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [docsPage, pageSize])
 
   useEffect(() => resetState(), [resetState])

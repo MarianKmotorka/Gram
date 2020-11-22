@@ -1,6 +1,8 @@
 import React, { FC, useState } from 'react'
+
 import { TabView } from '../../../../components'
 import { SearchIcon } from '../../../../components/Icons'
+import { getFollowedByText, getFollowingText } from './utils'
 import { useFollowers } from '../../../../contextProviders/FollowersProvider'
 
 import {
@@ -11,14 +13,23 @@ import {
   Wrapper,
   Title,
 } from './FollowersDetail.styled'
-import { getFollowedByText, getFollowingText } from './utils'
 
 interface IFollowersDetailProps {
   isCurrentUser: boolean
   userNick: string
+  defaultTabName?: string
 }
 
-const FollowersDetail: FC<IFollowersDetailProps> = ({ isCurrentUser, userNick }) => {
+export const tabNames = {
+  following: 'Following',
+  followedBy: 'Followed by',
+}
+
+const FollowersDetail: FC<IFollowersDetailProps> = ({
+  isCurrentUser,
+  userNick,
+  defaultTabName,
+}) => {
   const { followings, followedBy } = useFollowers()
   const [followingFilter, setFollowingFilter] = useState('')
   const [followedByFilter, setFollowedByFilter] = useState('')
@@ -28,8 +39,8 @@ const FollowersDetail: FC<IFollowersDetailProps> = ({ isCurrentUser, userNick })
 
   return (
     <Wrapper>
-      <TabView.Container>
-        <TabView.Item name='Following'>
+      <TabView.Container defaultTabName={defaultTabName}>
+        <TabView.Item name={tabNames.following}>
           <Title>{getFollowingText(isCurrentUser, followings.length, userNick)}</Title>
 
           <SearchContainer>
@@ -50,7 +61,7 @@ const FollowersDetail: FC<IFollowersDetailProps> = ({ isCurrentUser, userNick })
           </RowsContainer>
         </TabView.Item>
 
-        <TabView.Item name='Followed by'>
+        <TabView.Item name={tabNames.followedBy}>
           <Title>{getFollowedByText(isCurrentUser, followedBy.length, userNick)}</Title>
 
           <SearchContainer>
