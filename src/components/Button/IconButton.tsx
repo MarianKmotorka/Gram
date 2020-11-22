@@ -1,15 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-interface IIconButtonProps {
-  visibility?: string
-  top?: string
-  left?: string
-  right?: string
-  bottom?: string
-  position?: string
+interface IIconButtonProps extends IStyledProps {
   icon: React.ReactNode
-  onClick: () => void
+  onClick?: () => void
 }
 
 interface IStyledProps {

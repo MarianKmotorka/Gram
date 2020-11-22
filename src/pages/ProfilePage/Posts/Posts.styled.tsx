@@ -2,6 +2,10 @@ import styled, { css } from 'styled-components'
 
 const smallScreenWidth = '600px'
 
+export const Wrapper = styled.div`
+  margin-top: 25px;
+`
+
 export const Grid = styled.div<{ smallScreenGrid: boolean }>`
   display: grid;
   grid-gap: 15px;

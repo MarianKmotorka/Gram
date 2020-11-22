@@ -6,10 +6,6 @@ export const Wrapper = styled(CenteredContainer)`
   height: 100%;
   position: relative;
   padding-top: 15px;
-
-  > * + * {
-    margin-top: 25px;
-  }
 `
 
 export const DraggableWrapper = styled(motion.div)`

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { IconButton } from '../../../components'
 import Button from '../../../components/Button/Button'
 import pattern from '../../../images/patternpad2.svg'
 
@@ -127,5 +128,13 @@ export const InfoCard = styled.div`
   @media only screen and (max-width: 400px) {
     min-width: 200px;
     border-radius: 5px;
+  }
+`
+
+export const StyledIconButton = styled(IconButton)`
+  background-color: transparent;
+
+  :hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 `

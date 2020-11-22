@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import moment from 'moment'
 
 import { IUser } from '../../../domain'
+import { Button } from '../../../components'
 import useUploadNewPhoto from './useUploadNewPhoto'
 import noPhotoPng from '../../../images/no-photo.png'
+import SideBlade from '../../../components/SideBlade/SideBlade'
+import FollowersDetail from './FollowersDetail/FollowersDetail'
 import { useFollowers } from '../../../contextProviders/FollowersProvider'
-import { Button } from '../../../components'
 import {
   ClockIcon,
   EditIcon,
@@ -13,6 +16,7 @@ import {
   BlindManIcon,
   EnvelopeIcon,
   PlusIcon,
+  ExpandIcon,
 } from '../../../components/Icons'
 
 import {
@@ -25,6 +29,7 @@ import {
   EditPhotoButton,
   InfoCard,
   Text,
+  StyledIconButton,
 } from './Profile.styled'
 
 interface IProfileProps {
@@ -33,6 +38,7 @@ interface IProfileProps {
 }
 
 const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
+  const [sideBladeOpened, setSideBladeOpened] = useState(false)
   const [file, setFile] = useState<File | null>(null)
   const { uploading, progress, startUploading } = useUploadNewPhoto(
     file,
@@ -59,93 +65,110 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
   }
 
   return (
-    <Wrapper>
-      <input
-        style={{ display: 'none' }}
-        type='file'
-        id='upload-profile-photo-file-input'
-        onChange={handleInputChanged}
-      />
-      <InfoCard>
-        <PhotoWrapper>
-          <ProfilePhoto src={user.photoUrl || noPhotoPng} />
-
-          {isCurrentUser && (
-            <EditPhotoButton
-              buttonType='action'
-              icon={<EditIcon />}
-              isLoading={uploading}
-              loadingProgress={progress}
-              onClick={handleEditPhotoClicked}
-            />
-          )}
-        </PhotoWrapper>
-
-        <Nick>{user.nick}</Nick>
-
-        {!isCurrentUser && (
-          <Button
-            reversed={isFollowedByMe(user.id)}
-            color='accent'
-            onClick={async () => await handleFollowed(user.id, user.nick)}
-          >
-            {isFollowedByMe(user.id) ? 'Followed' : 'Follow'}
-          </Button>
+    <>
+      <AnimatePresence>
+        {sideBladeOpened && (
+          <SideBlade onClose={() => setSideBladeOpened(false)}>
+            <FollowersDetail />
+          </SideBlade>
         )}
-      </InfoCard>
+      </AnimatePresence>
 
-      <AboutSection>
+      <Wrapper>
+        <input
+          style={{ display: 'none' }}
+          type='file'
+          id='upload-profile-photo-file-input'
+          onChange={handleInputChanged}
+        />
         <InfoCard>
-          <Text>
-            <Bold>
-              <EditIcon />
-              <span>About me:</span>
-            </Bold>
-            {user.aboutMe}
-          </Text>
+          <PhotoWrapper>
+            <ProfilePhoto src={user.photoUrl || noPhotoPng} />
+
+            {isCurrentUser && (
+              <EditPhotoButton
+                buttonType='action'
+                icon={<EditIcon />}
+                isLoading={uploading}
+                loadingProgress={progress}
+                onClick={handleEditPhotoClicked}
+              />
+            )}
+          </PhotoWrapper>
+
+          <Nick>{user.nick}</Nick>
+
+          {!isCurrentUser && (
+            <Button
+              reversed={isFollowedByMe(user.id)}
+              color='accent'
+              onClick={async () => await handleFollowed(user.id, user.nick)}
+            >
+              {isFollowedByMe(user.id) ? 'Followed' : 'Follow'}
+            </Button>
+          )}
         </InfoCard>
 
-        <InfoCard>
-          <Text>
-            <Bold>
-              <EnvelopeIcon />
-              <span>Posts:</span>
-            </Bold>
-            {user.postCount}
-          </Text>
-          <Text>
-            <Bold>
-              <BlindManIcon />
-              <span>Following:</span>
-            </Bold>
-            {followingsCount}
-          </Text>
-          <Text>
-            <Bold>
-              <UserSecretIcon />
-              <span>Followed by:</span>
-            </Bold>
-            {followedByCount}
-          </Text>
-          <Text>
-            <Bold>
-              <PlusIcon />
-              <span>Registered:</span>
-            </Bold>
-            {moment(user.createdAt.toDate()).format('DD. MM. YYYY')}
-          </Text>
-          {user.lastLogin && (
+        <AboutSection>
+          <InfoCard>
             <Text>
               <Bold>
-                <ClockIcon />
-                <span>Last login:</span>
+                <EditIcon />
+                <span>About me:</span>
               </Bold>
-              {moment(user.lastLogin.toDate()).format('DD. MM. YYYY, HH:mm')}
+              {user.aboutMe}
             </Text>
-          )}
-        </InfoCard>
-      </AboutSection>
-    </Wrapper>
+          </InfoCard>
+
+          <InfoCard>
+            <Text>
+              <Bold>
+                <EnvelopeIcon />
+                <span>Posts:</span>
+              </Bold>
+              {user.postCount}
+            </Text>
+            <Text>
+              <Bold>
+                <BlindManIcon />
+                <span>Following:</span>
+              </Bold>
+              {followingsCount}
+            </Text>
+            <Text>
+              <Bold>
+                <UserSecretIcon />
+                <span>Followed by:</span>
+              </Bold>
+              {followedByCount}
+            </Text>
+            <Text>
+              <Bold>
+                <PlusIcon />
+                <span>Registered:</span>
+              </Bold>
+              {moment(user.createdAt.toDate()).format('DD. MM. YYYY')}
+            </Text>
+            {user.lastLogin && (
+              <Text>
+                <Bold>
+                  <ClockIcon />
+                  <span>Last login:</span>
+                </Bold>
+                {moment(user.lastLogin.toDate()).format('DD. MM. YYYY, HH:mm')}
+              </Text>
+            )}
+
+            <StyledIconButton
+              onClick={() => setSideBladeOpened(true)}
+              top='-7px'
+              right='7px'
+              icon={<ExpandIcon />}
+            />
+          </InfoCard>
+        </AboutSection>
+      </Wrapper>
+    </>
   )
 }
 

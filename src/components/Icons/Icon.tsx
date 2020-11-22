@@ -11,7 +11,7 @@ interface IStyledProps {
 const I = styled.i<IStyledProps>`
   margin: ${({ margin }) => margin || '0'};
   font-size: ${({ fontSize }) => fontSize || '1em'};
-  color: ${({ color, theme }) => (color ? theme[color] : theme.black)};
+  color: ${({ color, theme }) => (color ? theme[color] : theme.primary)};
   cursor: ${({ cursorPointer }) => (cursorPointer ? 'pointer' : 'auto')};
 `
 

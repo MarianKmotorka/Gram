@@ -5,9 +5,16 @@ import { IPost, IUser } from '../../../domain'
 import { LoadingRow } from '../../../components'
 import PostDetailPage from '../../PostDetailPage/PostDetailPage'
 import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
-
-import { BottomDiv, Grid, Image, LayoutControls, VerticalSeparator } from './Posts.styled'
 import { useFollowers } from '../../../contextProviders/FollowersProvider'
+
+import {
+  BottomDiv,
+  Grid,
+  Image,
+  LayoutControls,
+  VerticalSeparator,
+  Wrapper,
+} from './Posts.styled'
 
 interface IPostsProps {
   posts: IPost[]
@@ -32,7 +39,7 @@ const Posts: React.FC<IPostsProps> = ({
   const { handleFollowed, isFollowedByMe: isFollowed } = useFollowers()
 
   return (
-    <>
+    <Wrapper>
       {selectedPost && (
         <PostDetailPage
           postId={selectedPost.id}
@@ -75,7 +82,7 @@ const Posts: React.FC<IPostsProps> = ({
       {loading && <LoadingRow />}
 
       <BottomDiv ref={observe} />
-    </>
+    </Wrapper>
   )
 }
 
