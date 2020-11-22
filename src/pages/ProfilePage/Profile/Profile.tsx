@@ -17,6 +17,7 @@ import {
   EnvelopeIcon,
   PlusIcon,
   ExpandIcon,
+  CloseIcon,
 } from '../../../components/Icons'
 
 import {
@@ -68,7 +69,10 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
     <>
       <AnimatePresence>
         {sideBladeOpened && (
-          <SideBlade onClose={() => setSideBladeOpened(false)}>
+          <SideBlade
+            onClose={() => setSideBladeOpened(false)}
+            closeIcon={<CloseIcon color='bg' />}
+          >
             <FollowersDetail />
           </SideBlade>
         )}

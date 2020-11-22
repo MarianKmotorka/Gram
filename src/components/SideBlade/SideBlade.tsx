@@ -1,12 +1,14 @@
 import React, { FC } from 'react'
 import { useWindowSize } from '../../hooks'
+import IconButton from '../Button/IconButton'
 import { CloseIcon } from '../Icons'
 import { NAVBAR_HEIGHT } from '../Navbar/Navbar.styled'
 
-import { StyledIconButon, Wrapper } from './SideBlade.styled'
+import { Wrapper } from './SideBlade.styled'
 
 interface ISideBladeProps {
   onClose: () => void
+  closeIcon?: React.ReactNode
 }
 
 const getAnimationProps = (smallScreen: boolean) =>
@@ -19,14 +21,19 @@ const getAnimationProps = (smallScreen: boolean) =>
       }
     : { initial: { right: -550 }, animate: { right: 0 }, exit: { right: -550 } }
 
-const SideBlade: FC<ISideBladeProps> = ({ onClose, children }) => {
+const SideBlade: FC<ISideBladeProps> = ({ onClose, children, closeIcon }) => {
   const { width } = useWindowSize()
 
   return (
     <Wrapper {...getAnimationProps(width < 550)}>
       {children}
 
-      <StyledIconButon onClick={onClose} icon={<CloseIcon />} top='10px' left='10px' />
+      <IconButton
+        onClick={onClose}
+        icon={closeIcon || <CloseIcon />}
+        top='5px'
+        left='5px'
+      />
     </Wrapper>
   )
 }

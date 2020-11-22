@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 
 import TopMenu from './TopMenu/TopMenu'
 import { IPost } from '../../domain'
-import { FeedType, getPostsQuery } from './utils'
+import { FeedFilter, getPostsQuery } from './utils'
 import { ChevronUpIcon } from '../../components/Icons'
 import { LoadingRow, FeedPost } from '../../components'
 import PostDetailPage from '../PostDetailPage/PostDetailPage'
@@ -10,13 +10,19 @@ import SideCard, { SideCardPlaceHolder } from './SideCard/SideCard'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { isLiked, likePost } from '../../services/postService'
 import FollowersProvider, { useFollowers } from '../../contextProviders/FollowersProvider'
-import { useNotifyError, useObserver, usePagedQuery, useScroll } from '../../hooks'
+import {
+  useLocalStorage,
+  useNotifyError,
+  useObserver,
+  usePagedQuery,
+  useScroll,
+} from '../../hooks'
 
 import { DummymSpan, PostsContainer, Wrapper, ScrollUpButton } from './Feed.styled'
 
 const Feed: React.FC = () => {
   const { currentUser } = useAuthorizedUser()
-  const [feedType, setFeedType] = useState<FeedType>('all')
+  const [feedFilter, setFeedFilter] = useLocalStorage<FeedFilter>('feed-filter', 'all')
   const [selectedPost, setSelectedPost] = useState<IPost>()
   const {
     followings,
@@ -31,11 +37,11 @@ const Feed: React.FC = () => {
   >(
     useCallback(
       getPostsQuery(
-        feedType,
+        feedFilter,
         followings.map(x => x.userId),
         currentUser.id
       ),
-      [feedType]
+      [feedFilter, followings]
     ),
     { startFetching: !followingsLoading }
   )
@@ -82,7 +88,7 @@ const Feed: React.FC = () => {
         />
 
         <PostsContainer>
-          <TopMenu feedType={feedType} forwardRef={topRef} onChange={setFeedType} />
+          <TopMenu feedType={feedFilter} forwardRef={topRef} onChange={setFeedFilter} />
 
           {posts.map(x => (
             <FeedPost

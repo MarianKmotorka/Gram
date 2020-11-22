@@ -1,11 +1,11 @@
 import { IPost } from '../../domain'
 import { propertyOf } from '../../utils'
 
-export type FeedType = 'followed' | 'all' | 'mine'
+export type FeedFilter = 'followed' | 'all' | 'mine'
 type Firestore = firebase.firestore.Firestore
 
 export const getPostsQuery = (
-  feedType: FeedType,
+  feedType: FeedFilter,
   followedUserIds: string[],
   currUserId: string
 ) => {
