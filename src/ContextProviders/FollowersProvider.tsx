@@ -1,10 +1,11 @@
 import React, { createContext, FC, useCallback, useContext } from 'react'
-import { IFollow } from '../domain'
-import { useFirestoreQuery, useNotifyError } from '../hooks'
-import { useAuthorizedUser } from './AuthProvider'
-import { follow, unfollow } from '../services/userService'
-import { useApiError } from './ApiErrorProvider'
 import { propertyOf } from '../utils'
+import { IFollow, IUser } from '../domain'
+import { useApiError } from './ApiErrorProvider'
+import { useAuthorizedUser } from './AuthProvider'
+import { FieldPath } from '../firebase/firebaseConfig'
+import { follow, unfollow } from '../services/userService'
+import { useFirestoreQuery, useNotifyError } from '../hooks'
 
 interface IProps {
   userId?: string
@@ -31,23 +32,13 @@ const FollowersProvider: FC<IProps> = ({ children, userId }) => {
     useCallback(x => x.collection(`users/${_userId}/followings`), [_userId])
   )
 
-  const [followedBy, followedByLoading, followedByError] = useFirestoreQuery<IFollow>(
-    useCallback(
-      x =>
-        x
-          .collectionGroup('followings')
-          .where(propertyOf<IFollow>('userId'), '==', _userId),
-      [_userId]
-    )
-  )
-
   const [myFollowings, myLoading, myError] = useFirestoreQuery<IFollow>(
     useCallback(x => x.collection(`users/${currentUser.id}/followings`), [currentUser.id])
   )
 
   useNotifyError(myError)
   useNotifyError(followingsError)
-  useNotifyError(followedByError)
+
   const { setError } = useApiError()
 
   const isFollowedByMe = (userId: string) =>
@@ -58,6 +49,8 @@ const FollowersProvider: FC<IProps> = ({ children, userId }) => {
     if (isFollowedByMe(userId)) await unfollow(id, userId, setError)
     else await follow(id, { userId: userId, userNick: userNick }, setError)
   }
+
+  const { followedBy, followedByLoading } = useFollowedBy(_userId)
 
   const value = {
     followings,
@@ -73,3 +66,45 @@ const FollowersProvider: FC<IProps> = ({ children, userId }) => {
 }
 
 export default FollowersProvider
+
+const useFollowedBy = (userId: string) => {
+  const { documentId } = FieldPath
+
+  const [, followedByLoading, followedByError, followedByDocs] = useFirestoreQuery<
+    IFollow
+  >(
+    useCallback(
+      x =>
+        x
+          .collectionGroup('followings')
+          .where(propertyOf<IFollow>('userId'), '==', userId),
+      [userId]
+    )
+  )
+
+  const [
+    followedByUsers,
+    followedByUsersLoading,
+    followedByUsersError,
+  ] = useFirestoreQuery<IUser>(
+    useCallback(
+      x =>
+        x
+          .collection('users')
+          .where(documentId(), 'in', [
+            ...followedByDocs.map(x => x.ref.parent.parent?.id),
+            'not-existing-id',
+          ]),
+      [followedByDocs, documentId]
+    ),
+    { startFetching: !followedByLoading }
+  )
+
+  useNotifyError(followedByError)
+  useNotifyError(followedByUsersError)
+
+  return {
+    followedBy: followedByUsers.map(x => ({ userId: x.id, userNick: x.nick })),
+    followedByLoading: followedByUsersLoading,
+  }
+}

@@ -26,7 +26,7 @@ const Feed: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<IPost>()
   const {
     followings,
-    followedByCount,
+    followedBy,
     loading: followingsLoading,
     isFollowedByMe,
     handleFollowed,
@@ -41,7 +41,7 @@ const Feed: React.FC = () => {
         followings.map(x => x.userId),
         currentUser.id
       ),
-      [feedFilter, followings]
+      [feedFilter, followingsLoading]
     ),
     { startFetching: !followingsLoading }
   )
@@ -84,7 +84,7 @@ const Feed: React.FC = () => {
         <SideCard
           currentUser={currentUser}
           followingCount={followings.length}
-          followedByCount={followedByCount}
+          followedByCount={followedBy.length}
         />
 
         <PostsContainer>

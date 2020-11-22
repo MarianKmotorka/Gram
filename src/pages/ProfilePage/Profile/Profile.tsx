@@ -73,7 +73,7 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
             onClose={() => setSideBladeOpened(false)}
             closeIcon={<CloseIcon color='bg' />}
           >
-            <FollowersDetail />
+            <FollowersDetail isCurrentUser={isCurrentUser} userNick={user.nick} />
           </SideBlade>
         )}
       </AnimatePresence>
