@@ -15,7 +15,7 @@ const ProtectedRoute = ({ component: Component, location, ...rest }: IProps) => 
       <Redirect
         to={{
           pathname: '/login',
-          state: { from: location?.pathname || '' },
+          state: { returnUrl: `${location?.pathname}${location?.search}` || '' },
         }}
       />
     )

@@ -33,19 +33,18 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
     if (!validationResult.success) return setIsLoading(false)
 
     await projectAuth
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email.trim(), password)
       .then(({ user }) => {
         const newUser: Omit<IUser, 'id' | 'lastLogin'> = {
           nick,
-          aboutMe,
           postCount: 0,
           photoUrl: null,
+          aboutMe: aboutMe.trim(),
           createdAt: getTimestamp() as firebase.firestore.Timestamp,
         }
 
         user && projectFirestore.collection('users').doc(user.uid).set(newUser)
       })
-      .then(() => history.replace('/'))
       .catch(err => {
         setIsLoading(false)
         setError(err.message)
