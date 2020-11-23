@@ -8,11 +8,11 @@ import { IPost, IUser } from '../../domain'
 import { PlusIcon } from '../../components/Icons'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
+import FollowersProvider from '../../contextProviders/FollowersProvider'
 import { useFirestoreDoc, usePagedQuery, useWindowSize } from '../../hooks'
 import { Button, ErrorWhileLoadingData, LoadingOverlay } from '../../components'
 
 import { DraggableWrapper, Wrapper } from './ProfilePage.styled'
-import FollowersProvider from '../../contextProviders/FollowersProvider'
 
 const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   match: { params },
@@ -76,8 +76,6 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
         <Posts
           posts={posts}
           loading={postsLoading}
-          currentUser={currentUser}
-          postsOwner={userResponse.data}
           refresh={refresh}
           loadMore={loadMore}
         />

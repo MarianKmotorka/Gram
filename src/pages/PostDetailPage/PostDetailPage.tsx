@@ -6,6 +6,7 @@ import { useFirestoreDoc, useFirestoreQuery } from '../../hooks'
 import { useApiError } from '../../contextProviders/ApiErrorProvider'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { PostDetail, PostDetailLoadingSkeleton } from '../../components'
+import { useFollowers } from '../../contextProviders/FollowersProvider'
 import {
   commentOnPost,
   deleteComment,
@@ -15,26 +16,21 @@ import {
 
 interface IPostDetailPageProps {
   postId: string
-  canDelete: boolean
-  canFollow: boolean
-  isFollowed: boolean
+  deleteDisabled?: boolean
   onClose: () => void
   afterLikedCallback?: () => void
   afterDeletedCallback?: () => void
-  onFollow: () => Promise<void>
 }
 
 const PostDetailPage: FC<IPostDetailPageProps> = ({
   postId,
-  canDelete,
-  canFollow,
-  isFollowed,
+  deleteDisabled,
   onClose,
-  onFollow,
   afterLikedCallback,
   afterDeletedCallback,
 }) => {
   const { setError } = useApiError()
+  const { isFollowedByMe, handleFollowed } = useFollowers()
   const { currentUser } = useAuthorizedUser()
   const [response, { refresh }] = useFirestoreDoc<IPost>(`posts/${postId}`, {
     realTime: false,
@@ -90,19 +86,19 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
 
   return (
     <PostDetail
-      post={response.data}
-      canDelete={canDelete}
-      canFollow={canFollow}
+      post={post}
       comments={comments}
-      isFollowed={isFollowed}
       currentUser={currentUser}
-      isLiked={post.likes.includes(currentUser.nick)}
+      canFollow={post.userId !== currentUser.id}
+      canDelete={currentUser.id === post.userId && deleteDisabled !== true}
       onClose={onClose}
-      onFollow={onFollow}
       onLike={handleLiked}
       onDelete={handleDeleted}
       onCommentSubmit={handleCommentSubmitted}
       onDeleteComment={handleCommentDeleted}
+      isFollowed={isFollowedByMe(post.userId)}
+      isLiked={post.likes.includes(currentUser.nick)}
+      onFollow={async () => handleFollowed(post.userId, post.userNick)}
     />
   )
 }

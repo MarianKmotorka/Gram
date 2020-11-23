@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import { useObserver } from '../../../hooks'
-import { IPost, IUser } from '../../../domain'
+import { useObserver, useUrlQueryParams } from '../../../hooks'
+import { IPost } from '../../../domain'
 import { LoadingRow } from '../../../components'
 import PostDetailPage from '../../PostDetailPage/PostDetailPage'
 import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
-import { useFollowers } from '../../../contextProviders/FollowersProvider'
 
 import {
   BottomDiv,
@@ -19,38 +19,24 @@ import {
 interface IPostsProps {
   posts: IPost[]
   loading?: boolean
-  postsOwner: IUser
-  currentUser: IUser
   loadMore: () => void
   refresh: () => void
 }
 
-const Posts: React.FC<IPostsProps> = ({
-  posts,
-  loading,
-  postsOwner,
-  currentUser,
-  loadMore,
-  refresh,
-}) => {
+const Posts: React.FC<IPostsProps> = ({ posts, loading, loadMore, refresh }) => {
+  const { location, push } = useHistory()
+  const { postId: selectedPostId } = useUrlQueryParams()
+
   const [displayGrid, setDisplayGrid] = useState(true)
-  const [selectedPost, setSelectedPost] = useState<IPost>()
   const observe = useObserver<HTMLDivElement>(loadMore, !loading)
-  const { handleFollowed, isFollowedByMe: isFollowed } = useFollowers()
 
   return (
     <Wrapper>
-      {selectedPost && (
+      {selectedPostId && (
         <PostDetailPage
-          postId={selectedPost.id}
+          postId={selectedPostId as string}
           afterDeletedCallback={refresh}
-          canDelete={postsOwner.id === currentUser.id}
-          canFollow={currentUser.id !== postsOwner.id}
-          onClose={() => setSelectedPost(undefined)}
-          isFollowed={isFollowed(selectedPost.userId)}
-          onFollow={async () =>
-            await handleFollowed(selectedPost.userId, selectedPost.userNick)
-          }
+          onClose={() => push(location.pathname)}
         />
       )}
 
@@ -73,8 +59,8 @@ const Posts: React.FC<IPostsProps> = ({
           <Image
             key={x.id}
             src={x.imageUrl}
-            onClick={() => setSelectedPost(x)}
             smallScreenGrid={displayGrid}
+            onClick={() => push(`${location.pathname}?postId=${x.id}`)}
           />
         ))}
       </Grid>

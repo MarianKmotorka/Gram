@@ -1,14 +1,15 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import TopMenu from './TopMenu/TopMenu'
 import { IPost } from '../../domain'
+import TopMenu from './TopMenu/TopMenu'
 import { FeedFilter, getPostsQuery } from './utils'
 import { ChevronUpIcon } from '../../components/Icons'
 import { LoadingRow, FeedPost } from '../../components'
 import PostDetailPage from '../PostDetailPage/PostDetailPage'
+import { isLiked, likePost } from '../../services/postService'
 import SideCard, { SideCardPlaceHolder } from './SideCard/SideCard'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
-import { isLiked, likePost } from '../../services/postService'
 import FollowersProvider, { useFollowers } from '../../contextProviders/FollowersProvider'
 import {
   useLocalStorage,
@@ -16,14 +17,16 @@ import {
   useObserver,
   usePagedQuery,
   useScroll,
+  useUrlQueryParams,
 } from '../../hooks'
 
 import { DummymSpan, PostsContainer, Wrapper, ScrollUpButton } from './Feed.styled'
 
 const Feed: React.FC = () => {
+  const history = useHistory()
+  const { postId: selectedPostId } = useUrlQueryParams()
   const { currentUser } = useAuthorizedUser()
   const [feedFilter, setFeedFilter] = useLocalStorage<FeedFilter>('feed-filter', 'all')
-  const [selectedPost, setSelectedPost] = useState<IPost>()
   const {
     followings,
     followedBy,
@@ -51,7 +54,9 @@ const Feed: React.FC = () => {
   const [topRef, scrollUp] = useScroll<HTMLDivElement>()
   const observe = useObserver<HTMLDivElement>(nextPage, hasMore && !postsLoading)
 
-  const updateLikeCount = (post: IPost) => {
+  const updateLikeCount = (post?: IPost) => {
+    if (post === undefined) return
+
     const newLikes = isLiked(post, currentUser.nick)
       ? post.likes.filter(x => x !== currentUser.nick)
       : [...post.likes, currentUser.nick]
@@ -66,16 +71,13 @@ const Feed: React.FC = () => {
 
   return (
     <>
-      {selectedPost && (
+      {selectedPostId && (
         <PostDetailPage
-          canDelete={false}
-          postId={selectedPost.id}
-          onClose={() => setSelectedPost(undefined)}
-          isFollowed={isFollowedByMe(selectedPost.userId)}
-          canFollow={selectedPost.userId !== currentUser.id}
-          afterLikedCallback={() => updateLikeCount(selectedPost)}
-          onFollow={async () =>
-            await handleFollowed(selectedPost.userId, selectedPost.userNick)
+          deleteDisabled
+          postId={selectedPostId as string}
+          onClose={() => history.push('/feed')}
+          afterLikedCallback={() =>
+            updateLikeCount(posts.find(x => x.id === selectedPostId))
           }
         />
       )}
@@ -94,11 +96,11 @@ const Feed: React.FC = () => {
             <FeedPost
               post={x}
               key={x.id}
-              onLikeClick={handleLikeClicked}
-              onOpenDetail={setSelectedPost}
               canFollow={x.userId !== currentUser.id}
               isLiked={isLiked(x, currentUser.nick)}
               isFollowed={isFollowedByMe(x.userId)}
+              onLikeClick={handleLikeClicked}
+              onOpenDetail={() => history.push(`/feed?postId=${x.id}`)}
               onFollowClick={async () => await handleFollowed(x.userId, x.userNick)}
             />
           ))}
