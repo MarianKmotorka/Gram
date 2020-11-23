@@ -1,24 +1,37 @@
-import React, { useState, useEffect, TextareaHTMLAttributes } from 'react'
-import { useFocus } from '../../hooks'
+import React, { useState, useEffect, TextareaHTMLAttributes, useRef } from 'react'
 
 const AutoTextArea = (props: TextareaHTMLAttributes<HTMLTextAreaElement>) => {
-  const textAreaRef = useFocus<HTMLTextAreaElement>()
-  const [text, setText] = useState('')
+  const textAreaRef = useRef<HTMLTextAreaElement>(null!)
   const [textAreaHeight, setTextAreaHeight] = useState('auto')
   const [parentHeight, setParentHeight] = useState('auto')
 
+  const text = textAreaRef.current?.value
+
   useEffect(() => {
+    if (!text) {
+      setParentHeight('auto')
+      setTextAreaHeight('auto')
+      return
+    }
+
     setParentHeight(`${textAreaRef.current!.scrollHeight}px`)
     setTextAreaHeight(`${textAreaRef.current!.scrollHeight}px`)
   }, [text, textAreaRef])
 
-  const onChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextAreaHeight('auto')
     setParentHeight(`${textAreaRef.current!.scrollHeight}px`)
-    setText(event.target.value)
 
     if (props.onChange) {
-      props.onChange(event)
+      props.onChange(e)
+    }
+  }
+
+  const handleKeyPressed = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) e.preventDefault()
+
+    if (props.onKeyPress) {
+      props.onKeyPress(e)
     }
   }
 
@@ -31,6 +44,7 @@ const AutoTextArea = (props: TextareaHTMLAttributes<HTMLTextAreaElement>) => {
       <textarea
         {...props}
         ref={textAreaRef}
+        onKeyPress={handleKeyPressed}
         rows={1}
         style={{
           height: textAreaHeight,

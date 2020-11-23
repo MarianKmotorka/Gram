@@ -4,6 +4,13 @@ import { NAVBAR_HEIGHT_PX } from './components/Navbar/Navbar.styled'
 export const AppContent = styled.div`
   height: calc(100% - ${NAVBAR_HEIGHT_PX});
   overflow: auto;
+  position: relative;
+
+  @media only screen and (max-width: 400px) {
+    ::-webkit-scrollbar {
+      width: 2px;
+    }
+  }
 `
 
 export const GlobalStyles = createGlobalStyle`

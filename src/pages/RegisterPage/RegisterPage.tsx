@@ -51,10 +51,13 @@ const RegisterPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
       })
   }
 
+  const handleKeyPressed = async (e: React.KeyboardEvent) =>
+    e.key === 'Enter' && (await handleRegister())
+
   return (
     <>
       <Wrapper>
-        <StyledCard bg='white'>
+        <StyledCard bg='white' onKeyPress={handleKeyPressed}>
           <Title>Register</Title>
 
           {error && <MessageStripe textType='error' text={error} />}

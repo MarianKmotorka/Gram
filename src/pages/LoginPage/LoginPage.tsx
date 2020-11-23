@@ -23,10 +23,13 @@ const LoginPage: React.FC<RouteComponentProps<any>> = ({ history }) => {
     })
   }
 
+  const handleKeyPressed = async (e: React.KeyboardEvent) =>
+    e.key === 'Enter' && (await handleLogin())
+
   return (
     <>
       <Wrapper>
-        <StyledCard bg='white'>
+        <StyledCard bg='white' onKeyPress={handleKeyPressed}>
           <Title>Login</Title>
 
           {error && <MessageStripe textType='error' text={error} />}

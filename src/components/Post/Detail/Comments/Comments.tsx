@@ -26,10 +26,13 @@ const Comments: FC<ICommentsProps> = ({ comments, currentUser, onSubmit, onDelet
   const [text, setText] = useState('')
 
   const handleSubmitted = async () => {
-    if (!text) return
-    await onSubmit(text)
+    if (!text.trim()) return
     setText('')
+    await onSubmit(text)
   }
+
+  const handleKeyPressed = async (e: React.KeyboardEvent) =>
+    e.key === 'Enter' && !e.shiftKey && (await handleSubmitted())
 
   const renderComment = ({
     id,
@@ -64,7 +67,7 @@ const Comments: FC<ICommentsProps> = ({ comments, currentUser, onSubmit, onDelet
   }
 
   const newComment = (
-    <CommentContainer>
+    <CommentContainer onKeyPress={handleKeyPressed}>
       <Metadata>
         <span>
           <img src={currentUser.photoUrl || noPhoto} alt='user' />
