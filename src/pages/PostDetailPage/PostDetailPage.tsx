@@ -21,6 +21,7 @@ interface IPostDetailPageProps {
   onClose: () => void
   afterLikedCallback?: () => void
   afterDeletedCallback?: () => void
+  afterCommentAddedOrDeletedCallback?: (added: boolean) => void
 }
 
 const PostDetailPage: FC<IPostDetailPageProps> = ({
@@ -29,6 +30,7 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
   onClose,
   afterLikedCallback,
   afterDeletedCallback,
+  afterCommentAddedOrDeletedCallback,
 }) => {
   const { setError } = useApiError()
   const { currentUser } = useAuthorizedUser()
@@ -64,14 +66,15 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
     afterLikedCallback && afterLikedCallback()
   }
 
-  const handleDeleted = async () => {
+  const handlePostDeleted = async () => {
     await deletePost(post, setError)
     onClose()
     afterDeletedCallback && afterDeletedCallback()
   }
 
   const handleCommentDeleted = async (id: string) => {
-    deleteComment(id, setError)
+    deleteComment(id, post.id, setError)
+    afterCommentAddedOrDeletedCallback && afterCommentAddedOrDeletedCallback(false)
   }
 
   const handleCommentSubmitted = async (text: string) => {
@@ -84,6 +87,7 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
     }
 
     await commentOnPost(comment, setError)
+    afterCommentAddedOrDeletedCallback && afterCommentAddedOrDeletedCallback(true)
   }
 
   return (
@@ -91,16 +95,16 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
       post={post}
       comments={comments}
       currentUser={currentUser}
+      isFollowed={isFollowedByMe(post.userId)}
       canFollow={post.userId !== currentUser.id}
-      canDelete={currentUser.id === post.userId && deleteDisabled !== true}
+      isLiked={post.likes.includes(currentUser.nick)}
       initialTabKey={initialTabKey as PostDetailTabs}
+      canDelete={currentUser.id === post.userId && deleteDisabled !== true}
       onClose={onClose}
       onLike={handleLiked}
-      onDelete={handleDeleted}
-      onCommentSubmit={handleCommentSubmitted}
+      onDelete={handlePostDeleted}
       onDeleteComment={handleCommentDeleted}
-      isFollowed={isFollowedByMe(post.userId)}
-      isLiked={post.likes.includes(currentUser.nick)}
+      onCommentSubmit={handleCommentSubmitted}
       onFollow={async () => handleFollowed(post.userId, post.userNick)}
     />
   )

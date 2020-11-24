@@ -80,7 +80,7 @@ const FeedPost: React.FC<IFeedPostProps> = ({
 
           <CardButton onClick={() => onOpenDetail('comments')}>
             <CommentsIcon />
-            <span>-</span>
+            <span>{post.commentCount || 0}</span>
           </CardButton>
         </ButtonsContainer>
       </Body>

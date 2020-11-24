@@ -35,7 +35,6 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
       userId: user.id,
       userNick: user.nick,
       userPhotoUrl: user.photoUrl,
-      likes: [],
     },
     onPostCreated
   )

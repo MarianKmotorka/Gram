@@ -16,6 +16,7 @@ export interface IPost extends IEntity {
   imageUrl: string
   createdAt: firebase.firestore.Timestamp
   description: string | null
+  commentCount: number
 
   userId: string
   userNick: string

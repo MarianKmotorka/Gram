@@ -11,7 +11,7 @@ import { propertyOf } from '../../../utils'
 
 const useUplaodPost = (
   image: File | null,
-  post: Omit<IPost, 'id' | 'createdAt' | 'imageUrl'>,
+  post: Omit<IPost, 'id' | 'createdAt' | 'imageUrl' | 'likes' | 'commentCount'>,
   onDone?: () => void
 ) => {
   const [uploading, setUploading] = useState(false)
@@ -24,9 +24,10 @@ const useUplaodPost = (
       if (!url) return
 
       const newPost: Omit<IPost, 'id'> = {
+        likes: [],
         imageUrl: url,
+        commentCount: 0,
         title: post.title,
-        likes: post.likes,
         userId: post.userId,
         userNick: post.userNick,
         description: post.description || '',

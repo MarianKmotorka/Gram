@@ -95,7 +95,6 @@ export const CardButton = styled.button`
   width: 100px;
   cursor: pointer;
 
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   color: ${({ theme }) => theme.primary};
   background: ${({ theme }) => lightenColor(theme.white, 0.7)};
 
@@ -104,7 +103,7 @@ export const CardButton = styled.button`
   }
 
   :hover {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) inset;
     background: ${({ theme }) => theme.white};
     color: ${({ theme }) => theme.primary};
   }

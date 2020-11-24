@@ -4,8 +4,8 @@ import { SetError } from '../contextProviders/ApiErrorProvider'
 import {
   FieldValue,
   getTimestamp,
-  projectFirestore,
-  projectStorage,
+  projectFirestore as db,
+  projectStorage as storage,
 } from '../firebase/firebaseConfig'
 
 export const isLiked = (post: IPost, nick: IUser['nick']) =>
@@ -16,14 +16,14 @@ export const likePost = async (post: IPost, nick: IUser['nick']) => {
   const liked = isLiked(post, nick)
   const arrayOperation = liked ? arrayRemove : arrayUnion
 
-  await projectFirestore.doc(`posts/${post.id}`).update({ likes: arrayOperation(nick) })
+  await db.doc(`posts/${post.id}`).update({ likes: arrayOperation(nick) })
 }
 
 export const deletePost = async (post: IPost, setError: SetError) => {
   const { increment } = FieldValue
 
   const deletePostComments = async () => {
-    const comments = await projectFirestore
+    const comments = await db
       .collection('comments')
       .where(propertyOf<IComment>('postId'), '==', post.id)
       .get()
@@ -31,10 +31,10 @@ export const deletePost = async (post: IPost, setError: SetError) => {
   }
 
   await Promise.all([
-    projectStorage.refFromURL(post.imageUrl).delete(),
-    projectFirestore.collection('posts').doc(post.id).delete(),
+    storage.refFromURL(post.imageUrl).delete(),
+    db.collection('posts').doc(post.id).delete(),
     deletePostComments(),
-    projectFirestore
+    db
       .doc(`users/${post.userId}`)
       .update({ [propertyOf<IUser>('postCount')]: increment(-1) }),
   ]).catch(setError)
@@ -49,9 +49,25 @@ export const commentOnPost = async (
     timestamp: getTimestamp(),
   }
 
-  await projectFirestore.collection('comments').add(data).catch(setError)
+  const { increment } = FieldValue
+  const batch = db.batch()
+
+  batch.set(db.collection('comments').doc(), data)
+  batch.update(db.collection('posts').doc(comment.postId), {
+    [propertyOf<IPost>('commentCount')]: increment(1),
+  })
+
+  await batch.commit().catch(setError)
 }
 
-export const deleteComment = async (id: string, setError: SetError) => {
-  await projectFirestore.doc(`comments/${id}`).delete().catch(setError)
+export const deleteComment = async (id: string, postId: string, setError: SetError) => {
+  const { increment } = FieldValue
+  const batch = db.batch()
+
+  batch.delete(db.doc(`comments/${id}`))
+  batch.update(db.collection('posts').doc(postId), {
+    [propertyOf<IPost>('commentCount')]: increment(-1),
+  })
+
+  await batch.commit().catch(setError)
 }

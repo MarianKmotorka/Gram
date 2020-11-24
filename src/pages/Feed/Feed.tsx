@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import { IPost } from '../../domain'
 import TopMenu from './TopMenu/TopMenu'
+import { propertyOf } from '../../utils'
 import { FeedFilter, getPostsQuery } from './utils'
 import { ChevronUpIcon } from '../../components/Icons'
 import { LoadingRow, FeedPost } from '../../components'
@@ -61,12 +62,21 @@ const Feed: React.FC = () => {
       ? post.likes.filter(x => x !== currentUser.nick)
       : [...post.likes, currentUser.nick]
 
-    modifyPost({ ...post, likes: newLikes })
+    modifyPost({ ...post, [propertyOf<IPost>('likes')]: newLikes })
   }
 
   const handleLikeClicked = async (post: IPost) => {
     await likePost(post, currentUser.nick)
     updateLikeCount(post)
+  }
+
+  const updateCommentCount = (commentAdded: boolean, post?: IPost) => {
+    if (post === undefined) return
+
+    const currCount = post.commentCount || 0
+    const newCount = commentAdded ? currCount + 1 : currCount - 1
+
+    modifyPost({ ...post, [propertyOf<IPost>('commentCount')]: newCount })
   }
 
   return (
@@ -78,6 +88,12 @@ const Feed: React.FC = () => {
           onClose={() => history.push('/feed')}
           afterLikedCallback={() =>
             updateLikeCount(posts.find(x => x.id === selectedPostId))
+          }
+          afterCommentAddedOrDeletedCallback={added =>
+            updateCommentCount(
+              added,
+              posts.find(x => x.id === selectedPostId)
+            )
           }
         />
       )}
