@@ -1,8 +1,9 @@
-import React, { FC, ReactNode, Children, isValidElement, useState } from 'react'
+import React, { FC, ReactNode, Children, isValidElement, useState, useMemo } from 'react'
 import { Tab, TabsWrapper, Wrapper } from './TabViewContainer.styled'
 
 interface IProps {
-  defaultTabName?: string
+  selectedTabName?: string
+  onChange?: (tabName: string) => void
 }
 
 const getNameItemMap = (children: ReactNode) => {
@@ -15,16 +16,31 @@ const getNameItemMap = (children: ReactNode) => {
   return map
 }
 
-const TabViewContainer: FC<IProps> = ({ defaultTabName, children }) => {
-  const tabNames = Object.keys(getNameItemMap(children))
-  const [selectedName, setSelectedName] = useState(defaultTabName || tabNames[0])
-  const selectedItem = getNameItemMap(children)[selectedName]
+const TabViewContainer: FC<IProps> = ({
+  selectedTabName: tabName,
+  children,
+  onChange,
+}) => {
+  const tabNames = useMemo(() => Object.keys(getNameItemMap(children)), [children])
+  const [_tabName, _setTabName] = useState(tabNames[0])
+
+  const selectedTabName = tabName || _tabName
+  const selectedItem = getNameItemMap(children)[selectedTabName]
+
+  const handleTabClicked = (newTabName: string) => {
+    if (onChange) {
+      onChange(newTabName)
+      return
+    }
+
+    _setTabName(newTabName)
+  }
 
   return (
     <Wrapper>
       <TabsWrapper>
         {tabNames.map(x => (
-          <Tab key={x} active={x === selectedName} onClick={() => setSelectedName(x)}>
+          <Tab key={x} active={x === selectedTabName} onClick={() => handleTabClicked(x)}>
             {x}
           </Tab>
         ))}

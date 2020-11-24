@@ -64,6 +64,7 @@ const PostDetail: FC<IPostDetailProps> = ({
   const [deleting, setDeleting] = useState(false)
   const [expanded, setExpanded] = useState(width > 600)
   const [mouseMoving, onMouseMove] = useMouseMoving()
+  const [selectedTab, setSelectedTab] = useState<string>('Post')
 
   const visibility = mouseMoving ? 'visible' : 'hidden'
   const showBottomBtns = mouseMoving && (width > 600 || !expanded)
@@ -72,6 +73,11 @@ const PostDetail: FC<IPostDetailProps> = ({
     if (deleting) return
     setDeleting(true)
     await onDelete(post)
+  }
+
+  const handleCommentsButtonClicked = () => {
+    setExpanded(true)
+    setSelectedTab('Comments')
   }
 
   const component = (
@@ -106,7 +112,7 @@ const PostDetail: FC<IPostDetailProps> = ({
               <span>{post.likes.length}</span>
             </BottomButton>
 
-            <BottomButton onClick={() => setExpanded(true)}>
+            <BottomButton onClick={handleCommentsButtonClicked}>
               <CommentsIcon color='bg' /> <span>{comments.length}</span>
             </BottomButton>
 
@@ -125,7 +131,7 @@ const PostDetail: FC<IPostDetailProps> = ({
 
       {expanded && (
         <DetailContainer>
-          <TabView.Container>
+          <TabView.Container selectedTabName={selectedTab} onChange={setSelectedTab}>
             <TabView.Item name='Post'>
               <PostInfo
                 post={post}

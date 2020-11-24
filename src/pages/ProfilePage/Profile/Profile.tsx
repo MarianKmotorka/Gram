@@ -39,7 +39,7 @@ interface IProfileProps {
 }
 
 const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
-  const [bladeDefaultTabName, setBladeDefaultTabName] = useState<string>()
+  const [bladeSelectedTab, setBladeSelectedTab] = useState<string>()
   const [file, setFile] = useState<File | null>(null)
   const { uploading, progress, startUploading } = useUploadNewPhoto(
     file,
@@ -68,15 +68,16 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
   return (
     <>
       <AnimatePresence>
-        {bladeDefaultTabName && (
+        {bladeSelectedTab && (
           <SideBlade
-            onClose={() => setBladeDefaultTabName(undefined)}
+            onClose={() => setBladeSelectedTab(undefined)}
             closeIcon={<CloseIcon color='bg' />}
           >
             <FollowersDetail
               isCurrentUser={isCurrentUser}
               userNick={user.nick}
-              defaultTabName={bladeDefaultTabName}
+              selectedTabName={bladeSelectedTab}
+              onSelectedTabNameChange={setBladeSelectedTab}
             />
           </SideBlade>
         )}
@@ -136,14 +137,14 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
               </Bold>
               {user.postCount}
             </Text>
-            <Text clickable onClick={() => setBladeDefaultTabName(tabNames.following)}>
+            <Text clickable onClick={() => setBladeSelectedTab(tabNames.following)}>
               <Bold>
                 <BlindManIcon />
                 <span>Following:</span>
               </Bold>
               {followingsCount}
             </Text>
-            <Text clickable onClick={() => setBladeDefaultTabName(tabNames.followedBy)}>
+            <Text clickable onClick={() => setBladeSelectedTab(tabNames.followedBy)}>
               <Bold>
                 <UserSecretIcon />
                 <span>Followed by:</span>
@@ -168,7 +169,7 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
             )}
 
             <StyledIconButton
-              onClick={() => setBladeDefaultTabName(tabNames.following)}
+              onClick={() => setBladeSelectedTab(tabNames.following)}
               top='-7px'
               right='7px'
               icon={<ExpandIcon />}

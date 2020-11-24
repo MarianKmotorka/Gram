@@ -39,7 +39,7 @@ const SideCard: FC<ISideCardProps> = ({
   followedByCount,
 }) => {
   const history = useHistory()
-  const [bladeDefaultTabName, setBladeDefaultTabName] = useState<string>()
+  const [bladeSelectedTab, setBladeSelectedTab] = useState<string>()
 
   return (
     <>
@@ -60,12 +60,12 @@ const SideCard: FC<ISideCardProps> = ({
           <b>Posts:</b>
           {currentUser.postCount}
         </Stat>
-        <Stat clickable onClick={() => setBladeDefaultTabName(tabNames.following)}>
+        <Stat clickable onClick={() => setBladeSelectedTab(tabNames.following)}>
           <BlindManIcon />
           <b>Following:</b>
           {followingCount}
         </Stat>
-        <Stat clickable onClick={() => setBladeDefaultTabName(tabNames.followedBy)}>
+        <Stat clickable onClick={() => setBladeSelectedTab(tabNames.followedBy)}>
           <UserSecretIcon />
           <b>Followed by:</b>
           {followedByCount}
@@ -73,15 +73,16 @@ const SideCard: FC<ISideCardProps> = ({
       </Wrapper>
 
       <AnimatePresence>
-        {bladeDefaultTabName && (
+        {bladeSelectedTab && (
           <SideBlade
-            onClose={() => setBladeDefaultTabName(undefined)}
+            onClose={() => setBladeSelectedTab(undefined)}
             closeIcon={<CloseIcon color='bg' />}
           >
             <FollowersDetail
               isCurrentUser
               userNick={currentUser.nick}
-              defaultTabName={bladeDefaultTabName}
+              selectedTabName={bladeSelectedTab}
+              onSelectedTabNameChange={setBladeSelectedTab}
             />
           </SideBlade>
         )}

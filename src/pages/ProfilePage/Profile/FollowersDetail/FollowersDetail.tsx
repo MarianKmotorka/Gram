@@ -18,7 +18,8 @@ import {
 interface IFollowersDetailProps {
   isCurrentUser: boolean
   userNick: string
-  defaultTabName?: string
+  selectedTabName: string
+  onSelectedTabNameChange: (tabName: string) => void
 }
 
 export const tabNames = {
@@ -29,7 +30,8 @@ export const tabNames = {
 const FollowersDetail: FC<IFollowersDetailProps> = ({
   isCurrentUser,
   userNick,
-  defaultTabName,
+  selectedTabName,
+  onSelectedTabNameChange,
 }) => {
   const { followings, followedBy, handleFollowed, isFollowedByMe } = useFollowers()
   const [followingFilter, setFollowingFilter] = useState('')
@@ -40,7 +42,10 @@ const FollowersDetail: FC<IFollowersDetailProps> = ({
 
   return (
     <Wrapper>
-      <TabView.Container defaultTabName={defaultTabName}>
+      <TabView.Container
+        selectedTabName={selectedTabName}
+        onChange={onSelectedTabNameChange}
+      >
         <TabView.Item name={tabNames.following}>
           <Title>{getFollowingText(isCurrentUser, followings.length, userNick)}</Title>
 
