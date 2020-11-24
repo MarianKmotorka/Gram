@@ -7,13 +7,8 @@ import { IBackdropProps } from '../../../components/Backdrop'
 import { Padding } from '../../../components/UtilityComponents'
 import { MessageStripe, Backdrop } from '../../../components'
 
-import {
-  FileInput,
-  Header,
-  StyledButton,
-  StyledInput,
-  Wrapper,
-} from './CreatePostForm.styled'
+import { FileInput, Header, StyledButton, StyledInput } from './CreatePostForm.styled'
+import SideBlade from '../../../components/SideBlade/SideBlade'
 
 interface ICreatePostProps {
   user: IUser
@@ -51,17 +46,13 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
     startUpload()
   }
 
-  const handleClosed = () => {
-    if (uploading) return setValidationError('Please wait until upload is finished.')
-    onClose()
-  }
+  const handleClosed = uploading ? undefined : onClose
 
   return (
-    <Backdrop onClose={uploading ? undefined : onClose}>
-      <Wrapper initial={{ y: '-50vh' }} animate={{ y: 0 }} exit={{ y: '-50vh' }}>
+    <Backdrop onClose={handleClosed}>
+      <SideBlade onClose={handleClosed} closeIcon={<CloseIcon color='bg' />}>
         <Header>
           <h2>New post</h2>
-          <CloseIcon onClick={handleClosed} />
         </Header>
 
         <Padding value='0 25px'>
@@ -70,6 +61,7 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
 
           <StyledInput
             label='Post title'
+            placeholder='Title'
             onChange={setTitle}
             value={title}
             disabled={progress > 0}
@@ -78,6 +70,7 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
           <StyledInput
             disabled={progress > 0}
             label='More about your post'
+            placeholder='More ...'
             onChange={setDescription}
             value={description}
             rows={4}
@@ -93,21 +86,25 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
             disabled={progress !== 0}
           />
 
-          <StyledButton bg='accent2' disabled={uploading} onClick={handleSelectFile}>
+          <StyledButton
+            bg='accent2'
+            color='bg'
+            disabled={uploading}
+            onClick={handleSelectFile}
+          >
             Pick an image
           </StyledButton>
 
           <StyledButton
-            marginLeft='auto'
+            color='bg'
             loadingProgress={progress}
             isLoading={uploading}
-            reversed={uploading}
             onClick={handleSubmit}
           >
             Submit
           </StyledButton>
         </Padding>
-      </Wrapper>
+      </SideBlade>
     </Backdrop>
   )
 }

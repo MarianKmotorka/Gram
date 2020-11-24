@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion'
 import styled from 'styled-components'
+import { Button } from '../../components'
 import { CenteredContainer } from '../../components/CenteredContainer'
 
 export const Wrapper = styled(CenteredContainer)`
@@ -8,17 +8,15 @@ export const Wrapper = styled(CenteredContainer)`
   padding-top: 15px;
 `
 
-export const DraggableWrapper = styled(motion.div)`
+export const NewPostButton = styled(Button)`
   position: fixed;
   bottom: 50px;
   right: 13%;
-  z-index: 2;
+  z-index: 5;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.3);
-  background-color: transparent;
-  border-radius: 100vh;
 
-  * + * {
-    margin-left: 10px;
+  i {
+    margin-right: 10px;
   }
 
   @media only screen and (max-width: 1250px) {

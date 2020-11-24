@@ -9,15 +9,14 @@ import { PlusIcon } from '../../components/Icons'
 import CreatePostForm from './CreatePostForm/CreatePostForm'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import FollowersProvider from '../../contextProviders/FollowersProvider'
-import { useFirestoreDoc, usePagedQuery, useWindowSize } from '../../hooks'
-import { Button, ErrorWhileLoadingData, LoadingOverlay } from '../../components'
+import { useFirestoreDoc, usePagedQuery } from '../../hooks'
+import { ErrorWhileLoadingData, LoadingOverlay } from '../../components'
 
-import { DraggableWrapper, Wrapper } from './ProfilePage.styled'
+import { NewPostButton, Wrapper } from './ProfilePage.styled'
 
 const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   match: { params },
 }) => {
-  const { height } = useWindowSize()
   const { currentUser } = useAuthorizedUser()
   const [showCreatePostForm, setShowCreatePostForm] = useState(false)
 
@@ -51,16 +50,10 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
         <Profile user={userResponse.data} isCurrentUser={isCurrentUser} />
 
         {isCurrentUser && (
-          <DraggableWrapper
-            drag='y'
-            dragMomentum={false}
-            dragConstraints={{ bottom: 0, top: 200 - height }}
-          >
-            <Button onClick={() => setShowCreatePostForm(true)}>
-              <PlusIcon />
-              <span>New</span>
-            </Button>
-          </DraggableWrapper>
+          <NewPostButton onClick={() => setShowCreatePostForm(true)} color='accent2'>
+            <PlusIcon />
+            <span>New</span>
+          </NewPostButton>
         )}
 
         <AnimatePresence>

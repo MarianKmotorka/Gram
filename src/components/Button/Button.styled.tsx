@@ -65,6 +65,10 @@ export const StyledPrimaryButton = styled.button<IStyledButtonProps>`
       }
     `
   }}
+
+  i {
+    cursor: inherit;
+  }
 `
 
 export const StyledActionButton = styled.button<IStyledButtonProps>`
@@ -85,6 +89,10 @@ export const StyledActionButton = styled.button<IStyledButtonProps>`
 
   :hover {
     background: ${({ theme }) => lightenColor(theme.bg2, 0.3)};
+  }
+
+  i {
+    cursor: inherit;
   }
 `
 
