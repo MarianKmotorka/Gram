@@ -2,7 +2,7 @@ import React, { FC, useCallback } from 'react'
 
 import { propertyOf } from '../../utils'
 import { IComment, IPost } from '../../domain'
-import { useFirestoreDoc, useFirestoreQuery } from '../../hooks'
+import { useFirestoreDoc, useFirestoreQuery, useUrlQueryParams } from '../../hooks'
 import { useApiError } from '../../contextProviders/ApiErrorProvider'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { PostDetail, PostDetailLoadingSkeleton } from '../../components'
@@ -13,6 +13,7 @@ import {
   deletePost,
   likePost,
 } from '../../services/postService'
+import { PostDetailTabs } from '../../components/Post/Detail/PostDetail'
 
 interface IPostDetailPageProps {
   postId: string
@@ -30,8 +31,9 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
   afterDeletedCallback,
 }) => {
   const { setError } = useApiError()
-  const { isFollowedByMe, handleFollowed } = useFollowers()
   const { currentUser } = useAuthorizedUser()
+  const { initialTabKey } = useUrlQueryParams()
+  const { isFollowedByMe, handleFollowed } = useFollowers()
   const [response, { refresh }] = useFirestoreDoc<IPost>(`posts/${postId}`, {
     realTime: false,
   })
@@ -91,6 +93,7 @@ const PostDetailPage: FC<IPostDetailPageProps> = ({
       currentUser={currentUser}
       canFollow={post.userId !== currentUser.id}
       canDelete={currentUser.id === post.userId && deleteDisabled !== true}
+      initialTabKey={initialTabKey as PostDetailTabs}
       onClose={onClose}
       onLike={handleLiked}
       onDelete={handleDeleted}

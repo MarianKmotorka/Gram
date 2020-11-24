@@ -39,7 +39,7 @@ interface IPostDetailProps {
   canFollow: boolean
   currentUser: IUser
   comments: IComment[]
-  defaultTabName?: string
+  initialTabKey?: PostDetailTabs
   onClose: () => void
   onLike: () => Promise<void>
   onFollow: () => Promise<void>
@@ -56,6 +56,7 @@ const PostDetail: FC<IPostDetailProps> = ({
   canFollow,
   isFollowed,
   currentUser,
+  initialTabKey,
   onClose,
   onLike,
   onDelete,
@@ -67,7 +68,7 @@ const PostDetail: FC<IPostDetailProps> = ({
   const [deleting, setDeleting] = useState(false)
   const [expanded, setExpanded] = useState(width > 600)
   const [mouseMoving, onMouseMove] = useMouseMoving()
-  const [selectedTab, setSelectedTab] = useState<PostDetailTabs>('post')
+  const [selectedTab, setSelectedTab] = useState<PostDetailTabs>(initialTabKey || 'post')
 
   const visibility = mouseMoving ? 'visible' : 'hidden'
   const showBottomBtns = mouseMoving && (width > 600 || !expanded)
