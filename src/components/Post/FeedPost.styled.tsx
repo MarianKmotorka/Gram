@@ -70,6 +70,8 @@ export const AuthorName = styled(Link)`
 export const Body = styled.div`
   position: relative;
   margin-bottom: -7px;
+  max-height: 700px;
+
   img {
     width: 100%;
     cursor: pointer;
@@ -94,6 +96,7 @@ export const CardButton = styled.button`
   font-size: 18px;
   width: 100px;
   cursor: pointer;
+  transition: background-color 0.2s;
 
   color: ${({ theme }) => theme.primary};
   background: ${({ theme }) => lightenColor(theme.white, 0.7)};
@@ -103,7 +106,7 @@ export const CardButton = styled.button`
   }
 
   :hover {
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) inset;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) inset;
     background: ${({ theme }) => theme.white};
     color: ${({ theme }) => theme.primary};
   }
