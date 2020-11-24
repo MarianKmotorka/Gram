@@ -66,7 +66,7 @@ const PostDetail: FC<IPostDetailProps> = ({
 }) => {
   const { width } = useWindowSize()
   const [deleting, setDeleting] = useState(false)
-  const [expanded, setExpanded] = useState(width > 600)
+  const [expanded, setExpanded] = useState(initialTabKey || width > 600)
   const [mouseMoving, onMouseMove] = useMouseMoving()
   const [selectedTab, setSelectedTab] = useState<PostDetailTabs>(initialTabKey || 'post')
 
