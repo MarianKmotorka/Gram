@@ -25,7 +25,7 @@ interface IFeedPostProps {
   isFollowed: boolean
   canFollow: boolean
   onLikeClick: (post: IPost) => Promise<void>
-  onOpenDetail: (tabKey: PostDetailTabs) => void
+  onOpenDetail: (tabKey?: PostDetailTabs) => void
   onFollowClick: () => Promise<void>
 }
 
@@ -70,7 +70,7 @@ const FeedPost: React.FC<IFeedPostProps> = ({
       </Header>
 
       <Body>
-        <img src={post.imageUrl} alt='post' onClick={() => onOpenDetail('post')} />
+        <img src={post.imageUrl} alt='post' onClick={() => onOpenDetail()} />
 
         <ButtonsContainer>
           <CardButton onClick={async () => await onLikeClick(post)}>

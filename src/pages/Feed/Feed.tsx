@@ -117,7 +117,9 @@ const Feed: React.FC = () => {
               isFollowed={isFollowedByMe(x.userId)}
               onLikeClick={handleLikeClicked}
               onOpenDetail={tabKey =>
-                history.push(`/feed?postId=${x.id}&initialTabKey=${tabKey}`)
+                history.push(
+                  `/feed?postId=${x.id}${tabKey ? `&initialTabKey=${tabKey}` : ''}`
+                )
               }
               onFollowClick={async () => await handleFollowed(x.userId, x.userNick)}
             />
