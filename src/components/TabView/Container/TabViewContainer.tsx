@@ -1,52 +1,58 @@
-import React, { FC, ReactNode, Children, isValidElement, useState, useMemo } from 'react'
+import React, { ReactNode, Children, isValidElement, useState, useMemo } from 'react'
 import { Tab, TabsWrapper, Wrapper } from './TabViewContainer.styled'
 
-interface IProps {
-  selectedTabName?: string
-  onChange?: (tabName: string) => void
+interface IProps<TKey> {
+  selectedKey?: TKey
+  onChange?: (key: TKey) => void
+  children: ReactNode
 }
 
-const getNameItemMap = (children: ReactNode) => {
-  let map: { [key: string]: ReactNode } = {}
+interface IKeyTabPair<TKey> {
+  key: TKey
+  tab: { component: ReactNode; name: string }
+}
+
+function getKeyTabPairs<TKey>(children: ReactNode) {
+  let keyTabPairs: IKeyTabPair<TKey>[] = []
 
   Children.forEach(children, x => {
-    if (isValidElement(x)) map[x.props.name as string] = x
+    if (isValidElement(x))
+      keyTabPairs.push({ key: x.props.tabKey, tab: { component: x, name: x.props.name } })
   })
 
-  return map
+  return keyTabPairs
 }
 
-const TabViewContainer: FC<IProps> = ({
-  selectedTabName: tabName,
-  children,
-  onChange,
-}) => {
-  const tabNames = useMemo(() => Object.keys(getNameItemMap(children)), [children])
-  const [_tabName, _setTabName] = useState(tabNames[0])
+function TabViewContainer<TKey>({ selectedKey: key, children, onChange }: IProps<TKey>) {
+  const keyTabPairs = useMemo(() => getKeyTabPairs<TKey>(children), [children])
+  const [_selectedKey, _setSelectedKey] = useState(keyTabPairs.map(x => x.key)[0])
 
-  const selectedTabName = tabName || _tabName
-  const selectedItem = getNameItemMap(children)[selectedTabName]
+  const selectedKey = key || _selectedKey
 
-  const handleTabClicked = (newTabName: string) => {
+  const handleTabClicked = (newTabName: TKey) => {
     if (onChange) {
       onChange(newTabName)
       return
     }
 
-    _setTabName(newTabName)
+    _setSelectedKey(newTabName)
   }
 
   return (
     <Wrapper>
       <TabsWrapper>
-        {tabNames.map(x => (
-          <Tab key={x} active={x === selectedTabName} onClick={() => handleTabClicked(x)}>
-            {x}
+        {keyTabPairs.map(x => (
+          <Tab
+            key={`${x.key}`}
+            active={x.key === selectedKey}
+            onClick={() => handleTabClicked(x.key)}
+          >
+            {x.tab.name}
           </Tab>
         ))}
       </TabsWrapper>
 
-      {selectedItem}
+      {getKeyTabPairs(children).find(x => x.key === selectedKey)?.tab.component}
     </Wrapper>
   )
 }

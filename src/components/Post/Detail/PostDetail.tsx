@@ -1,12 +1,13 @@
 import React, { FC, useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import Likes from './Likes/Likes'
 import TabView from '../../TabView'
+import PostInfo from './PostInfo/PostInfo'
+import Comments from './Comments/Comments'
+import IconButton from '../../Button/IconButton'
 import { IPost, IComment, IUser } from '../../../domain'
 import { useMouseMoving, useWindowSize } from '../../../hooks'
-import PostInfo from './PostInfo/PostInfo'
-import IconButton from '../../Button/IconButton'
-import Likes from './Likes/Likes'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -27,7 +28,8 @@ import {
   ImageContainer,
   Wrapper,
 } from './PostDetail.styled'
-import Comments from './Comments/Comments'
+
+export type PostDetailTabs = 'post' | 'comments' | 'likes'
 
 interface IPostDetailProps {
   post: IPost
@@ -37,6 +39,7 @@ interface IPostDetailProps {
   canFollow: boolean
   currentUser: IUser
   comments: IComment[]
+  defaultTabName?: string
   onClose: () => void
   onLike: () => Promise<void>
   onFollow: () => Promise<void>
@@ -64,7 +67,7 @@ const PostDetail: FC<IPostDetailProps> = ({
   const [deleting, setDeleting] = useState(false)
   const [expanded, setExpanded] = useState(width > 600)
   const [mouseMoving, onMouseMove] = useMouseMoving()
-  const [selectedTab, setSelectedTab] = useState<string>('Post')
+  const [selectedTab, setSelectedTab] = useState<PostDetailTabs>('post')
 
   const visibility = mouseMoving ? 'visible' : 'hidden'
   const showBottomBtns = mouseMoving && (width > 600 || !expanded)
@@ -77,7 +80,7 @@ const PostDetail: FC<IPostDetailProps> = ({
 
   const handleCommentsButtonClicked = () => {
     setExpanded(true)
-    setSelectedTab('Comments')
+    setSelectedTab('comments')
   }
 
   const component = (
@@ -131,8 +134,8 @@ const PostDetail: FC<IPostDetailProps> = ({
 
       {expanded && (
         <DetailContainer>
-          <TabView.Container selectedTabName={selectedTab} onChange={setSelectedTab}>
-            <TabView.Item name='Post'>
+          <TabView.Container selectedKey={selectedTab} onChange={setSelectedTab}>
+            <TabView.Item<PostDetailTabs> tabKey='post' name='Post'>
               <PostInfo
                 post={post}
                 onFollow={onFollow}
@@ -141,7 +144,7 @@ const PostDetail: FC<IPostDetailProps> = ({
               />
             </TabView.Item>
 
-            <TabView.Item name='Comments'>
+            <TabView.Item<PostDetailTabs> tabKey='comments' name='Comments'>
               <Comments
                 comments={comments}
                 currentUser={currentUser}
@@ -150,7 +153,7 @@ const PostDetail: FC<IPostDetailProps> = ({
               />
             </TabView.Item>
 
-            <TabView.Item name='Likes'>
+            <TabView.Item<PostDetailTabs> tabKey='likes' name='Likes'>
               <Likes likes={post.likes} />
             </TabView.Item>
           </TabView.Container>

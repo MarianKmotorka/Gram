@@ -1,12 +1,14 @@
-import React, { FC } from 'react'
+import React, { ReactNode } from 'react'
 
 import { Wrapper } from './TabViewItem.styled'
 
-export interface ITabViewItemProps {
+export interface ITabViewItemProps<T> {
+  tabKey: T
   name: string
+  children?: ReactNode
 }
 
-const TabViewItem: FC<ITabViewItemProps> = ({ children }) => {
+function TabViewItem<T>({ children }: ITabViewItemProps<T>) {
   return <Wrapper>{children}</Wrapper>
 }
 

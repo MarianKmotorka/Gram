@@ -18,20 +18,17 @@ import {
 interface IFollowersDetailProps {
   isCurrentUser: boolean
   userNick: string
-  selectedTabName: string
-  onSelectedTabNameChange: (tabName: string) => void
+  selectedTab: FollowersDetailTabs
+  onSelectedTabChanged: (tabName: FollowersDetailTabs) => void
 }
 
-export const tabNames = {
-  following: 'Following',
-  followedBy: 'Followed by',
-}
+export type FollowersDetailTabs = 'following' | 'followedBy'
 
 const FollowersDetail: FC<IFollowersDetailProps> = ({
   isCurrentUser,
   userNick,
-  selectedTabName,
-  onSelectedTabNameChange,
+  selectedTab,
+  onSelectedTabChanged,
 }) => {
   const { followings, followedBy, handleFollowed, isFollowedByMe } = useFollowers()
   const [followingFilter, setFollowingFilter] = useState('')
@@ -42,11 +39,8 @@ const FollowersDetail: FC<IFollowersDetailProps> = ({
 
   return (
     <Wrapper>
-      <TabView.Container
-        selectedTabName={selectedTabName}
-        onChange={onSelectedTabNameChange}
-      >
-        <TabView.Item name={tabNames.following}>
+      <TabView.Container selectedKey={selectedTab} onChange={onSelectedTabChanged}>
+        <TabView.Item<FollowersDetailTabs> tabKey='following' name='Following'>
           <Title>{getFollowingText(isCurrentUser, followings.length, userNick)}</Title>
 
           <SearchContainer>
@@ -77,7 +71,7 @@ const FollowersDetail: FC<IFollowersDetailProps> = ({
           </RowsContainer>
         </TabView.Item>
 
-        <TabView.Item name={tabNames.followedBy}>
+        <TabView.Item<FollowersDetailTabs> tabKey='followedBy' name='Followed by'>
           <Title>{getFollowedByText(isCurrentUser, followedBy.length, userNick)}</Title>
 
           <SearchContainer>

@@ -5,7 +5,7 @@ import { AnimatePresence } from 'framer-motion'
 import { IUser } from '../../../domain'
 import noPhoto from '../../../images/no-photo.png'
 import FollowersDetail, {
-  tabNames,
+  FollowersDetailTabs,
 } from '../../ProfilePage/Profile/FollowersDetail/FollowersDetail'
 import SideBlade from '../../../components/SideBlade/SideBlade'
 import {
@@ -39,7 +39,7 @@ const SideCard: FC<ISideCardProps> = ({
   followedByCount,
 }) => {
   const history = useHistory()
-  const [bladeSelectedTab, setBladeSelectedTab] = useState<string>()
+  const [bladeSelectedTab, setBladeSelectedTab] = useState<FollowersDetailTabs>()
 
   return (
     <>
@@ -60,12 +60,12 @@ const SideCard: FC<ISideCardProps> = ({
           <b>Posts:</b>
           {currentUser.postCount}
         </Stat>
-        <Stat clickable onClick={() => setBladeSelectedTab(tabNames.following)}>
+        <Stat clickable onClick={() => setBladeSelectedTab('following')}>
           <BlindManIcon />
           <b>Following:</b>
           {followingCount}
         </Stat>
-        <Stat clickable onClick={() => setBladeSelectedTab(tabNames.followedBy)}>
+        <Stat clickable onClick={() => setBladeSelectedTab('followedBy')}>
           <UserSecretIcon />
           <b>Followed by:</b>
           {followedByCount}
@@ -81,8 +81,8 @@ const SideCard: FC<ISideCardProps> = ({
             <FollowersDetail
               isCurrentUser
               userNick={currentUser.nick}
-              selectedTabName={bladeSelectedTab}
-              onSelectedTabNameChange={setBladeSelectedTab}
+              selectedTab={bladeSelectedTab}
+              onSelectedTabChanged={setBladeSelectedTab}
             />
           </SideBlade>
         )}

@@ -3,7 +3,8 @@ import moment from 'moment'
 
 import { IPost } from '../../domain'
 import noPhotoPng from '../../images/no-photo.png'
-import { ClockIcon, HeartFilledIcon, HeartIcon } from '../Icons'
+import { PostDetailTabs } from './Detail/PostDetail'
+import { ClockIcon, CommentsIcon, HeartFilledIcon, HeartIcon } from '../Icons'
 
 import {
   AuthorInfo,
@@ -15,6 +16,7 @@ import {
   AuthorName,
   CardButton,
   StyledButton,
+  ButtonsContainer,
 } from './FeedPost.styled'
 
 interface IFeedPostProps {
@@ -23,7 +25,7 @@ interface IFeedPostProps {
   isFollowed: boolean
   canFollow: boolean
   onLikeClick: (post: IPost) => Promise<void>
-  onOpenDetail: (postId: IPost) => void
+  onOpenDetail: (postId: IPost, tabKey?: PostDetailTabs) => void
   onFollowClick: () => Promise<void>
 }
 
@@ -70,10 +72,17 @@ const FeedPost: React.FC<IFeedPostProps> = ({
       <Body>
         <img src={post.imageUrl} alt='post' onClick={() => onOpenDetail(post)} />
 
-        <CardButton onClick={async () => await onLikeClick(post)}>
-          {isLiked ? <HeartFilledIcon color='red' /> : <HeartIcon />}
-          <span>{post.likes ? post.likes.length : 0}</span>
-        </CardButton>
+        <ButtonsContainer>
+          <CardButton onClick={async () => await onLikeClick(post)}>
+            {isLiked ? <HeartFilledIcon color='red' /> : <HeartIcon />}
+            <span>{post.likes ? post.likes.length : 0}</span>
+          </CardButton>
+
+          <CardButton onClick={async () => await onLikeClick(post)}>
+            <CommentsIcon />
+            <span>-</span>
+          </CardButton>
+        </ButtonsContainer>
       </Body>
     </Wrapper>
   )

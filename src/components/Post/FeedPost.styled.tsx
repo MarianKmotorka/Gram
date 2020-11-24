@@ -76,22 +76,24 @@ export const Body = styled.div`
   }
 `
 
+export const ButtonsContainer = styled.div`
+  border-radius: 15px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 25px;
+  right: 20px;
+`
+
 export const CardButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
   outline: none;
   border: none;
-  padding: 8px 20px;
-  border-radius: 30px;
+  padding: 10px 18px;
   font-size: 18px;
-  margin: 5px 10px 10px;
   width: 100px;
   cursor: pointer;
-
-  position: absolute;
-  bottom: 15px;
-  right: 10px;
 
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   color: ${({ theme }) => theme.primary};

@@ -1,8 +1,11 @@
 import React, { FC } from 'react'
 import { createPortal } from 'react-dom'
-import { useWindowSize } from '../../../hooks'
-import LoadingOverlay from '../../Loaders/LoadingOverlay'
+
 import TabView from '../../TabView'
+import { useWindowSize } from '../../../hooks'
+import { PostDetailTabs } from './PostDetail'
+import LoadingOverlay from '../../Loaders/LoadingOverlay'
+
 import { Wrapper, ImageContainer, DetailContainer } from './PostDetail.styled'
 
 const PostDetailLoadingSkeleton: FC = () => {
@@ -17,9 +20,9 @@ const PostDetailLoadingSkeleton: FC = () => {
       {width > 600 && (
         <DetailContainer>
           <TabView.Container>
-            <TabView.Item name='Post' />
-            <TabView.Item name='Comments' />
-            <TabView.Item name='Likes' />
+            <TabView.Item<PostDetailTabs> tabKey='post' name='Post' />
+            <TabView.Item<PostDetailTabs> tabKey='comments' name='Comments' />
+            <TabView.Item<PostDetailTabs> tabKey='likes' name='Likes' />
           </TabView.Container>
         </DetailContainer>
       )}
