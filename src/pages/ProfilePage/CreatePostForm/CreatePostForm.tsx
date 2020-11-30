@@ -23,6 +23,7 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
 
   const [file, setFile] = useState<File | null>(null)
   const { startUpload, uploading, uploadError, progress } = useUplaodPost(
+    'posts/images',
     file,
     {
       title,
@@ -57,7 +58,12 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
 
         <Padding value='0 25px'>
           {validationError && <MessageStripe textType='error' text={validationError} />}
-          {uploadError && <MessageStripe textType='error' text={uploadError.name} />}
+          {uploadError && (
+            <MessageStripe
+              textType='error'
+              text={`${uploadError.name}: ${uploadError.message}`}
+            />
+          )}
 
           <StyledInput
             label='Post title'

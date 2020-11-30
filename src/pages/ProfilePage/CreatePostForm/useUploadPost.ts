@@ -1,23 +1,22 @@
 import { useEffect, useState } from 'react'
 import { IPost, IUser } from '../../../domain'
-import { useNotifyError, useStorage } from '../../../hooks'
+import { useStorage } from '../../../hooks'
 import {
   FieldValue,
   getTimestamp,
-  projectFirestore,
+  projectFirestore as db,
 } from '../../../firebase/firebaseConfig'
-import { useApiError } from '../../../contextProviders/ApiErrorProvider'
 import { propertyOf } from '../../../utils'
 
 const useUplaodPost = (
-  image: File | null,
+  folderName: string,
+  file: File | null,
   post: Omit<IPost, 'id' | 'createdAt' | 'imageUrl' | 'likes' | 'commentCount'>,
   onDone?: () => void
 ) => {
   const [uploading, setUploading] = useState(false)
-  const { progress, error, url } = useStorage(image, uploading)
-  useNotifyError(error && { code: error.name, message: error.message })
-  const { setError } = useApiError()
+  const { progress, error: storageError, url } = useStorage(folderName, file, uploading)
+  const [createPostError, setCreatePostError] = useState<Error | null>(null)
 
   useEffect(() => {
     const createPost = async () => {
@@ -36,14 +35,14 @@ const useUplaodPost = (
       }
 
       const { increment } = FieldValue
+      const batch = db.batch()
 
-      await Promise.all([
-        projectFirestore.collection('posts').add(newPost),
-        projectFirestore
-          .doc(`users/${post.userId}`)
-          .update({ [propertyOf<IUser>('postCount')]: increment(1) }),
-      ]).catch(setError)
+      batch.set(db.collection('posts').doc(), newPost)
+      batch.update(db.doc(`users/${post.userId}`), {
+        [propertyOf<IUser>('postCount')]: increment(1),
+      })
 
+      await batch.commit().catch(setCreatePostError)
       onDone && onDone()
     }
 
@@ -51,10 +50,12 @@ const useUplaodPost = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url])
 
+  const uploadError = storageError || createPostError
+
   return {
     progress,
-    uploading,
-    uploadError: error,
+    uploadError,
+    uploading: uploading && !uploadError,
     startUpload: () => setUploading(true),
   }
 }

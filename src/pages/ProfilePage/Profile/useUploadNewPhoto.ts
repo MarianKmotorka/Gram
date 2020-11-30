@@ -12,9 +12,14 @@ const useUploadNewPhoto = (
   oldPhotoUrl?: string | null
 ) => {
   const [uploading, setUploading] = useState(false)
-  const { progress, url: newPhotoUrl, error: uploadError } = useStorage(file, uploading, {
-    maxWidthOrHeight: 500,
-  })
+  const { progress, url: newPhotoUrl, error: uploadError } = useStorage(
+    'profilePhotos',
+    file,
+    uploading,
+    {
+      maxWidthOrHeight: 500,
+    }
+  )
 
   const { setError } = useApiError()
   useNotifyError(uploadError && { code: uploadError.name, message: uploadError.message })

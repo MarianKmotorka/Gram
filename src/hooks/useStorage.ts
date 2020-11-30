@@ -15,6 +15,7 @@ const defaultOptions: ICompressionOptions = {
 }
 
 const useStorage = (
+  folderName: string,
   file?: File | null,
   startUpload: boolean = true,
   compressionOptions?: ICompressionOptions
@@ -24,28 +25,34 @@ const useStorage = (
   const [url, setUrl] = useState<string | null>(null)
   const auth = useAuthorizedUser()
 
+  const handleError = (err: Error) => {
+    setError(err)
+    setProgress(0)
+  }
+
   useEffect(() => {
     let unsub: Function = () => {}
 
     const upload = async () => {
+      if (!file || !startUpload) return
+
       const storageRef = projectStorage.ref(
-        `${auth.authUser.uid}${Date.now()}${file!.name}`
+        `${folderName}/${auth.authUser.uid}${Date.now()}${file.name}`
       )
 
-      const compressedFile = await imageCompression(
-        file!,
-        compressionOptions || defaultOptions
-      )
+      const compressedFile = file.type.startsWith('image/')
+        ? await imageCompression(file, compressionOptions || defaultOptions)
+        : file
 
       unsub = storageRef.put(compressedFile).on(
         'state_changed',
         snap => setProgress((snap.bytesTransferred / snap.totalBytes) * 100),
-        err => setError(err),
+        handleError,
         async () => setUrl(await storageRef.getDownloadURL())
       )
     }
 
-    if (file && startUpload) upload()
+    upload()
 
     return () => unsub()
     // eslint-disable-next-line react-hooks/exhaustive-deps

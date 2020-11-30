@@ -12,7 +12,7 @@ export const NewPostButton = styled(Button)`
   position: fixed;
   bottom: 50px;
   right: 13%;
-  z-index: 5;
+  z-index: 4;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.3);
 
   i {
