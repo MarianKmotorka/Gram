@@ -1,6 +1,4 @@
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react'
-import omit from 'lodash/omit'
-import has from 'lodash/has'
 
 import { IUser } from '../domain'
 import { useFirestoreDoc } from '../hooks'
@@ -10,7 +8,6 @@ import {
   getTimestamp,
   projectAuth,
   projectFirestore as db,
-  projectStorage,
 } from '../firebase/firebaseConfig'
 
 type AuthContextValue =

@@ -17,6 +17,7 @@ declare module 'styled-components' {
     gray: string
     primary: string
     lightPink: string
+    transparent: string
 
     [key: string]: string
   }
@@ -39,4 +40,5 @@ export const lightTheme: DefaultTheme = {
   black: '#000000',
   gray: '#494949',
   lightPink: '#ffaeae',
+  transparent: 'transparent',
 }

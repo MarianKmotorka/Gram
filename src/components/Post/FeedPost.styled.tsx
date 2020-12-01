@@ -75,6 +75,7 @@ export const Body = styled.div`
 
   img {
     width: 100%;
+    height: 100%;
     cursor: pointer;
     display: block;
   }
@@ -145,9 +146,9 @@ export const StyledIconButton = styled(IconButton)`
   }
 `
 
-export const StyledButton = styled(Button)`
+export const FollowButton = styled(Button)`
   transform: scale(0.8);
   position: absolute;
-  right: 15px;
+  right: 60px;
   top: 15px;
 `

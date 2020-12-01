@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 
 import { IPost } from '../../domain'
+import IconButton from '../Button/IconButton'
 import noPhotoPng from '../../images/no-photo.png'
 import { PostDetailTabs } from './Detail/PostDetail'
 import { ClockIcon, CommentsIcon, ExpandIcon, HeartFilledIcon, HeartIcon } from '../Icons'
@@ -15,10 +16,9 @@ import {
   Wrapper,
   AuthorName,
   CardButton,
-  StyledButton,
+  FollowButton,
   ButtonsContainer,
 } from './FeedPost.styled'
-import IconButton from '../Button/IconButton'
 
 interface IFeedPostProps {
   post: IPost
@@ -47,14 +47,14 @@ const FeedPost: React.FC<IFeedPostProps> = ({
       <Header>
         <AuthorSection>
           {canFollow && (
-            <StyledButton
+            <FollowButton
               color='accent'
               reversed={isFollowed}
               onClick={onFollowClick}
               hover={false}
             >
               {isFollowed ? 'Followed' : 'Follow'}
-            </StyledButton>
+            </FollowButton>
           )}
 
           <img src={post.userPhotoUrl || noPhotoPng} alt='author' />
@@ -73,6 +73,8 @@ const FeedPost: React.FC<IFeedPostProps> = ({
         <IconButton
           top='10px'
           right='10px'
+          scale={0.9}
+          bg='transparent'
           icon={<ExpandIcon color='accent' />}
           onClick={() => onOpenDetail()}
         />

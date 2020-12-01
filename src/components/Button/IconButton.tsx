@@ -8,8 +8,10 @@ interface IIconButtonProps extends IStyledProps {
 
 interface IStyledProps {
   visibility?: string
+  bg?: string
   top?: string
   left?: string
+  scale?: number
   right?: string
   bottom?: string
   position?: string
@@ -30,10 +32,11 @@ const Container = styled.button<IStyledProps>`
   z-index: 4;
   height: 45px;
   width: 45px;
+  transform: ${({ scale }) => `scale(${scale || 1})`};
   cursor: pointer;
 
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: ${({ bg, theme }) => (bg && theme[bg]) || 'rgba(0, 0, 0, 0.3)'};
   transition: all 0.2s;
 
   font-size: inherit;
