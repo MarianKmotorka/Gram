@@ -1,10 +1,16 @@
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react'
+import omit from 'lodash/omit'
 
 import { IUser } from '../domain'
 import { useFirestoreDoc } from '../hooks'
 import { propertyOf } from '../utils'
 import { ErrorWhileLoadingData, LoadingOverlay } from '../components'
-import { getTimestamp, projectAuth, projectFirestore } from '../firebase/firebaseConfig'
+import {
+  getTimestamp,
+  projectAuth,
+  projectFirestore as db,
+  projectStorage,
+} from '../firebase/firebaseConfig'
 
 type AuthContextValue =
   | { isLoggedIn: false; projectAuth: firebase.auth.Auth }
@@ -29,6 +35,30 @@ export const useAuthorizedUser = () => {
 }
 
 const AuthProvider: React.FC = ({ children }) => {
+  // Update script for renaming imageUrl to mediaUrl for existing records
+  useEffect(() => {
+    const renameProp = async () => {
+      const posts = await db.collection('posts').get()
+
+      posts.forEach(async x => {
+        const oldPost = x.data()
+        const metadata = await projectStorage.refFromURL(oldPost.imageUrl).getMetadata()
+        const newPost = omit(
+          {
+            ...oldPost,
+            mediaType: metadata.contentType,
+            mediaUrl: oldPost.imageUrl,
+          },
+          ['imageUrl']
+        )
+
+        await db.doc('posts/' + x.id).set(newPost)
+      })
+    }
+
+    renameProp()
+  }, [])
+
   const [state, setState] = useState<AuthContextValue>({ isLoggedIn: false, projectAuth })
   const [authUser, setAuthUser] = useState<firebase.User>()
   const [showSpinner, setShowSpinner] = useState(true)
@@ -41,9 +71,9 @@ const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     const unsub = projectAuth.onAuthStateChanged(async user => {
       if (user) {
-        await projectFirestore
+        await db
           .doc(`users/${user.uid}`)
-          .set({ [propertyOf<IUser>('lastLogin')]: getTimestamp() }, { merge: true })
+          .update({ [propertyOf<IUser>('lastLogin')]: getTimestamp() })
 
         setAuthUser(user) // Note: this line needs to be bellow updating lastLogin
       } else {
