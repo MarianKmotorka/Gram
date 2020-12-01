@@ -70,7 +70,7 @@ const FeedPost: React.FC<IFeedPostProps> = ({
       </Header>
 
       <Body>
-        <img src={post.imageUrl} alt='post' onClick={() => onOpenDetail()} />
+        <img src={post.mediaUrl} alt='post' onClick={() => onOpenDetail()} />
 
         <ButtonsContainer>
           <CardButton onClick={async () => await onLikeClick(post)}>

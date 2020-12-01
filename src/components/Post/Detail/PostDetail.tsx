@@ -106,8 +106,8 @@ const PostDetail: FC<IPostDetailProps> = ({
           top='5px'
           position={width < 600 ? 'fixed' : 'absolute'}
         />
-        <BlurredBackground src={post.imageUrl} />
-        <Image src={post.imageUrl} />
+        <BlurredBackground src={post.mediaUrl} />
+        <Image src={post.mediaUrl} />
 
         {showBottomBtns && (
           <BottomButtonsContainer>

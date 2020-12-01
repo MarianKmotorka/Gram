@@ -12,7 +12,7 @@ const useUplaodPost = (
   file: File | null,
   post: Omit<
     IPost,
-    'id' | 'createdAt' | 'imageUrl' | 'likes' | 'commentCount' | 'mediaType'
+    'id' | 'createdAt' | 'mediaUrl' | 'likes' | 'commentCount' | 'mediaType'
   >,
   onDone?: () => void
 ) => {
@@ -30,7 +30,7 @@ const useUplaodPost = (
 
       const newPost: Omit<IPost, 'id'> = {
         likes: [],
-        imageUrl: url,
+        mediaUrl: url,
         commentCount: 0,
         title: post.title,
         userId: post.userId,

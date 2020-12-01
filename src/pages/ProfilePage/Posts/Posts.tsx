@@ -58,7 +58,7 @@ const Posts: React.FC<IPostsProps> = ({ posts, loading, loadMore, refresh }) => 
         {posts.map(x => (
           <Image
             key={x.id}
-            src={x.imageUrl}
+            src={x.mediaUrl}
             smallScreenGrid={displayGrid}
             onClick={() => push(`${location.pathname}?postId=${x.id}`)}
           />

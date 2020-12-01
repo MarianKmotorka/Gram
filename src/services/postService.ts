@@ -22,22 +22,21 @@ export const likePost = async (post: IPost, nick: IUser['nick']) => {
 export const deletePost = async (post: IPost, setError: SetError) => {
   const { increment } = FieldValue
 
-  const deletePostComments = async () => {
-    const comments = await db
-      .collection('comments')
-      .where(propertyOf<IComment>('postId'), '==', post.id)
-      .get()
-    comments.forEach(async x => await x.ref.delete())
-  }
+  const comments = await db
+    .collection('comments')
+    .where(propertyOf<IComment>('postId'), '==', post.id)
+    .get()
 
-  await Promise.all([
-    storage.refFromURL(post.imageUrl).delete(),
-    db.collection('posts').doc(post.id).delete(),
-    deletePostComments(),
-    db
-      .doc(`users/${post.userId}`)
-      .update({ [propertyOf<IUser>('postCount')]: increment(-1) }),
-  ]).catch(setError)
+  const batch = db.batch()
+
+  comments.forEach(x => batch.delete(x.ref))
+  batch.delete(db.collection('posts').doc(post.id))
+  batch.update(db.doc(`users/${post.userId}`), {
+    [propertyOf<IUser>('postCount')]: increment(-1),
+  })
+
+  await batch.commit().catch(setError)
+  await storage.refFromURL(post.mediaUrl).delete().catch(setError)
 }
 
 export const commentOnPost = async (
