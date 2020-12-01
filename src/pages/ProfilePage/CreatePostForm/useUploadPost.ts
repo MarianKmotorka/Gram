@@ -9,14 +9,20 @@ import {
 import { propertyOf } from '../../../utils'
 
 const useUplaodPost = (
-  folderName: string,
   file: File | null,
-  post: Omit<IPost, 'id' | 'createdAt' | 'imageUrl' | 'likes' | 'commentCount'>,
+  post: Omit<
+    IPost,
+    'id' | 'createdAt' | 'imageUrl' | 'likes' | 'commentCount' | 'mediaType'
+  >,
   onDone?: () => void
 ) => {
-  const [uploading, setUploading] = useState(false)
-  const { progress, error: storageError, url } = useStorage(folderName, file, uploading)
   const [createPostError, setCreatePostError] = useState<Error | null>(null)
+  const [uploading, setUploading] = useState(false)
+  const { progress, error: storageError, url } = useStorage(
+    `posts/${file?.type.split('/')[0]}`,
+    file,
+    uploading
+  )
 
   useEffect(() => {
     const createPost = async () => {
@@ -29,6 +35,7 @@ const useUplaodPost = (
         title: post.title,
         userId: post.userId,
         userNick: post.userNick,
+        mediaType: file?.type || '',
         description: post.description || '',
         userPhotoUrl: post.userPhotoUrl || '',
         createdAt: getTimestamp() as firebase.firestore.Timestamp,
@@ -48,7 +55,7 @@ const useUplaodPost = (
 
     createPost()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url])
+  }, [url, file])
 
   const uploadError = storageError || createPostError
 

@@ -10,6 +10,8 @@ import { MessageStripe, Backdrop } from '../../../components'
 import { FileInput, Header, StyledButton, StyledInput } from './CreatePostForm.styled'
 import SideBlade from '../../../components/SideBlade/SideBlade'
 
+const allowedFileTypes = ['image', 'video']
+
 interface ICreatePostProps {
   user: IUser
   onClose: Required<IBackdropProps>['onClose']
@@ -23,7 +25,6 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
 
   const [file, setFile] = useState<File | null>(null)
   const { startUpload, uploading, uploadError, progress } = useUplaodPost(
-    'posts/images',
     file,
     {
       title,
@@ -43,7 +44,10 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
   const handleSubmit = () => {
     setValidationError('')
     if (!title) return setValidationError('Post title cannot be empty.')
-    if (!file) return setValidationError('Pick an image.')
+    if (!file) return setValidationError('Pick a media.')
+    if (!allowedFileTypes.includes(file.type.split('/')[0]))
+      return setValidationError('Only images and videos can be uploaded.')
+
     startUpload()
   }
 
@@ -87,8 +91,8 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
           <FileInput
             id='create-post-form-file-input'
             type='file'
-            accept='image/*'
-            onChange={({ target }) => setFile(target.files && target.files[0])}
+            accept='image/*,video/*'
+            onChange={({ target }) => target.files && setFile(target.files[0])}
             disabled={progress !== 0}
           />
 
@@ -98,7 +102,7 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
             disabled={uploading}
             onClick={handleSelectFile}
           >
-            Pick an image
+            Pick a media
           </StyledButton>
 
           <StyledButton

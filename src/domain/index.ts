@@ -13,10 +13,15 @@ export interface IComment extends IEntity {
 
 export interface IPost extends IEntity {
   title: string
-  imageUrl: string
+  imageUrl: string // TODO: rename to mediaUrl
   createdAt: firebase.firestore.Timestamp
   description: string | null
   commentCount: number
+
+  /**
+   * e.g.: image/png, video/mp4
+   */
+  mediaType: string
 
   userId: string
   userNick: string
