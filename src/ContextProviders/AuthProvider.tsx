@@ -36,33 +36,6 @@ export const useAuthorizedUser = () => {
 }
 
 const AuthProvider: React.FC = ({ children }) => {
-  // TODO: REMOVE after db is updated on prod
-  // Update script for renaming imageUrl to mediaUrl for existing records
-  useEffect(() => {
-    const renameProp = async () => {
-      const posts = await db.collection('posts').get()
-
-      posts.forEach(async x => {
-        const oldPost = x.data()
-        if (has(oldPost, 'imageUrl')) {
-          const metadata = await projectStorage.refFromURL(oldPost.imageUrl).getMetadata()
-          const newPost = omit(
-            {
-              ...oldPost,
-              mediaType: metadata.contentType,
-              mediaUrl: oldPost.imageUrl,
-            },
-            ['imageUrl']
-          )
-
-          await db.doc('posts/' + x.id).set(newPost)
-        }
-      })
-    }
-
-    renameProp()
-  }, [])
-
   const [state, setState] = useState<AuthContextValue>({ isLoggedIn: false, projectAuth })
   const [authUser, setAuthUser] = useState<firebase.User>()
   const [showSpinner, setShowSpinner] = useState(true)
