@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.black};
 `
 
-export const ImageContainer = styled.div`
+export const MediaContainer = styled.div`
   height: 100%;
   flex: 7;
 
@@ -16,7 +16,7 @@ export const ImageContainer = styled.div`
   position: relative;
 `
 
-export const BlurredBackground = styled.img`
+export const BlurredImageBackground = styled.img`
   filter: blur(10px) brightness(40%);
   position: absolute;
   top: 0;
@@ -25,11 +25,33 @@ export const BlurredBackground = styled.img`
   height: 100%;
 `
 
+export const BlurredVideoBackground = styled.video`
+  filter: blur(15px) brightness(40%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`
+
 export const Image = styled.img`
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
   z-index: 2;
+`
+
+export const Video = styled.video`
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  z-index: 2;
+
+  :focus,
+  :active {
+    outline: none;
+  }
 `
 
 export const DetailContainer = styled.div`

@@ -4,7 +4,7 @@ import moment from 'moment'
 import { IPost } from '../../domain'
 import noPhotoPng from '../../images/no-photo.png'
 import { PostDetailTabs } from './Detail/PostDetail'
-import { ClockIcon, CommentsIcon, HeartFilledIcon, HeartIcon } from '../Icons'
+import { ClockIcon, CommentsIcon, ExpandIcon, HeartFilledIcon, HeartIcon } from '../Icons'
 
 import {
   AuthorInfo,
@@ -18,6 +18,7 @@ import {
   StyledButton,
   ButtonsContainer,
 } from './FeedPost.styled'
+import IconButton from '../Button/IconButton'
 
 interface IFeedPostProps {
   post: IPost
@@ -67,10 +68,21 @@ const FeedPost: React.FC<IFeedPostProps> = ({
         </AuthorSection>
 
         <Title>{post.title}</Title>
+
+        <IconButton
+          top='10px'
+          right='10px'
+          icon={<ExpandIcon color='accent' />}
+          onClick={() => onOpenDetail()}
+        />
       </Header>
 
       <Body>
-        <img src={post.mediaUrl} alt='post' onClick={() => onOpenDetail()} />
+        {post.mediaType.startsWith('image') ? (
+          <img src={post.mediaUrl} alt='post' onClick={() => onOpenDetail()} />
+        ) : (
+          <video src={post.mediaUrl} controls />
+        )}
 
         <ButtonsContainer>
           <CardButton onClick={async () => await onLikeClick(post)}>

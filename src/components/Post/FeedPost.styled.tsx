@@ -69,12 +69,25 @@ export const AuthorName = styled(Link)`
 
 export const Body = styled.div`
   position: relative;
-  margin-bottom: -7px;
   max-height: 700px;
+  display: flex;
+  justify-content: center;
 
   img {
     width: 100%;
     cursor: pointer;
+    display: block;
+  }
+
+  video {
+    width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+
+    :focus,
+    :active {
+      outline: none;
+    }
   }
 `
 

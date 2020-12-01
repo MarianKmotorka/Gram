@@ -6,16 +6,16 @@ import { useWindowSize } from '../../../hooks'
 import { PostDetailTabs } from './PostDetail'
 import LoadingOverlay from '../../Loaders/LoadingOverlay'
 
-import { Wrapper, ImageContainer, DetailContainer } from './PostDetail.styled'
+import { Wrapper, MediaContainer, DetailContainer } from './PostDetail.styled'
 
 const PostDetailLoadingSkeleton: FC = () => {
   const { width } = useWindowSize()
 
   const component = (
     <Wrapper>
-      <ImageContainer>
+      <MediaContainer>
         <LoadingOverlay />
-      </ImageContainer>
+      </MediaContainer>
 
       {width > 600 && (
         <DetailContainer>

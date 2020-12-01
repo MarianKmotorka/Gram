@@ -13,6 +13,7 @@ import {
   Image,
   LayoutControls,
   VerticalSeparator,
+  Video,
   Wrapper,
 } from './Posts.styled'
 
@@ -55,14 +56,23 @@ const Posts: React.FC<IPostsProps> = ({ posts, loading, loadMore, refresh }) => 
       {posts.length === 0 && <p>Nothing here ... :(</p>}
 
       <Grid smallScreenGrid={displayGrid}>
-        {posts.map(x => (
-          <Image
-            key={x.id}
-            src={x.mediaUrl}
-            smallScreenGrid={displayGrid}
-            onClick={() => push(`${location.pathname}?postId=${x.id}`)}
-          />
-        ))}
+        {posts.map(x =>
+          x.mediaType.startsWith('image') ? (
+            <Image
+              key={x.id}
+              src={x.mediaUrl}
+              smallScreenGrid={displayGrid}
+              onClick={() => push(`${location.pathname}?postId=${x.id}`)}
+            />
+          ) : (
+            <Video
+              key={x.id}
+              src={x.mediaUrl}
+              smallScreenGrid={displayGrid}
+              onClick={() => push(`${location.pathname}?postId=${x.id}`)}
+            />
+          )
+        )}
       </Grid>
 
       {loading && <LoadingRow />}

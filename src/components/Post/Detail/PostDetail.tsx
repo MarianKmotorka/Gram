@@ -20,12 +20,14 @@ import {
 } from '../../Icons'
 
 import {
-  BlurredBackground,
+  BlurredImageBackground,
+  BlurredVideoBackground,
   BottomButton,
   BottomButtonsContainer,
   DetailContainer,
   Image,
-  ImageContainer,
+  MediaContainer,
+  Video,
   Wrapper,
 } from './PostDetail.styled'
 
@@ -86,7 +88,7 @@ const PostDetail: FC<IPostDetailProps> = ({
 
   const component = (
     <Wrapper onMouseMove={onMouseMove}>
-      <ImageContainer>
+      <MediaContainer>
         <IconButton
           icon={<CloseIcon color='bg' />}
           onClick={onClose}
@@ -106,8 +108,18 @@ const PostDetail: FC<IPostDetailProps> = ({
           top='5px'
           position={width < 600 ? 'fixed' : 'absolute'}
         />
-        <BlurredBackground src={post.mediaUrl} />
-        <Image src={post.mediaUrl} />
+
+        {post.mediaType.startsWith('image') ? (
+          <>
+            <Image src={post.mediaUrl} />
+            <BlurredImageBackground src={post.mediaUrl} />
+          </>
+        ) : (
+          <>
+            <Video src={post.mediaUrl} controls onPause={onMouseMove} />
+            <BlurredVideoBackground src={post.mediaUrl} />
+          </>
+        )}
 
         {showBottomBtns && (
           <BottomButtonsContainer>
@@ -131,7 +143,7 @@ const PostDetail: FC<IPostDetailProps> = ({
             )}
           </BottomButtonsContainer>
         )}
-      </ImageContainer>
+      </MediaContainer>
 
       {expanded && (
         <DetailContainer>

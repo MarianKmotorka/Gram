@@ -48,6 +48,28 @@ export const Image = styled.img<{ smallScreenGrid: boolean }>`
   }
 `
 
+export const Video = styled.video<{ smallScreenGrid: boolean }>`
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.15s;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+
+  :hover {
+    transform: scale(0.95);
+  }
+
+  @media only screen and (max-width: ${smallScreenWidth}) {
+    ${({ smallScreenGrid }) =>
+      smallScreenGrid &&
+      css`
+        height: 100px;
+      `}
+  }
+`
+
 export const BottomDiv = styled.div`
   height: 1px;
 `

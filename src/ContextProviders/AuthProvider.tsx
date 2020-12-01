@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react'
 import omit from 'lodash/omit'
+import has from 'lodash/has'
 
 import { IUser } from '../domain'
 import { useFirestoreDoc } from '../hooks'
@@ -35,6 +36,7 @@ export const useAuthorizedUser = () => {
 }
 
 const AuthProvider: React.FC = ({ children }) => {
+  // TODO: REMOVE after db is updated on prod
   // Update script for renaming imageUrl to mediaUrl for existing records
   useEffect(() => {
     const renameProp = async () => {
@@ -42,17 +44,19 @@ const AuthProvider: React.FC = ({ children }) => {
 
       posts.forEach(async x => {
         const oldPost = x.data()
-        const metadata = await projectStorage.refFromURL(oldPost.imageUrl).getMetadata()
-        const newPost = omit(
-          {
-            ...oldPost,
-            mediaType: metadata.contentType,
-            mediaUrl: oldPost.imageUrl,
-          },
-          ['imageUrl']
-        )
+        if (has(oldPost, 'imageUrl')) {
+          const metadata = await projectStorage.refFromURL(oldPost.imageUrl).getMetadata()
+          const newPost = omit(
+            {
+              ...oldPost,
+              mediaType: metadata.contentType,
+              mediaUrl: oldPost.imageUrl,
+            },
+            ['imageUrl']
+          )
 
-        await db.doc('posts/' + x.id).set(newPost)
+          await db.doc('posts/' + x.id).set(newPost)
+        }
       })
     }
 
