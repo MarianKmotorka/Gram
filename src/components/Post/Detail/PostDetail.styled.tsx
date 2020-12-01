@@ -66,9 +66,9 @@ export const DetailContainer = styled.div`
   }
 `
 
-export const BottomButtonsContainer = styled.div`
+export const BottomButtonsContainer = styled.div<{ bottom: string }>`
   position: absolute;
-  bottom: 15px;
+  bottom: ${({ bottom }) => bottom};
   margin: 0 auto;
 
   display: flex;

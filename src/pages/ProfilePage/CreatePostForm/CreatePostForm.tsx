@@ -47,6 +47,8 @@ const CreatePostForm: React.FC<ICreatePostProps> = ({ user, onClose, onPostCreat
     if (!file) return setValidationError('Pick a media.')
     if (!allowedFileTypes.includes(file.type.split('/')[0]))
       return setValidationError('Only images and videos can be uploaded.')
+    if (file.size > 150_000_000)
+      return setValidationError('File cannot be larger than 150MB.')
 
     startUpload()
   }

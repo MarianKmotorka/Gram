@@ -91,11 +91,11 @@ export const Body = styled.div`
   }
 `
 
-export const ButtonsContainer = styled.div`
+export const ButtonsContainer = styled.div<{ bottom: string }>`
   border-radius: 15px;
   overflow: hidden;
   position: absolute;
-  bottom: 25px;
+  bottom: ${({ bottom }) => bottom};
   right: 20px;
 `
 

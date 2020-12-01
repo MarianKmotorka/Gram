@@ -73,7 +73,8 @@ const PostDetail: FC<IPostDetailProps> = ({
   const [selectedTab, setSelectedTab] = useState<PostDetailTabs>(initialTabKey || 'post')
 
   const visibility = mouseMoving ? 'visible' : 'hidden'
-  const showBottomBtns = mouseMoving && (width > 600 || !expanded)
+  const showSideButtons = mouseMoving && (width > 600 || !expanded)
+  const isImage = post.mediaType.startsWith('image')
 
   const handleDeleted = async () => {
     if (deleting) return
@@ -109,7 +110,7 @@ const PostDetail: FC<IPostDetailProps> = ({
           position={width < 600 ? 'fixed' : 'absolute'}
         />
 
-        {post.mediaType.startsWith('image') ? (
+        {isImage ? (
           <>
             <Image src={post.mediaUrl} />
             <BlurredImageBackground src={post.mediaUrl} />
@@ -121,8 +122,8 @@ const PostDetail: FC<IPostDetailProps> = ({
           </>
         )}
 
-        {showBottomBtns && (
-          <BottomButtonsContainer>
+        {showSideButtons && (
+          <BottomButtonsContainer bottom={isImage ? '15px' : '70px'}>
             <BottomButton onClick={onLike}>
               {isLiked ? <HeartFilledIcon color='red' /> : <HeartIcon color='bg' />}
               <span>{post.likes.length}</span>

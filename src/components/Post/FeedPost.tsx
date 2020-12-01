@@ -40,6 +40,7 @@ const FeedPost: React.FC<IFeedPostProps> = ({
   onFollowClick,
 }) => {
   const createdAt = moment(post.createdAt.toDate()).fromNow()
+  const isImage = post.mediaType.startsWith('image')
 
   return (
     <Wrapper>
@@ -78,13 +79,13 @@ const FeedPost: React.FC<IFeedPostProps> = ({
       </Header>
 
       <Body>
-        {post.mediaType.startsWith('image') ? (
+        {isImage ? (
           <img src={post.mediaUrl} alt='post' onClick={() => onOpenDetail()} />
         ) : (
           <video src={post.mediaUrl} controls />
         )}
 
-        <ButtonsContainer>
+        <ButtonsContainer bottom={isImage ? '25px' : '70px'}>
           <CardButton onClick={async () => await onLikeClick(post)}>
             {isLiked ? <HeartFilledIcon color='red' /> : <HeartIcon />}
             <span>{post.likes ? post.likes.length : 0}</span>
