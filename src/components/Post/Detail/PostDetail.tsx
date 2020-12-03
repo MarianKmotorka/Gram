@@ -45,7 +45,7 @@ interface IPostDetailProps {
   onClose: () => void
   onLike: () => Promise<void>
   onFollow: () => Promise<void>
-  onDelete: (post: IPost) => Promise<void>
+  onDelete: () => Promise<void>
   onCommentSubmit: (text: string) => Promise<void>
   onDeleteComment: (id: string) => Promise<void>
 }
@@ -79,7 +79,7 @@ const PostDetail: FC<IPostDetailProps> = ({
   const handleDeleted = async () => {
     if (deleting) return
     setDeleting(true)
-    await onDelete(post)
+    await onDelete()
   }
 
   const handleCommentsButtonClicked = () => {
@@ -117,7 +117,12 @@ const PostDetail: FC<IPostDetailProps> = ({
           </>
         ) : (
           <>
-            <Video src={post.mediaUrl} controls onPause={onMouseMove} />
+            <Video
+              src={post.mediaUrl}
+              controls
+              onPause={onMouseMove}
+              onEnded={onMouseMove}
+            />
             <BlurredVideoBackground src={post.mediaUrl} />
           </>
         )}

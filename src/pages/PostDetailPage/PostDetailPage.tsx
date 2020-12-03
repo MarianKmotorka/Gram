@@ -2,18 +2,18 @@ import React, { FC, useCallback } from 'react'
 
 import { propertyOf } from '../../utils'
 import { IComment, IPost } from '../../domain'
-import { useFirestoreDoc, useFirestoreQuery, useUrlQueryParams } from '../../hooks'
 import { useApiError } from '../../contextProviders/ApiErrorProvider'
 import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
 import { PostDetail, PostDetailLoadingSkeleton } from '../../components'
 import { useFollowers } from '../../contextProviders/FollowersProvider'
+import { PostDetailTabs } from '../../components/Post/Detail/PostDetail'
+import { useFirestoreDoc, useFirestoreQuery, useUrlQueryParams } from '../../hooks'
 import {
   commentOnPost,
   deleteComment,
   deletePost,
   likePost,
 } from '../../services/postService'
-import { PostDetailTabs } from '../../components/Post/Detail/PostDetail'
 
 interface IPostDetailPageProps {
   postId: string
