@@ -52,7 +52,7 @@ function TabViewContainer<TKey>({ selectedKey: key, children, onChange }: IProps
         ))}
       </TabsWrapper>
 
-      {getKeyTabPairs(children).find(x => x.key === selectedKey)?.tab.component}
+      {keyTabPairs.find(x => x.key === selectedKey)?.tab.component}
     </Wrapper>
   )
 }

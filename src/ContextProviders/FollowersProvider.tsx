@@ -44,11 +44,11 @@ const FollowersProvider: FC<IProps> = ({ children, userId }) => {
   const isFollowedByMe = (userId: string) =>
     myFollowings.find(x => x.userId === userId) !== undefined
 
-  const handleFollowed = async (userToFollowId: string, usertoFollowNick: string) => {
+  const handleFollowed = async (userToFollowId: string, userToFollowNick: string) => {
     const { id } = currentUser
     if (isFollowedByMe(userToFollowId)) await unfollow(id, userToFollowId, setError)
     else
-      await follow(id, { userId: userToFollowId, userNick: usertoFollowNick }, setError)
+      await follow(id, { userId: userToFollowId, userNick: userToFollowNick }, setError)
   }
 
   const { followedBy, followedByLoading } = useFollowedBy(_userId)
