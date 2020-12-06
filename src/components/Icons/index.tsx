@@ -114,3 +114,11 @@ export const ChevronRightIcon: React.FC<IIconProps> = props => (
 export const ExpandIcon: React.FC<IIconProps> = props => (
   <Icon name='fas fa-expand-alt' {...props} />
 )
+
+export const CameraIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-camera' {...props} />
+)
+
+export const VideoIcon: React.FC<IIconProps> = props => (
+  <Icon name='fas fa-video' {...props} />
+)

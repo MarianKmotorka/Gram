@@ -16,12 +16,14 @@ export const getPostsQuery = (
     case 'all':
       return (db: Firestore) =>
         db.collection('posts').orderBy(propertyOf<IPost>('createdAt'), 'desc')
+
     case 'followed':
       return (db: Firestore) =>
         db
           .collection('posts')
           .where(propertyOf<IPost>('userId'), 'in', userIds)
           .orderBy(propertyOf<IPost>('createdAt'), 'desc')
+
     case 'mine':
       return (db: Firestore) =>
         db

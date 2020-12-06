@@ -5,11 +5,18 @@ import { useObserver, useUrlQueryParams } from '../../../hooks'
 import { IPost } from '../../../domain'
 import { LoadingRow } from '../../../components'
 import PostDetailPage from '../../PostDetailPage/PostDetailPage'
-import { GridIcon, RoundSquareIcon } from '../../../components/Icons'
+import {
+  GridIcon,
+  RoundSquareIcon,
+  CameraIcon,
+  VideoIcon,
+} from '../../../components/Icons'
 
 import {
   BottomDiv,
   Grid,
+  GridItem,
+  GridItemOverlay,
   Image,
   LayoutControls,
   VerticalSeparator,
@@ -56,23 +63,27 @@ const Posts: React.FC<IPostsProps> = ({ posts, loading, loadMore, refresh }) => 
       {posts.length === 0 && <p>Nothing here ... :(</p>}
 
       <Grid smallScreenGrid={displayGrid}>
-        {posts.map(x =>
-          x.mediaType.startsWith('image') ? (
-            <Image
-              key={x.id}
-              src={x.mediaUrl}
-              smallScreenGrid={displayGrid}
-              onClick={() => push(`${location.pathname}?postId=${x.id}`)}
-            />
-          ) : (
-            <Video
-              key={x.id}
-              src={x.mediaUrl}
-              smallScreenGrid={displayGrid}
-              onClick={() => push(`${location.pathname}?postId=${x.id}`)}
-            />
+        {posts.map(x => {
+          const isImage = x.mediaType.startsWith('image')
+          const Icon = isImage ? CameraIcon : VideoIcon
+
+          return (
+            <GridItem smallScreenGrid={displayGrid}>
+              {isImage ? (
+                <Image key={x.id} src={x.mediaUrl} />
+              ) : (
+                <Video key={x.id} src={x.mediaUrl} />
+              )}
+
+              <GridItemOverlay
+                smallScreenGrid={displayGrid}
+                onClick={() => push(`${location.pathname}?postId=${x.id}`)}
+              >
+                <Icon />
+              </GridItemOverlay>
+            </GridItem>
           )
-        )}
+        })}
       </Grid>
 
       {loading && <LoadingRow />}
