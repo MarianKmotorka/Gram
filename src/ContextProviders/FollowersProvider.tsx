@@ -15,6 +15,8 @@ interface IContextValue {
   followings: IFollow[]
   followedBy: IFollow[]
   loading: boolean
+  followingsLoading: boolean
+  followedByLoading: boolean
   followingsCount: number
   followedByCount: number
   isFollowedByMe: (userId: string) => boolean
@@ -32,7 +34,7 @@ const FollowersProvider: FC<IProps> = ({ children, userId }) => {
     useCallback(x => x.collection(`users/${_userId}/followings`), [_userId])
   )
 
-  const [myFollowings, myLoading, myError] = useFirestoreQuery<IFollow>(
+  const [myFollowings, myFollowingsLoading, myError] = useFirestoreQuery<IFollow>(
     useCallback(x => x.collection(`users/${currentUser.id}/followings`), [currentUser.id])
   )
 
@@ -58,7 +60,9 @@ const FollowersProvider: FC<IProps> = ({ children, userId }) => {
     followedBy,
     followedByCount: followedBy.length,
     followingsCount: followings.length,
-    loading: followingsLoading || myLoading || followedByLoading,
+    loading: followingsLoading || myFollowingsLoading || followedByLoading,
+    followingsLoading: followingsLoading || myFollowingsLoading,
+    followedByLoading,
     isFollowedByMe,
     handleFollowed,
   }

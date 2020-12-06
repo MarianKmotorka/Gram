@@ -12,6 +12,7 @@ import {
   BlindManIcon,
   CloseIcon,
   EnvelopeIcon,
+  LoadingIcon,
   UserSecretIcon,
 } from '../../../components/Icons'
 
@@ -23,23 +24,23 @@ import {
   ProfilePhoto,
   CardMiddle,
   Wrapper,
+  StyledLoader,
 } from './SideCard.styled'
-
-interface ISideCardProps {
-  currentUser: IUser
-  followingCount: number
-  followedByCount: number
-}
+import { useAuthorizedUser } from '../../../contextProviders/AuthProvider'
+import { useFollowers } from '../../../contextProviders/FollowersProvider'
 
 export const SideCardPlaceHolder = () => <Wrapper visibility='hidden' />
 
-const SideCard: FC<ISideCardProps> = ({
-  currentUser,
-  followingCount,
-  followedByCount,
-}) => {
-  const history = useHistory()
+const SideCard: FC = () => {
   const [bladeSelectedTab, setBladeSelectedTab] = useState<FollowersDetailTabs>()
+  const { currentUser } = useAuthorizedUser()
+  const history = useHistory()
+  const {
+    followedByCount,
+    followingsCount,
+    followingsLoading,
+    followedByLoading,
+  } = useFollowers()
 
   return (
     <>
@@ -63,12 +64,12 @@ const SideCard: FC<ISideCardProps> = ({
         <Stat clickable onClick={() => setBladeSelectedTab('following')}>
           <BlindManIcon />
           <b>Following:</b>
-          {followingCount}
+          {followingsLoading ? <StyledLoader /> : followingsCount}
         </Stat>
         <Stat clickable onClick={() => setBladeSelectedTab('followedBy')}>
           <UserSecretIcon />
           <b>Followed by:</b>
-          {followedByCount}
+          {followedByLoading ? <StyledLoader /> : followedByCount}
         </Stat>
       </Wrapper>
 

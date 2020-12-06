@@ -31,7 +31,7 @@ const Feed: React.FC = () => {
   const {
     followings,
     followedBy,
-    loading: followersLoading,
+    followingsLoading,
     isFollowedByMe,
     handleFollowed,
   } = useFollowers()
@@ -45,9 +45,9 @@ const Feed: React.FC = () => {
         followings.map(x => x.userId),
         currentUser.id
       ),
-      [feedFilter, followersLoading]
+      [feedFilter, followingsLoading]
     ),
-    { startFetching: !followersLoading }
+    { startFetching: !followingsLoading }
   )
 
   useNotifyError(postsErr)
@@ -99,11 +99,7 @@ const Feed: React.FC = () => {
       )}
 
       <Wrapper>
-        <SideCard
-          currentUser={currentUser}
-          followingCount={followings.length}
-          followedByCount={followedBy.length}
-        />
+        <SideCard />
 
         <PostsContainer>
           <TopMenu feedType={feedFilter} forwardRef={topRef} onChange={setFeedFilter} />
@@ -125,7 +121,7 @@ const Feed: React.FC = () => {
             />
           ))}
 
-          {(postsLoading || followersLoading) && <LoadingRow />}
+          {(postsLoading || followingsLoading) && <LoadingRow />}
 
           <ScrollUpButton color='accent' onClick={scrollUp}>
             <ChevronUpIcon />

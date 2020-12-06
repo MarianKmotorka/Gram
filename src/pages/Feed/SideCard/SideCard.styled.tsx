@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { LoadingIcon } from '../../../components/Icons'
 
 export const Wrapper = styled.div<{ visibility?: string }>`
   background-color: ${({ theme }) => theme.bg2};
@@ -85,4 +86,10 @@ export const Stat = styled.p<{ clickable?: boolean }>`
   }
 
   margin: 8px auto 0 30px;
+`
+
+export const StyledLoader = styled(LoadingIcon)`
+  font-size: 0.9rem;
+  margin-left: -5px;
+  color: ${({ theme }) => theme.bg} !important;
 `

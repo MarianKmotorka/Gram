@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { IconButton } from '../../../components'
 import Button from '../../../components/Button/Button'
+import { LoadingIcon } from '../../../components/Icons'
 import pattern from '../../../images/patternpad2.svg'
 
 export const Wrapper = styled.div`
@@ -139,4 +140,10 @@ export const StyledIconButton = styled(IconButton)`
   :hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
+`
+
+export const StyledLoader = styled(LoadingIcon)`
+  font-size: 0.9rem;
+  margin-left: -5px;
+  color: ${({ theme }) => theme.primary} !important;
 `

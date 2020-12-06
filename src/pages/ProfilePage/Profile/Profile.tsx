@@ -31,6 +31,7 @@ import {
   InfoCard,
   Text,
   StyledIconButton,
+  StyledLoader,
 } from './Profile.styled'
 
 interface IProfileProps {
@@ -50,6 +51,8 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
   const {
     followedByCount,
     followingsCount,
+    followedByLoading,
+    followingsLoading,
     handleFollowed,
     isFollowedByMe,
   } = useFollowers()
@@ -142,14 +145,14 @@ const Profile: React.FC<IProfileProps> = ({ user, isCurrentUser }) => {
                 <BlindManIcon />
                 <span>Following:</span>
               </Bold>
-              {followingsCount}
+              {followingsLoading ? <StyledLoader /> : followingsCount}
             </Text>
             <Text clickable onClick={() => setBladeSelectedTab('followedBy')}>
               <Bold>
                 <UserSecretIcon />
                 <span>Followed by:</span>
               </Bold>
-              {followedByCount}
+              {followedByLoading ? <StyledLoader /> : followedByCount}
             </Text>
             <Text>
               <Bold>
