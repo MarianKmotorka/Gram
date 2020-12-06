@@ -25,17 +25,10 @@ import { DummymSpan, PostsContainer, Wrapper, ScrollUpButton } from './Feed.styl
 
 const Feed: React.FC = () => {
   const history = useHistory()
-  const { postId: selectedPostId } = useUrlQueryParams()
   const { currentUser } = useAuthorizedUser()
+  const { postId: selectedPostId } = useUrlQueryParams()
   const [feedFilter, setFeedFilter] = useLocalStorage<FeedFilter>('feed-filter', 'all')
-  const {
-    followings,
-    followedBy,
-    followingsLoading,
-    isFollowedByMe,
-    handleFollowed,
-  } = useFollowers()
-
+  const { followings, followingsLoading, isFollowedByMe, handleFollowed } = useFollowers()
   const [posts, postsLoading, nextPage, hasMore, , postsErr, modifyPost] = usePagedQuery<
     IPost
   >(

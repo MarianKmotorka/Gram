@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 
-import { IUser } from '../../../domain'
 import noPhoto from '../../../images/no-photo.png'
 import FollowersDetail, {
   FollowersDetailTabs,
@@ -12,7 +11,6 @@ import {
   BlindManIcon,
   CloseIcon,
   EnvelopeIcon,
-  LoadingIcon,
   UserSecretIcon,
 } from '../../../components/Icons'
 
