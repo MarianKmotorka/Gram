@@ -10,6 +10,8 @@ import {
   RoundSquareIcon,
   CameraIcon,
   VideoIcon,
+  HeartIcon,
+  CommentsIcon,
 } from '../../../components/Icons'
 
 import {
@@ -65,7 +67,7 @@ const Posts: React.FC<IPostsProps> = ({ posts, loading, loadMore, refresh }) => 
       <Grid smallScreenGrid={displayGrid}>
         {posts.map(x => {
           const isImage = x.mediaType.startsWith('image')
-          const Icon = isImage ? CameraIcon : VideoIcon
+          const MediaTypeIcon = isImage ? CameraIcon : VideoIcon
 
           return (
             <GridItem smallScreenGrid={displayGrid}>
@@ -79,7 +81,16 @@ const Posts: React.FC<IPostsProps> = ({ posts, loading, loadMore, refresh }) => 
                 smallScreenGrid={displayGrid}
                 onClick={() => push(`${location.pathname}?postId=${x.id}`)}
               >
-                <Icon />
+                <MediaTypeIcon />
+
+                <section>
+                  <span>
+                    <HeartIcon /> {x.likes.length}
+                  </span>
+                  <span>
+                    <CommentsIcon /> {x.commentCount}
+                  </span>
+                </section>
               </GridItemOverlay>
             </GridItem>
           )

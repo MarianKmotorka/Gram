@@ -41,6 +41,15 @@ export const GridItem = styled.div<{ smallScreenGrid: boolean }>`
         height: 100px;
       `}
   }
+
+  :hover rect {
+    clip-path: circle(100%);
+    background: rgba(0, 0, 0, 0.7);
+
+    section {
+      opacity: 1;
+    }
+  }
 `
 
 export const Image = styled.img`
@@ -86,40 +95,69 @@ export const VerticalSeparator = styled.div`
   height: 35px;
 `
 
-export const GridItemOverlay = styled.section<{ smallScreenGrid: boolean }>`
+export const GridItemOverlay = styled.rect<{ smallScreenGrid: boolean }>`
   position: absolute;
-  top: 0;
-  left: 0;
+  display: grid;
+  place-items: center;
+  top: 0%;
+  right: 0%;
   height: 100%;
   width: 100%;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.4s;
+  color: ${({ theme }) => theme.white};
+  background: rgba(0, 0, 0, 0.3);
+  clip-path: circle(65px at 100% 0%);
 
-  i {
+  > i {
     position: absolute;
     cursor: inherit;
     transition: inherit;
-    top: 5%;
-    right: 5%;
+    top: 14px;
+    right: 14px;
     font-size: 1.5rem;
-    color: ${({ theme }) => theme.white};
+    color: inherit;
+  }
 
-    @media only screen and (max-width: ${smallScreenWidth}) {
-      ${({ smallScreenGrid }) =>
-        smallScreenGrid &&
-        css`
-          font-size: 1rem;
-        `}
+  section {
+    opacity: 0;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    color: inherit;
+
+    i {
+      font-size: 1.7rem;
+      margin-right: 8px;
+      color: inherit;
+      cursor: inherit;
+    }
+
+    span {
+      font-size: 1.4rem;
+      color: inherit;
+      display: flex;
+      align-items: center;
     }
   }
 
-  :hover {
-    background: rgba(0, 0, 0, 0.7);
+  @media only screen and (max-width: ${smallScreenWidth}) {
+    ${({ smallScreenGrid }) =>
+      smallScreenGrid &&
+      css`
+        clip-path: circle(35px at 100% 0%);
 
-    i {
-      top: 50%;
-      right: 50%;
-      transform: translate(50%, -50%) scale(2.7);
-    }
+        span,
+        i,
+        section > span,
+        section i {
+          font-size: 0.8rem;
+        }
+
+        > i {
+          top: 8px;
+          right: 8px;
+        }
+      `}
   }
 `
