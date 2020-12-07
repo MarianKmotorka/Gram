@@ -42,7 +42,7 @@ export const GridItem = styled.div<{ smallScreenGrid: boolean }>`
       `}
   }
 
-  :hover rect {
+  :hover sub {
     clip-path: circle(100%);
     background: rgba(0, 0, 0, 0.7);
 
@@ -95,7 +95,7 @@ export const VerticalSeparator = styled.div`
   height: 35px;
 `
 
-export const GridItemOverlay = styled.rect<{ smallScreenGrid: boolean }>`
+export const GridItemOverlay = styled.sub<{ smallScreenGrid: boolean }>`
   position: absolute;
   display: grid;
   place-items: center;
@@ -104,10 +104,9 @@ export const GridItemOverlay = styled.rect<{ smallScreenGrid: boolean }>`
   height: 100%;
   width: 100%;
   cursor: pointer;
-  transition: all 0.4s;
+  transition: all 0.45s;
   color: ${({ theme }) => theme.white};
-  background: rgba(0, 0, 0, 0.3);
-  clip-path: circle(65px at 100% 0%);
+  clip-path: circle(20px at 90% 11%);
 
   > i {
     position: absolute;
@@ -145,8 +144,6 @@ export const GridItemOverlay = styled.rect<{ smallScreenGrid: boolean }>`
     ${({ smallScreenGrid }) =>
       smallScreenGrid &&
       css`
-        clip-path: circle(35px at 100% 0%);
-
         span,
         i,
         section > span,

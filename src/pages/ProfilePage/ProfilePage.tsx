@@ -21,7 +21,9 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
   const [showCreatePostForm, setShowCreatePostForm] = useState(false)
 
   const [userResponse] = useFirestoreDoc<IUser>(`users/${params.userId}`)
-  const [posts, postsLoading, loadMore, , refresh, postsErr] = usePagedQuery<IPost>(
+  const [posts, postsLoading, loadMore, , refresh, postsErr, modifyPost] = usePagedQuery<
+    IPost
+  >(
     useCallback(
       x =>
         x
@@ -71,6 +73,7 @@ const ProfilePage: React.FC<RouteComponentProps<{ userId: string }>> = ({
           loading={postsLoading}
           refresh={refresh}
           loadMore={loadMore}
+          modifyPost={modifyPost}
         />
       </Wrapper>
     </FollowersProvider>
