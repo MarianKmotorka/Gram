@@ -69,6 +69,7 @@ export const Text = styled.p`
   line-height: 20px;
   font-size: 0.95rem;
   color: ${({ theme }) => theme.black};
+  white-space: pre-line;
 `
 
 export const TextInput = styled(AutoTextArea)`
