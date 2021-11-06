@@ -1,45 +1,86 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
-import { Button } from '../../../components'
 import { FeedFilter } from '../utils'
+import { Button } from '../../../components'
+import useHover from '../../../hooks/useHover'
 
-import { Wrapper } from './TopMenu.styled'
+import { ButtonsContainer, Indicator, Wrapper } from './TopMenu.styled'
 
 interface ITopMenuProps {
   feedType: FeedFilter
   onChange: (type: FeedFilter) => void
-  forwardRef: React.RefObject<HTMLDivElement>
 }
 
-const TopMenu: FC<ITopMenuProps> = ({ feedType, forwardRef, onChange }) => {
+const TopMenu: FC<ITopMenuProps> = ({ feedType, onChange }) => {
+  const [buttonsContainerRef, isHovered] = useHover<HTMLDivElement>()
+  const [allBtnRef, isAllBtnHovered] = useHover<HTMLDivElement>()
+  const [followedBtnRef, isFollowedBtnHovered] = useHover<HTMLDivElement>()
+  const [mineBtnRef, isMineBtnHovered] = useHover<HTMLDivElement>()
+  const [lastHovered, setLastHovered] = useState<FeedFilter>('all')
+
+  const getIndicatorOffset = () => {
+    if (lastHovered === 'all') return 7
+    if (lastHovered === 'followed') return 74
+    return 186
+  }
+
+  const getIndicatorWidth = () => {
+    if (lastHovered === 'all') return 48
+    if (lastHovered === 'followed') return 90
+    return 58
+  }
+
+  useEffect(() => {
+    if (isAllBtnHovered) setLastHovered('all')
+    if (isFollowedBtnHovered) setLastHovered('followed')
+    if (isMineBtnHovered) setLastHovered('mine')
+  }, [isAllBtnHovered, isFollowedBtnHovered, isMineBtnHovered])
+
   return (
-    <Wrapper ref={forwardRef}>
-      <Button
-        hover={false}
-        bg={feedType === 'all' ? 'accent2' : 'primary'}
-        scale={0.8}
-        onClick={() => onChange('all')}
-      >
-        ALL
-      </Button>
+    <Wrapper>
+      <ButtonsContainer ref={buttonsContainerRef}>
+        <div ref={allBtnRef}>
+          <Button
+            hover={false}
+            scale={0.8}
+            color={feedType === 'all' ? 'accent2' : 'white'}
+            onClick={() => onChange('all')}
+            bg='transparent'
+          >
+            ALL
+          </Button>
+        </div>
 
-      <Button
-        hover={false}
-        bg={feedType === 'followed' ? 'accent2' : 'primary'}
-        scale={0.8}
-        onClick={() => onChange('followed')}
-      >
-        FOLLOWED
-      </Button>
+        <div ref={followedBtnRef}>
+          <Button
+            hover={false}
+            scale={0.8}
+            color={feedType === 'followed' ? 'accent2' : 'white'}
+            onClick={() => onChange('followed')}
+            bg='transparent'
+          >
+            FOLLOWED
+          </Button>
+        </div>
 
-      <Button
-        hover={false}
-        bg={feedType === 'mine' ? 'accent2' : 'primary'}
-        scale={0.8}
-        onClick={() => onChange('mine')}
-      >
-        MINE
-      </Button>
+        <div ref={mineBtnRef}>
+          <Button
+            hover={false}
+            scale={0.8}
+            color={feedType === 'mine' ? 'accent2' : 'white'}
+            onClick={() => onChange('mine')}
+            bg='transparent'
+          >
+            MINE
+          </Button>
+        </div>
+
+        <Indicator
+          isHidden={isHovered ? 0 : 1}
+          width={getIndicatorWidth()}
+          offset={getIndicatorOffset()}
+        />
+      </ButtonsContainer>
     </Wrapper>
   )
 }

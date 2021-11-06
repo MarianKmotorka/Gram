@@ -95,7 +95,9 @@ const Feed: React.FC = () => {
         <SideCard />
 
         <PostsContainer>
-          <TopMenu feedType={feedFilter} forwardRef={topRef} onChange={setFeedFilter} />
+          <div ref={topRef}/>
+          
+          <TopMenu feedType={feedFilter} onChange={setFeedFilter} />
 
           {posts.map(x => (
             <FeedPost
