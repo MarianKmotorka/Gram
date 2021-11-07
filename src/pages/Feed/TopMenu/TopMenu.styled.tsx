@@ -5,13 +5,15 @@ export const Wrapper = styled.div`
   justify-content: center;
   background-color: ${({ theme }) => theme.bg2};
   border-radius: 8px;
+  @media only screen and (max-width: 400px) {
+    border-radius: 0px;
+  }
 `
 
 export const ButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
   background-color: ${({ theme }) => theme.bg2};
-  border-radius: 8px;
   height: 60px;
   position: relative;
   z-index: 1;
@@ -19,10 +21,6 @@ export const ButtonsContainer = styled.div`
   > div {
     display: flex;
     align-items: center;
-  }
-
-  @media only screen and (max-width: 400px) {
-    border-radius: 0px;
   }
 `
 
@@ -37,7 +35,7 @@ export const Indicator = styled.span<IndicatorProps>`
   width: 70px;
   display: block;
   background: ${({ theme }) => theme.accent};
-  border-radius: 6px;
+  border-radius: 10px;
   position: absolute;
   z-index: -1;
 
@@ -45,7 +43,7 @@ export const Indicator = styled.span<IndicatorProps>`
   top: 14px;
   opacity: 0.6;
   display: ${({ isHidden }) => (isHidden ? 'none' : 'block')};
-  transition: transform 0.3s, width 0.3s;
+  transition: transform 0.25s, width 0.25s;
   transform: ${({ offset }) => `translateX(${offset}px)`};
   width: ${({ width }) => `${width}px`};
 `
