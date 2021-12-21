@@ -7,22 +7,22 @@ interface IValidationResult {
 }
 
 export const validate = async (model: IRegisterUserModel): Promise<IValidationResult> => {
-  if (process.env.REACT_APP_REGISTRATION_ENABLED === 'FALSE')
+  if (process.env.REACT_APP_REGISTRATION_ENABLED !== 'TRUE')
     return Promise.resolve({
       success: false,
-      error: 'New user registration is temporarily stopped. Try again later.',
+      error: 'New user registration is temporarily stopped. Try again later.'
     })
 
   if (model.nick.length < 4 || model.nick.length > 20)
     return Promise.resolve({
       success: false,
-      error: 'Nick cannot be shorter than 4 chars and not longer than 20 chars.',
+      error: 'Nick cannot be shorter than 4 chars and not longer than 20 chars.'
     })
 
   if (model.nick.includes(' '))
     return Promise.resolve({
       success: false,
-      error: 'Nick cannot contain empty spaces. Use underscore instead.',
+      error: 'Nick cannot contain empty spaces. Use underscore instead.'
     })
 
   const usersWithSameNick = await projectFirestore
@@ -33,10 +33,10 @@ export const validate = async (model: IRegisterUserModel): Promise<IValidationRe
   if (!usersWithSameNick.empty)
     return Promise.resolve({
       success: false,
-      error: `User with nick ${model.nick} already exists.`,
+      error: `User with nick ${model.nick} already exists.`
     })
 
   return Promise.resolve({
-    success: true,
+    success: true
   })
 }
