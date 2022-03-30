@@ -1,6 +1,6 @@
 import { propertyOf } from '../utils'
 import { IComment, IPost, IUser } from '../domain'
-import { SetError } from '../contextProviders/ApiErrorProvider'
+import { SetError } from '../providers/ApiErrorProvider'
 import {
   FieldValue,
   getTimestamp,

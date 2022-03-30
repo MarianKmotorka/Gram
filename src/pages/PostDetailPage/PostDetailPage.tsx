@@ -2,10 +2,10 @@ import React, { FC, useCallback } from 'react'
 
 import { propertyOf } from '../../utils'
 import { IComment, IPost } from '../../domain'
-import { useApiError } from '../../contextProviders/ApiErrorProvider'
-import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
+import { useApiError } from '../../providers/ApiErrorProvider'
+import { useAuthorizedUser } from '../../providers/AuthProvider'
 import { PostDetail, PostDetailLoadingSkeleton } from '../../components'
-import { useFollowers } from '../../contextProviders/FollowersProvider'
+import { useFollowers } from '../../providers/FollowersProvider'
 import { PostDetailTabs } from '../../components/Post/Detail/PostDetail'
 import { useFirestoreDoc, useFirestoreQuery, useUrlQueryParams } from '../../hooks'
 import {

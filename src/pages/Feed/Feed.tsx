@@ -10,8 +10,8 @@ import { LoadingRow, FeedPost } from '../../components'
 import PostDetailPage from '../PostDetailPage/PostDetailPage'
 import { isLiked, likePost } from '../../services/postService'
 import SideCard, { SideCardPlaceHolder } from './SideCard/SideCard'
-import { useAuthorizedUser } from '../../contextProviders/AuthProvider'
-import FollowersProvider, { useFollowers } from '../../contextProviders/FollowersProvider'
+import { useAuthorizedUser } from '../../providers/AuthProvider'
+import FollowersProvider, { useFollowers } from '../../providers/FollowersProvider'
 import {
   useLocalStorage,
   useNotifyError,

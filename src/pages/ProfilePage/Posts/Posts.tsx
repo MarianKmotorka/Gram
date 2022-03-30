@@ -7,7 +7,7 @@ import { LoadingRow } from '../../../components'
 import { isLiked } from '../../../services/postService'
 import { useObserver, useUrlQueryParams } from '../../../hooks'
 import PostDetailPage from '../../PostDetailPage/PostDetailPage'
-import { useAuthorizedUser } from '../../../contextProviders/AuthProvider'
+import { useAuthorizedUser } from '../../../providers/AuthProvider'
 import {
   GridIcon,
   RoundSquareIcon,

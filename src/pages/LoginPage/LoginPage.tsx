@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
-import { useAuth } from '../../contextProviders/AuthProvider'
+import { useAuth } from '../../providers/AuthProvider'
 import { Footer, MessageStripe, Input } from '../../components'
 
 import { StyledCard, StyledButton, Title, Wrapper } from './LoginPage.styled'

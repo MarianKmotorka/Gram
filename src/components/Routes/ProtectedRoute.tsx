@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { RouteProps } from 'react-router'
-import { useAuth } from '../../contextProviders/AuthProvider'
+import { useAuth } from '../../providers/AuthProvider'
 
 interface IProps extends RouteProps {
   component: any

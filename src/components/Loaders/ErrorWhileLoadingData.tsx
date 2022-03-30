@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 
 import { useNotifyError } from '../../hooks'
-import { IError } from '../../contextProviders/ApiErrorProvider'
+import { IError } from '../../providers/ApiErrorProvider'
 
 const Wrapper = styled.div`
   padding: 25px;

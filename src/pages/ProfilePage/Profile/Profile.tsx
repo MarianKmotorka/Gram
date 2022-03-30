@@ -8,7 +8,7 @@ import useUploadNewPhoto from './useUploadNewPhoto'
 import noPhotoPng from '../../../images/no-photo.png'
 import SideBlade from '../../../components/SideBlade/SideBlade'
 import FollowersDetail, { FollowersDetailTabs } from './FollowersDetail/FollowersDetail'
-import { useFollowers } from '../../../contextProviders/FollowersProvider'
+import { useFollowers } from '../../../providers/FollowersProvider'
 import {
   ClockIcon,
   EditIcon,

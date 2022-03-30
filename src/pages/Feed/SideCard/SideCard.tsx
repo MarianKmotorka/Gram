@@ -24,8 +24,8 @@ import {
   Wrapper,
   StyledLoader,
 } from './SideCard.styled'
-import { useAuthorizedUser } from '../../../contextProviders/AuthProvider'
-import { useFollowers } from '../../../contextProviders/FollowersProvider'
+import { useAuthorizedUser } from '../../../providers/AuthProvider'
+import { useFollowers } from '../../../providers/FollowersProvider'
 
 export const SideCardPlaceHolder = () => <Wrapper visibility='hidden' />
 

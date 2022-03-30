@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import imageCompression from 'browser-image-compression'
 
 import { projectStorage } from '../firebase/firebaseConfig'
-import { useAuthorizedUser } from '../contextProviders/AuthProvider'
+import { useAuthorizedUser } from '../providers/AuthProvider'
 
 interface ICompressionOptions {
   maxSizeMB?: number

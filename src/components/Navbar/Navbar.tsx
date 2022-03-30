@@ -7,7 +7,7 @@ import { getLinksConfig } from './utils'
 import NavbarSearch from './NavbarSearch'
 import { useOnClickOutside, useWindowSize } from '../../hooks'
 import noPhotoPng from '../../images/no-photo.png'
-import { useAuth } from '../../contextProviders/AuthProvider'
+import { useAuth } from '../../providers/AuthProvider'
 
 import {
   Logo,

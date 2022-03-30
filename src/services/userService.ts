@@ -1,6 +1,6 @@
 import { IFollow } from '../domain'
 import { projectFirestore } from '../firebase/firebaseConfig'
-import { SetError } from '../contextProviders/ApiErrorProvider'
+import { SetError } from '../providers/ApiErrorProvider'
 
 export const follow = async (followerId: string, followee: IFollow, setError: SetError) =>
   await projectFirestore

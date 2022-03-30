@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom'
 
 import { IUser } from '../../domain'
 import { validate } from './validator'
-import { useAuth } from '../../contextProviders/AuthProvider'
+import { useAuth } from '../../providers/AuthProvider'
 import { MessageStripe, Footer, Input } from '../../components'
 import { getTimestamp, projectFirestore } from '../../firebase/firebaseConfig'
 

@@ -4,7 +4,7 @@ import { IComment, IPost, IUser } from '../../../domain'
 import { propertyOf } from '../../../utils'
 import { useNotifyError, useStorage } from '../../../hooks'
 import { projectFirestore, projectStorage } from '../../../firebase/firebaseConfig'
-import { useApiError } from '../../../contextProviders/ApiErrorProvider'
+import { useApiError } from '../../../providers/ApiErrorProvider'
 
 const useUploadNewPhoto = (
   file: File | null,

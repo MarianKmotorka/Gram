@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react'
 import { Button, TabView } from '../../../../components'
 import { SearchIcon } from '../../../../components/Icons'
 import { getFollowedByText, getFollowingText } from './utils'
-import { useFollowers } from '../../../../contextProviders/FollowersProvider'
+import { useFollowers } from '../../../../providers/FollowersProvider'
 
 import {
   Row,

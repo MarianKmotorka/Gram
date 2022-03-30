@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 
 import { CloseIcon } from '../Icons'
-import { useApiError } from '../../contextProviders/ApiErrorProvider'
+import { useApiError } from '../../providers/ApiErrorProvider'
 
 import { NAVBAR_HEIGHT } from '../Navbar/Navbar.styled'
 import { Bold, Title, Wrapper } from './ApiErrorNotification.styled'
